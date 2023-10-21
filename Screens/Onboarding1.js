@@ -1,7 +1,9 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet, TouchableOpacity, ImageBackground } from 'react-native';
+import { View, Text, Image, StyleSheet, TouchableOpacity, ImageBackground, StatusBar } from 'react-native';
 
 const Onboarding1 = ({ navigation }) => {
+  // StatusBar.setTranslucent(true);
+
   const onNextPress = () => {
     navigation.navigate('Onboarding2');
   };
@@ -35,7 +37,7 @@ const styles = StyleSheet.create({
     width: "100%",
     overflow: "hidden",
     height: "100%"
-    },
+  },
   frameParent: {
     marginLeft: -160.5,
     top: 458,

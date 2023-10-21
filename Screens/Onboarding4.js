@@ -1,8 +1,10 @@
 import React from 'react';
 import { Ionicons } from '@expo/vector-icons';
-import { View, Text, Image, StyleSheet, Pressable, TouchableOpacity, ImageBackground } from 'react-native';
+import { View, Text, Image, StyleSheet, Pressable, TouchableOpacity, ImageBackground, StatusBar } from 'react-native';
 
 const Onboarding2 = ({ navigation }) => {
+    // StatusBar.setTranslucent(true);
+
     const onNextPress = () => {
         navigation.navigate('CreatAccount');
     };

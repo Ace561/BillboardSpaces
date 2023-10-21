@@ -1,4 +1,5 @@
 import React from 'react';
+import { StatusBar } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Onboarding1 from './Screens/Onboarding1'
@@ -11,6 +12,9 @@ const Stack = createStackNavigator();
 
 
 function App() {
+  StatusBar.setHidden(false);
+  StatusBar.setTranslucent(true)
+
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Onboarding1">
