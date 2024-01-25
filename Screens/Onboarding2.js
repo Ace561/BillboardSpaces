@@ -1,6 +1,6 @@
 import React from 'react';
 import { Ionicons } from '@expo/vector-icons';
-import { View, Text, Image, StyleSheet, Pressable, TouchableOpacity, ImageBackground, StatusBar} from 'react-native';
+import { View, Text, Image, StyleSheet, Pressable, TouchableOpacity, ImageBackground, StatusBar } from 'react-native';
 
 const Onboarding2 = ({ navigation }) => {
     // StatusBar.setTranslucent(true);
@@ -10,7 +10,10 @@ const Onboarding2 = ({ navigation }) => {
     };
 
     return (
-        <ImageBackground style={styles.onboarding1Icon} resizeMode="cover" source={require("../assets/onboarding2.png")}>
+        <ImageBackground
+            style={styles.onboarding1Icon}
+            source={require("../assets/onboarding2.jpeg")}
+        >
             <Pressable style={styles.vector} onPress={() => navigation.goBack()}>
                 <Ionicons style={styles.icon} name="ios-arrow-back" size={35} color="black" />
             </Pressable>
