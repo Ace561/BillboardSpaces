@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, Modal, StyleSheet, Pressable, TextInput } from 'react-native';
+import { View, Text, ScrollView, TouchableOpacity, Platform, Modal, StyleSheet, Pressable, TextInput, SafeAreaView, StatusBar, KeyboardAvoidingView } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 
 export default function About1({ navigation }) {
@@ -9,6 +9,43 @@ export default function About1({ navigation }) {
     const [selectedState, setSelectedState] = useState('');
     const [fieldModalVisible, setFieldModalVisible] = useState(false);
     const [stateModalVisible, setStateModalVisible] = useState(false);
+
+    // Additional state variables for form data
+    const [fullName, setFullName] = useState('');
+    const [phoneNumber, setPhoneNumber] = useState('');
+    const [displayName, setDisplayName] = useState('');
+
+    const handleDone = async () => {
+        // Assuming you have an API endpoint to handle the PUT request
+        try {
+            const response = await fetch('https://bb-spaces.onrender.com/auth/update-profile/{id}/', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    field: selectedText,
+                    fullName: fullName,
+                    phoneNumber: phoneNumber,
+                    state: selectedState,
+                    displayName: displayName,
+                }),
+            });
+
+            if (response.ok) {
+                // Handle success, e.g., navigate to the next screen
+                navigation.navigate('Home');
+            } else {
+                // Handle error, show an alert or log the error
+                console.error('PUT request failed:', response.status);
+                alert('Failed to update user data');
+            }
+        } catch (error) {
+            // Handle other errors
+            console.error('An error occurred during PUT request:', error.message);
+            alert('Failed to update user data');
+        }
+    };
 
     const openFieldModal = () => {
         setFieldModalVisible(true);
@@ -44,134 +81,137 @@ export default function About1({ navigation }) {
     };
 
     return (
-        <View style={styles.container}>
-            <View style={styles.container2}>
-                <Text style={styles.tellUsAbout1}> Tell Us About Yourself</Text>
-                <Text style={styles.letsMakeYour1}>Let's Make Your Experience Better</Text>
-                <Text style={styles.PickYourField}>Pick your Field</Text>
-                <View style={{ top: 5 }}>
-                    <TouchableOpacity onPress={openFieldModal}>
-                        <View style={styles.rectangleView1}>
-                            <Text>{selectedText !== '' ? selectedText : '  Select an option'}</Text>
-                            <View style={styles.arrowContainer}>
-                                <AntDesign style={styles.arrow} name="down" size={20} color="black" />
+        <KeyboardAvoidingView style={styles.container} behavior="height" enabled>
+            <ScrollView >
+                <View style={styles.container2}>
+                    <Text style={styles.tellUsAbout1}> Tell Us About Yourself</Text>
+                    <Text style={styles.letsMakeYour1}>Let's Make Your Experience Better</Text>
+                    <Text style={styles.PickYourField}>Pick your Field</Text>
+                    <View style={{ top: 5 }}>
+                        <TouchableOpacity onPress={openFieldModal}>
+                            <View style={styles.rectangleView1}>
+                                <Text>{selectedText !== '' ? selectedText : '  Select an option'}</Text>
+                                <View style={styles.arrowContainer}>
+                                    <AntDesign style={styles.arrow} name="down" size={20} color="black" />
+                                </View>
                             </View>
+                        </TouchableOpacity>
+                        <Modal visible={fieldModalVisible} animationType="slide">
+                            <Pressable style={styles.modalContainer} onPress={closeFieldModal}>
+                                <View style={styles.modalContent}>
+                                    <TouchableOpacity onPress={() => handleTextSelection('  Billboard Owner')}>
+                                        <Text style={styles.billboardOwner}>Billboard Owner</Text>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity onPress={() => handleTextSelection('  Advertising Agent')}>
+                                        <Text style={styles.billboardOwner}>Advertising Agent</Text>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity onPress={() => handleTextSelection('  State Agent')}>
+                                        <Text style={styles.billboardOwner}>State Agent</Text>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity onPress={() => handleTextSelection('  Business Owner')}>
+                                        <Text style={styles.billboardOwner}>Business Owner</Text>
+                                    </TouchableOpacity>
+                                </View>
+                            </Pressable>
+                        </Modal>
+                    </View>
+                    <View style={styles.container3}>
+                        <Text style={styles.PickYourField}>Fullname</Text>
+                        <View style={{ top: 5 }}>
+                            <TouchableOpacity>
+                                <View style={styles.rectangleView2}>
+                                    <TextInput
+                                        style={styles.fullName}
+                                        placeholder="Enter Full name"
+                                        value={fullName}
+                                        onChangeText={text => setFullName(text)}
+                                    />
+                                </View>
+                            </TouchableOpacity>
                         </View>
-                    </TouchableOpacity>
-                    <Modal visible={fieldModalVisible} animationType="slide">
-                        <Pressable style={styles.modalContainer} onPress={closeFieldModal}>
-                            <View style={styles.modalContent}>
-                                <TouchableOpacity onPress={() => handleTextSelection('  Billboard Owner')}>
-                                    <Text style={styles.billboardOwner}>Billboard Owner</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity onPress={() => handleTextSelection('  Advertising Agent')}>
-                                    <Text style={styles.billboardOwner}>Advertising Agent</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity onPress={() => handleTextSelection('  State Agent')}>
-                                    <Text style={styles.billboardOwner}>State Agent</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity onPress={() => handleTextSelection('  Business Owner')}>
-                                    <Text style={styles.billboardOwner}>Business Owner</Text>
-                                </TouchableOpacity>
-                            </View>
-                        </Pressable>
-                    </Modal>
-                </View>
-                <View style={styles.container3}>
-                    <Text style={styles.PickYourField}>Fullname</Text>
-                    <View style={{ top: 5 }}>
-                        <TouchableOpacity>
-                            <View style={styles.rectangleView2}>
-                                <TextInput
-                                    style={styles.fullName}
-                                    placeholder="Enter Full name"
-                                // value={email}
-                                // onChangeText={text => setEmail(text)}
-                                />
-                            </View>
-                        </TouchableOpacity>
                     </View>
-                </View>
-                <View style={styles.container3}>
-                    <Text style={styles.PickYourField}>Phone Number</Text>
-                    <View style={{ top: 5 }}>
-                        <TouchableOpacity>
-                            <View style={styles.rectangleView2}>
-                                <TextInput
-                                    style={styles.fullName}
-                                    placeholder="Enter Phone number"
-                                // value={email}
-                                // onChangeText={text => setEmail(text)}
-                                />
-                            </View>
-                        </TouchableOpacity>
-                    </View>
-                </View>
-                <Text style={styles.PickYourField}>State of residence</Text>
-                <View style={{ top: 5 }}>
-                    <TouchableOpacity onPress={openStateModal}>
-                        <View style={styles.rectangleView2}>
-                            <Text>{selectedState !== '' ? selectedState : '  Enter state'}</Text>
-                            <View style={styles.arrowContainer}>
-                                <AntDesign style={styles.arrow} name="down" size={20} color="black" />
-                            </View>
+                    <View style={styles.container3}>
+                        <Text style={styles.PickYourField}>Phone Number</Text>
+                        <View style={{ top: 5 }}>
+                            <TouchableOpacity>
+                                <View style={styles.rectangleView2}>
+                                    <TextInput
+                                        style={styles.fullName}
+                                        placeholder="Enter Phone number"
+                                        value={phoneNumber}
+                                        onChangeText={text => setPhoneNumber(text)}
+                                    />
+                                </View>
+                            </TouchableOpacity>
                         </View>
-                    </TouchableOpacity>
-                    <Modal visible={stateModalVisible} animationType="slide">
-                        <Pressable style={styles.modalContainer} onPress={closeStateModal}>
-                            <View style={styles.modalContent}>
-                                <TouchableOpacity onPress={() => handleStateSelection('  Abia')}>
-                                    <Text style={styles.billboardOwner}>Abia</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity onPress={() => handleStateSelection('  Adamawa')}>
-                                    <Text style={styles.billboardOwner}>Adamawa</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity onPress={() => handleStateSelection('  Akwaibom')}>
-                                    <Text style={styles.billboardOwner}>Akwaibom</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity onPress={() => handleStateSelection('  Anambra')}>
-                                    <Text style={styles.billboardOwner}>Anambra</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity onPress={() => handleStateSelection('  Bauchi')}>
-                                    <Text style={styles.billboardOwner}>Bauchi</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity onPress={() => handleStateSelection('  Benue')}>
-                                    <Text style={styles.billboardOwner}>Benue</Text>
-                                </TouchableOpacity>
-                            </View>
-                        </Pressable>
-                    </Modal>
-                </View>
-                <View style={styles.container3}>
-                    <Text style={styles.PickYourField}>Display name (Business name)</Text>
+                    </View>
+                    <Text style={styles.PickYourField}>State of residence</Text>
                     <View style={{ top: 5 }}>
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={openStateModal}>
                             <View style={styles.rectangleView2}>
-                                <TextInput
-                                    style={styles.fullName}
-                                    placeholder="Enter display name"
-                                // value={email}
-                                // onChangeText={text => setEmail(text)}
-                                />
+                                <Text>{selectedState !== '' ? selectedState : '  Enter state'}</Text>
+                                <View style={styles.arrowContainer}>
+                                    <AntDesign style={styles.arrow} name="down" size={20} color="black" />
+                                </View>
                             </View>
                         </TouchableOpacity>
+                        <Modal visible={stateModalVisible} animationType="slide">
+                            <Pressable style={styles.modalContainer} onPress={closeStateModal}>
+                                <View style={styles.modalContent}>
+                                    <TouchableOpacity onPress={() => handleStateSelection('  Abia')}>
+                                        <Text style={styles.billboardOwner}>Abia</Text>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity onPress={() => handleStateSelection('  Adamawa')}>
+                                        <Text style={styles.billboardOwner}>Adamawa</Text>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity onPress={() => handleStateSelection('  Akwaibom')}>
+                                        <Text style={styles.billboardOwner}>Akwaibom</Text>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity onPress={() => handleStateSelection('  Anambra')}>
+                                        <Text style={styles.billboardOwner}>Anambra</Text>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity onPress={() => handleStateSelection('  Bauchi')}>
+                                        <Text style={styles.billboardOwner}>Bauchi</Text>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity onPress={() => handleStateSelection('  Benue')}>
+                                        <Text style={styles.billboardOwner}>Benue</Text>
+                                    </TouchableOpacity>
+                                </View>
+                            </Pressable>
+                        </Modal>
                     </View>
+                    <View style={styles.container3}>
+                        <Text style={styles.PickYourField}>Display name (Business name)</Text>
+                        <View style={{ top: 5 }}>
+                            <TouchableOpacity>
+                                <View style={styles.rectangleView2}>
+                                    <TextInput
+                                        style={styles.fullName}
+                                        placeholder="Enter display name"
+                                        value={displayName}
+                                        onChangeText={text => setDisplayName(text)}
+                                    />
+                                </View>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                    <TouchableOpacity onPress={handleDone} style={styles.rectangleView3}>
+                        <Text style={{ color: 'white' }}>Done</Text>
+                    </TouchableOpacity>
                 </View>
-                <TouchableOpacity onPress={() => navigation.navigate("Home")} style={styles.rectangleView3}>
-                    <Text style={{ color: 'white' }}>Done</Text>
-                </TouchableOpacity>
-            </View>
-        </View>
+        </ScrollView >
+        </KeyboardAvoidingView>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1
+        flex: 1,
+        paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
     },
     container2: {
-        top: 79,
-        left: 16
+        marginTop: '10%',
+        left: "5%"
     },
     tellUsAbout1: {
         fontSize: 28,

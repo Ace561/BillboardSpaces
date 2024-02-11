@@ -53,7 +53,7 @@ export default function HomeScreen({ navigation }) {
                 </View>
                 <View style={styles.discover}>
 
-</View>
+                </View>
             </ScrollView>
         </SafeAreaView>
     )

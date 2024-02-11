@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, StatusBar, TouchableOpacity, TouchableWithoutFeedback, Modal, Image, TextInput, Pressable, KeyboardAvoidingView, SafeAreaView } from 'react-native'
+import { StyleSheet, Text, View, StatusBar, TouchableOpacity, TouchableWithoutFeedback, Modal, Image, TextInput, Pressable, KeyboardAvoidingView, SafeAreaView, ActivityIndicator, ScrollView } from 'react-native'
 import React, { useState } from 'react'
 import { Feather } from '@expo/vector-icons';
 
@@ -7,7 +7,7 @@ export default function CreatAccount({ navigation }) {
     const [passwordVisible, setPasswordVisible] = useState(false);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('')
-    const [mordalPassword, setModalPassword] = useState('')
+    const [mordalPassword, setMordalPassword] = useState('')
     const [modalVisible, setModalVisible] = useState(false);
     const [mordalPasswordVisible, setMordalPasswordVisible] = useState(false);
     const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
@@ -17,7 +17,7 @@ export default function CreatAccount({ navigation }) {
 
     const handleDone = async () => {
         try {
-            const response = await fetch('https://billboard-spaces.onrender.com/auth/password/reset/', {
+            const response = await fetch('https://bb-spaces.onrender.com/auth/password/reset/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -26,22 +26,22 @@ export default function CreatAccount({ navigation }) {
                     email: mordalPassword,
                 }),
             });
-    
+
             if (response.ok) {
                 const result = await response.json();
-    
+
                 // Check if the response indicates success
                 if (result && result.status === true) {
                     console.log(result.message); // Log the success message if needed
                     // Extract relevant information from the response and navigate to the next screen
-                    setModalVisible(false);
+                    navigation.navigate('Home');
                 } else {
                     // Handle the error or navigate to an appropriate screen
                     console.error("Password reset request failed:", result.message);
                     alert(`Password reset failed. ${result.message}`);
                 }
             } else {
-                console.error('Password reset request failed:', response.status);
+                console.error('Password reset request failed:', response.status, response.statusText, response.data);
                 throw new Error('Password reset request failed');
             }
         } catch (error) {
@@ -50,7 +50,7 @@ export default function CreatAccount({ navigation }) {
             alert(`Password reset failed. ${error.message}`);
         }
     };
-    
+
 
 
 
@@ -59,7 +59,7 @@ export default function CreatAccount({ navigation }) {
             setIsLoading(true);
 
             // Use fetch to send the login request
-            const response = await fetch('https://billboard-spaces.onrender.com/auth/login/', {
+            const response = await fetch('https://bb-spaces.onrender.com/auth/login/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -73,7 +73,7 @@ export default function CreatAccount({ navigation }) {
 
             if (response.ok) {
                 // If login is successful, navigate to the HomeScreen
-                navigation.navigate('Home');
+                navigation.navigate('About1');
                 console.log('Login Successful');
             } else {
                 // Handle error, e.g., show an error message to the user
@@ -121,12 +121,9 @@ export default function CreatAccount({ navigation }) {
     };
 
     return (
-        <TouchableWithoutFeedback onPress={closeModal}>
-            <SafeAreaView style={styles.container}>
-                <KeyboardAvoidingView
-                    behavior="padding"
-                    enabled
-                >
+        <KeyboardAvoidingView style={styles.container} behavior="height" enabled>
+            <TouchableWithoutFeedback onPress={closeModal}>
+                <ScrollView>
                     <View style={styles.logoPosition}>
                         <Image style={styles.logo} resizeMode="cover" source={require("../assets/logo.png")} />
                     </View>
@@ -170,8 +167,13 @@ export default function CreatAccount({ navigation }) {
                             <Text style={styles.forgotPassword1}>Forgot password?</Text>
                         </Pressable>
                         <TouchableOpacity onPress={handleLogin} style={styles.buttonParent}>
-                            <Text style={styles.button}>Sign in</Text>
+                            {isLoading ? (
+                                <ActivityIndicator size="small" />
+                            ) : (
+                                <Text style={styles.button}>Sign in</Text>
+                            )}
                         </TouchableOpacity>
+
                         <View style={styles.text}>
                             <Text style={styles.alreadyAUser1}>{`Not a User? `}</Text>
                             <Pressable onPress={CreatAccount}>
@@ -192,8 +194,8 @@ reset it`}</Text>
                                                 style={styles.email}
                                                 placeholder="Email"
                                                 value={mordalPassword}
-                                                onChangeText={text => setModalPassword(text)}
-                                                // secureTextEntry={!mordalPasswordVisible}
+                                                onChangeText={text => setMordalPassword(text)}
+                                            // secureTextEntry={!mordalPasswordVisible}
                                             />
                                             {/* <TouchableOpacity
                                                 style={styles.passwordToggle}
@@ -227,17 +229,21 @@ reset it`}</Text>
                                     />
                                 </TouchableOpacity>
                             </View> */}
-                                        <Pressable onPress={handleDone} style={styles.buttonParent}>
-                                            <Text style={styles.button}>Done</Text>
-                                        </Pressable>
+                                        <TouchableOpacity onPress={handleDone} style={styles.buttonParent}>
+                                            {isLoading ? (
+                                                <ActivityIndicator size="small" />
+                                            ) : (
+                                                <Text style={styles.button}>Done</Text>
+                                            )}
+                                        </TouchableOpacity>
                                     </View>
                                 </TouchableWithoutFeedback>
                             </Pressable>
                         </Modal>
                     </View>
-                </KeyboardAvoidingView>
-            </SafeAreaView>
-        </TouchableWithoutFeedback>
+                </ScrollView>
+            </TouchableWithoutFeedback>
+        </KeyboardAvoidingView>
     )
 }
 
