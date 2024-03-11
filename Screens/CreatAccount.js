@@ -23,6 +23,10 @@ export default function CreateAccount({ navigation }) {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [errorModalVisible, setErrorModalVisible] = useState(false);
+  const [emailFocused, setEmailFocused] = useState(false); // Track if email input is focused
+  const [passwordFocused, setPasswordFocused] = useState(false); // Track if password input is focused
+  const [confirmPasswordFocused, setConfirmPasswordFocused] = useState(false); // Track if confirm password input is focused
+
 
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
@@ -32,6 +36,30 @@ export default function CreateAccount({ navigation }) {
     setConfirmPasswordVisible(!confirmPasswordVisible);
   };
 
+  const handleEmailFocus = () => {
+    setEmailFocused(true);
+    setPasswordFocused(false);
+    setConfirmPasswordFocused(false);
+  };
+
+  const handlePasswordFocus = () => {
+    setEmailFocused(false);
+    setPasswordFocused(true);
+    setConfirmPasswordFocused(false);
+  };
+
+  const handleConfirmPasswordFocus = () => {
+    setEmailFocused(false);
+    setPasswordFocused(false);
+    setConfirmPasswordFocused(true);
+  };
+
+  const handleInputBlur = () => {
+    setEmailFocused(false);
+    setPasswordFocused(false);
+    setConfirmPasswordFocused(false);
+  };
+  
   const Signup = async () => {
     try {
       setIsLoading(true);
@@ -60,8 +88,28 @@ export default function CreateAccount({ navigation }) {
 
       if (response.ok) {
         console.log("Signup Successful:", responseData);
+        // Extract user_id from responseData
+        const userId = responseData.id;
+        alert('Password reset successful');
+
+        // Construct URL for profile update endpoint
+        const profileUpdateUrl = `https://bb-spaces.onrender.com/auth/update-profile/${userId}/`;
+
+        // Send request to update profile
+        const profileUpdateResponse = await fetch(profileUpdateUrl, {
+          method: "PUT", // or "PATCH" depending on your API
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            // Include any profile update data here
+          }),
+        });
+
+        // Handle response for profile update if needed
+
         // Handle navigation or state updates on successful signup
-        navigation.navigate("Home");
+        navigation.navigate("About1", { userId: responseData.id });
       } else {
         console.error("Signup Error:", responseData);
 
@@ -106,21 +154,32 @@ export default function CreateAccount({ navigation }) {
         </View>
         <View style={{ alignItems: 'center', marginTop: '10%' }}>
           <Text style={styles.or}>OR</Text>
-          <View style={styles.rectangleView1}>
+          <View style={[styles.rectangleView1,
+          emailFocused && { borderColor: "#0080fe", borderWidth: 1, },]}>
             <TextInput
-              style={styles.email}
+              style={[
+                styles.email,
+
+              ]}
               placeholder="Email"
               value={email}
-              onChangeText={text => setEmail(text)}
+              onChangeText={(text) => setEmail(text)}
+              onFocus={handleEmailFocus}
+              onBlur={handleInputBlur}
             />
           </View>
-          <View style={styles.rectangleView2}>
+          <View style={[styles.rectangleView2,
+          passwordFocused && { borderColor: "#0080fe", borderWidth: 1 },]}>
             <TextInput
-              style={styles.email}
+              style={[
+                styles.email,
+              ]}
               placeholder="Password"
               value={password}
-              onChangeText={text => setPassword(text)}
+              onChangeText={(text) => setPassword(text)}
               secureTextEntry={!passwordVisible}
+              onFocus={handlePasswordFocus}
+              onBlur={handleInputBlur}
             />
             <TouchableOpacity
               style={styles.passwordToggle}
@@ -133,13 +192,20 @@ export default function CreateAccount({ navigation }) {
               />
             </TouchableOpacity>
           </View>
-          <View style={styles.rectangleView2}>
+          <View style={[styles.rectangleView2,
+
+          confirmPasswordFocused && { borderColor: "#0080fe", borderWidth: 1 },
+          ]}>
             <TextInput
-              style={styles.email}
+              style={[
+                styles.email,
+              ]}
               placeholder="Confirm Password"
               value={confirmPassword}
-              onChangeText={text => setConfirmPassword(text)}
+              onChangeText={(text) => setConfirmPassword(text)}
               secureTextEntry={!confirmPasswordVisible}
+              onFocus={handleConfirmPasswordFocus}
+              onBlur={handleInputBlur}
             />
             <TouchableOpacity
               style={styles.passwordToggle}
@@ -162,9 +228,9 @@ export default function CreateAccount({ navigation }) {
           </TouchableOpacity>
           <View style={styles.text}>
             <Text style={styles.alreadyAUser1}>{`Already a user? `}</Text>
-            <Pressable onPress={SignIn}>
+            <TouchableOpacity onPress={SignIn}>
               <Text style={styles.signIn}>Sign in</Text>
-            </Pressable>
+            </TouchableOpacity>
           </View>
         </View>
       </ScrollView>
@@ -239,9 +305,9 @@ const styles = StyleSheet.create({
     elevation: 2,
     shadowOpacity: 1,
     borderStyle: "solid",
-    borderColor: "#0080fe",
+    // borderColor: "#0080fe",
     marginTop: '5%',
-    borderWidth: 1,
+    // borderWidth: 1,
     width: "90%",
     height: 40
   },
@@ -263,7 +329,7 @@ const styles = StyleSheet.create({
   },
   email: {
     fontSize: 12,
-    color: "#ccc",
+    fontWeight:'400',
     textAlign: "left",
     left: 10
   },

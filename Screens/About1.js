@@ -1,51 +1,67 @@
 import React, { useState } from 'react';
-import { View, Text, ScrollView, TouchableOpacity, Platform, Modal, StyleSheet, Pressable, TextInput, SafeAreaView, StatusBar, KeyboardAvoidingView } from 'react-native';
+import { View, Text, ScrollView, TouchableOpacity, Platform, Modal, StyleSheet, Pressable, TextInput, SafeAreaView, StatusBar, KeyboardAvoidingView, ActivityIndicator } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 
-export default function About1({ navigation }) {
+export default function About1({ navigation, route }) {
+
+    const { userId } = route.params;
 
     const [modalVisible, setModalVisible] = useState(false);
     const [selectedText, setSelectedText] = useState('');
     const [selectedState, setSelectedState] = useState('');
     const [fieldModalVisible, setFieldModalVisible] = useState(false);
     const [stateModalVisible, setStateModalVisible] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     // Additional state variables for form data
     const [fullName, setFullName] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
     const [displayName, setDisplayName] = useState('');
 
+    // State variables to track focus
+    const [fullNameFocused, setFullNameFocused] = useState(false);
+    const [phoneNumberFocused, setPhoneNumberFocused] = useState(false);
+    const [displayNameFocused, setDisplayNameFocused] = useState(false);
+
     const handleDone = async () => {
-        // Assuming you have an API endpoint to handle the PUT request
         try {
-            const response = await fetch('https://bb-spaces.onrender.com/auth/update-profile/{id}/', {
+            setIsLoading(true)
+            const response = await fetch(`https://bb-spaces.onrender.com/auth/update-profile/${userId}/`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    field: selectedText,
-                    fullName: fullName,
-                    phoneNumber: phoneNumber,
+                    user_field: selectedText,
+                    full_name: fullName,
+                    phone_number: phoneNumber,
                     state: selectedState,
-                    displayName: displayName,
+                    display_name: displayName,
                 }),
             });
 
             if (response.ok) {
-                // Handle success, e.g., navigate to the next screen
                 navigation.navigate('Home');
             } else {
-                // Handle error, show an alert or log the error
                 console.error('PUT request failed:', response.status);
                 alert('Failed to update user data');
             }
         } catch (error) {
-            // Handle other errors
             console.error('An error occurred during PUT request:', error.message);
             alert('Failed to update user data');
+
+            // Log response if available
+            if (error.response) {
+                try {
+                    const errorResponseData = await error.response.json();
+                    console.log('Error response data:', errorResponseData);
+                } catch (jsonError) {
+                    console.error('Failed to parse error response as JSON:', jsonError.message);
+                }
+            }
         }
     };
+
 
     const openFieldModal = () => {
         setFieldModalVisible(true);
@@ -80,6 +96,25 @@ export default function About1({ navigation }) {
         closeStateModal();
     };
 
+    // Functions to handle input field focus
+    const handleFullNameFocus = () => {
+        setFullNameFocused(true);
+        setPhoneNumberFocused(false);
+        setDisplayNameFocused(false);
+    };
+
+    const handlePhoneNumberFocus = () => {
+        setFullNameFocused(false);
+        setPhoneNumberFocused(true);
+        setDisplayNameFocused(false);
+    };
+
+    const handleDisplayNameFocus = () => {
+        setFullNameFocused(false);
+        setPhoneNumberFocused(false);
+        setDisplayNameFocused(true);
+    };
+
     return (
         <KeyboardAvoidingView style={styles.container} behavior="height" enabled>
             <ScrollView >
@@ -90,25 +125,25 @@ export default function About1({ navigation }) {
                     <View style={{ top: 5 }}>
                         <TouchableOpacity onPress={openFieldModal}>
                             <View style={styles.rectangleView1}>
-                                <Text>{selectedText !== '' ? selectedText : '  Select an option'}</Text>
+                                <Text style={{ padding: 10 }}>{selectedText !== '' ? selectedText : 'Select an option'}</Text>
                                 <View style={styles.arrowContainer}>
                                     <AntDesign style={styles.arrow} name="down" size={20} color="black" />
                                 </View>
                             </View>
                         </TouchableOpacity>
-                        <Modal visible={fieldModalVisible} animationType="slide">
+                        <Modal visible={fieldModalVisible} transparent={true} animationType="slide">
                             <Pressable style={styles.modalContainer} onPress={closeFieldModal}>
                                 <View style={styles.modalContent}>
-                                    <TouchableOpacity onPress={() => handleTextSelection('  Billboard Owner')}>
+                                    <TouchableOpacity onPress={() => handleTextSelection('Billboard Owner')}>
                                         <Text style={styles.billboardOwner}>Billboard Owner</Text>
                                     </TouchableOpacity>
-                                    <TouchableOpacity onPress={() => handleTextSelection('  Advertising Agent')}>
+                                    <TouchableOpacity onPress={() => handleTextSelection('advertising-agent')}>
                                         <Text style={styles.billboardOwner}>Advertising Agent</Text>
                                     </TouchableOpacity>
-                                    <TouchableOpacity onPress={() => handleTextSelection('  State Agent')}>
+                                    <TouchableOpacity onPress={() => handleTextSelection('State Agent')}>
                                         <Text style={styles.billboardOwner}>State Agent</Text>
                                     </TouchableOpacity>
-                                    <TouchableOpacity onPress={() => handleTextSelection('  Business Owner')}>
+                                    <TouchableOpacity onPress={() => handleTextSelection('Business Owner')}>
                                         <Text style={styles.billboardOwner}>Business Owner</Text>
                                     </TouchableOpacity>
                                 </View>
@@ -119,12 +154,14 @@ export default function About1({ navigation }) {
                         <Text style={styles.PickYourField}>Fullname</Text>
                         <View style={{ top: 5 }}>
                             <TouchableOpacity>
-                                <View style={styles.rectangleView2}>
+                                <View style={[styles.rectangleView2, fullNameFocused && styles.focusedInput]}>
                                     <TextInput
                                         style={styles.fullName}
                                         placeholder="Enter Full name"
                                         value={fullName}
                                         onChangeText={text => setFullName(text)}
+                                        onFocus={handleFullNameFocus}
+                                        onBlur={() => setFullNameFocused(false)}
                                     />
                                 </View>
                             </TouchableOpacity>
@@ -134,12 +171,14 @@ export default function About1({ navigation }) {
                         <Text style={styles.PickYourField}>Phone Number</Text>
                         <View style={{ top: 5 }}>
                             <TouchableOpacity>
-                                <View style={styles.rectangleView2}>
+                                <View style={[styles.rectangleView2, phoneNumberFocused && styles.focusedInput]}>
                                     <TextInput
                                         style={styles.fullName}
                                         placeholder="Enter Phone number"
                                         value={phoneNumber}
                                         onChangeText={text => setPhoneNumber(text)}
+                                        onFocus={handlePhoneNumberFocus}
+                                        onBlur={() => setPhoneNumberFocused(false)}
                                     />
                                 </View>
                             </TouchableOpacity>
@@ -149,33 +188,35 @@ export default function About1({ navigation }) {
                     <View style={{ top: 5 }}>
                         <TouchableOpacity onPress={openStateModal}>
                             <View style={styles.rectangleView2}>
-                                <Text>{selectedState !== '' ? selectedState : '  Enter state'}</Text>
+                                <Text style={{ padding: 10 }}>{selectedState !== '' ? selectedState : 'Enter state'}</Text>
                                 <View style={styles.arrowContainer}>
                                     <AntDesign style={styles.arrow} name="down" size={20} color="black" />
                                 </View>
                             </View>
                         </TouchableOpacity>
-                        <Modal visible={stateModalVisible} animationType="slide">
-                            <Pressable style={styles.modalContainer} onPress={closeStateModal}>
-                                <View style={styles.modalContent}>
-                                    <TouchableOpacity onPress={() => handleStateSelection('  Abia')}>
-                                        <Text style={styles.billboardOwner}>Abia</Text>
-                                    </TouchableOpacity>
-                                    <TouchableOpacity onPress={() => handleStateSelection('  Adamawa')}>
-                                        <Text style={styles.billboardOwner}>Adamawa</Text>
-                                    </TouchableOpacity>
-                                    <TouchableOpacity onPress={() => handleStateSelection('  Akwaibom')}>
-                                        <Text style={styles.billboardOwner}>Akwaibom</Text>
-                                    </TouchableOpacity>
-                                    <TouchableOpacity onPress={() => handleStateSelection('  Anambra')}>
-                                        <Text style={styles.billboardOwner}>Anambra</Text>
-                                    </TouchableOpacity>
-                                    <TouchableOpacity onPress={() => handleStateSelection('  Bauchi')}>
-                                        <Text style={styles.billboardOwner}>Bauchi</Text>
-                                    </TouchableOpacity>
-                                    <TouchableOpacity onPress={() => handleStateSelection('  Benue')}>
-                                        <Text style={styles.billboardOwner}>Benue</Text>
-                                    </TouchableOpacity>
+                        <Modal visible={stateModalVisible} transparent={true} animationType="slide">
+                            <Pressable style={styles.modalContainer2} onPress={closeStateModal}>
+                                <View style={styles.modalContent2}>
+                                    <ScrollView>
+                                        <TouchableOpacity onPress={() => handleStateSelection('abia')}>
+                                            <Text style={styles.billboardOwner}>Abia</Text>
+                                        </TouchableOpacity>
+                                        <TouchableOpacity onPress={() => handleStateSelection('  Adamawa')}>
+                                            <Text style={styles.billboardOwner}>Adamawa</Text>
+                                        </TouchableOpacity>
+                                        <TouchableOpacity onPress={() => handleStateSelection('  Akwaibom')}>
+                                            <Text style={styles.billboardOwner}>Akwaibom</Text>
+                                        </TouchableOpacity>
+                                        <TouchableOpacity onPress={() => handleStateSelection('  Anambra')}>
+                                            <Text style={styles.billboardOwner}>Anambra</Text>
+                                        </TouchableOpacity>
+                                        <TouchableOpacity onPress={() => handleStateSelection('  Bauchi')}>
+                                            <Text style={styles.billboardOwner}>Bauchi</Text>
+                                        </TouchableOpacity>
+                                        <TouchableOpacity onPress={() => handleStateSelection('  Benue')}>
+                                            <Text style={styles.billboardOwner}>Benue</Text>
+                                        </TouchableOpacity>
+                                    </ScrollView>
                                 </View>
                             </Pressable>
                         </Modal>
@@ -184,22 +225,28 @@ export default function About1({ navigation }) {
                         <Text style={styles.PickYourField}>Display name (Business name)</Text>
                         <View style={{ top: 5 }}>
                             <TouchableOpacity>
-                                <View style={styles.rectangleView2}>
+                                <View style={[styles.rectangleView2, displayNameFocused && styles.focusedInput]}>
                                     <TextInput
                                         style={styles.fullName}
                                         placeholder="Enter display name"
                                         value={displayName}
                                         onChangeText={text => setDisplayName(text)}
+                                        onFocus={handleDisplayNameFocus}
+                                        onBlur={() => setDisplayNameFocused(false)}
                                     />
                                 </View>
                             </TouchableOpacity>
                         </View>
                     </View>
                     <TouchableOpacity onPress={handleDone} style={styles.rectangleView3}>
-                        <Text style={{ color: 'white' }}>Done</Text>
+                        {isLoading ? (
+                            <ActivityIndicator size="small" />
+                        ) : (
+                            <Text style={{ color: 'white' }}>Done</Text>
+                        )}
                     </TouchableOpacity>
                 </View>
-        </ScrollView >
+            </ScrollView >
         </KeyboardAvoidingView>
     )
 }
@@ -242,9 +289,9 @@ const styles = StyleSheet.create({
         elevation: 2,
         shadowOpacity: 1,
         borderStyle: "solid",
-        borderColor: "#0080fe",
+        // borderColor: "#0080fe",
         marginTop: '5%',
-        borderWidth: 1,
+        // borderWidth: 1,
         width: "90%",
         height: 50
     },
@@ -299,30 +346,45 @@ const styles = StyleSheet.create({
     },
     modalContainer: {
         flex: 1,
-        justifyContent: 'center',
         alignItems: 'center',
-        // paddingTop:"40%"
-        backgroundColor: 'rgba(0, 0, 0, 0.5)'
     },
     modalContent: {
+        marginTop: '49%',
+        // marginLeft:'15%',
         borderBottomLeftRadius: 10,
         borderBottomRightRadius: 10,
-        borderTopLeftRadius: 10,
-        borderTopRightRadius: 10,
-        backgroundColor: "#fff",
+        backgroundColor: "#f5faff",
         padding: 15,
-        width: "80%",
-        height: "25%",
+        width: "90%",
+        height: "23%",
+    },
+    modalContainer2: {
+        flex: 1,
+        alignItems: 'center',
+    },
+    modalContent2: {
+        marginTop: '117%',
+        borderBottomLeftRadius: 10,
+        borderBottomRightRadius: 10,
+        backgroundColor: "#f5faff",
+        padding: 15,
+        width: "90%",
+        height: "23%",
     },
     billboardOwner: {
         fontSize: 14,
         fontWeight: "500",
         color: "#383838",
-        paddingTop: 5
+        // paddingTop: 5,
+        padding: 10
     },
     fullName: {
-        marginLeft: 3,
-        width: '100%'
-    }
+        padding: 10,
+        fontWeight: '400'
+    },
+    focusedInput: {
+        borderColor: "#0080fe", // Change border color when focused
+        borderWidth: 1,
+    },
 
 })
