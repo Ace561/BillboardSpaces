@@ -107,24 +107,24 @@ export default function AddBillboard() {
             <Modal visible={fieldModalVisible} transparent={true} animationType="slide">
               <Pressable style={styles.modalContainer} onPress={closeFieldModal}>
                 <View style={styles.modalContent}>
-                <TouchableOpacity onPress={() => handleTextSelection('Potrait')}>
-                <Text style={styles.billboardOwner}>Potrait</Text>
-              </TouchableOpacity>
-              <TouchableOpacity onPress={() => handleTextSelection('Large Format')}>
-                <Text style={styles.billboardOwner}>Large Format</Text>
-              </TouchableOpacity>
-              <TouchableOpacity onPress={() => handleTextSelection('48 Sheet')}>
-                <Text style={styles.billboardOwner}>48 Sheet</Text>
-              </TouchableOpacity>
-              <TouchableOpacity onPress={() => handleTextSelection('Spectacular Billboard')}>
-                <Text style={styles.billboardOwner}>Spectacular Billboard</Text>
-              </TouchableOpacity>
-              <TouchableOpacity onPress={() => handleTextSelection('Gantry')}>
-                <Text style={styles.billboardOwner}>Gantry</Text>
-              </TouchableOpacity>
-              <TouchableOpacity onPress={() => handleTextSelection('Unipole')}>
-                <Text style={styles.billboardOwner}>Unipole</Text>
-              </TouchableOpacity>
+                  <TouchableOpacity onPress={() => handleTextSelection('Potrait')}>
+                    <Text style={styles.billboardOwner}>Potrait</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity onPress={() => handleTextSelection('Large Format')}>
+                    <Text style={styles.billboardOwner}>Large Format</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity onPress={() => handleTextSelection('48 Sheet')}>
+                    <Text style={styles.billboardOwner}>48 Sheet</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity onPress={() => handleTextSelection('Spectacular Billboard')}>
+                    <Text style={styles.billboardOwner}>Spectacular Billboard</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity onPress={() => handleTextSelection('Gantry')}>
+                    <Text style={styles.billboardOwner}>Gantry</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity onPress={() => handleTextSelection('Unipole')}>
+                    <Text style={styles.billboardOwner}>Unipole</Text>
+                  </TouchableOpacity>
                 </View>
               </Pressable>
             </Modal>
@@ -234,9 +234,9 @@ export default function AddBillboard() {
           </View>
 
 
-
-
-
+          <TouchableOpacity style={styles.buttonParent}>
+            <Text style={styles.button}>Next</Text>
+          </TouchableOpacity>
         </ScrollView>
       </KeyboardAvoidingView>
     </SafeAreaView>
@@ -360,5 +360,22 @@ const styles = StyleSheet.create({
     padding: 15,
     width: "90.5%",
     height: "23%",
+  },
+  buttonParent: {
+    borderRadius: 10,
+    backgroundColor: "#0080fe",
+    width: "90%",
+    marginTop: '15%',
+    height: 48,
+    alignItems: "center",
+    justifyContent: 'center',
+    // alignSelf: 'center',
+    marginBottom:20,
+    marginLeft:16
+  },
+  button: {
+    fontSize: 14,
+    fontWeight: "500",
+    color: "#fff",
   },
 })

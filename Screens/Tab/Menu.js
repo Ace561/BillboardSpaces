@@ -45,7 +45,7 @@ export default function Menu({ navigation }) {
         width: 180
       }}>
         <Image resizeMode="cover" source={{ uri: product.image }} style={styles.rectangleIcon2} />
-        <TouchableOpacity onPress={() => navigation.navigate("Billboardclicked")} >
+        <TouchableOpacity onPress={() => navigation.navigate("Billboardclicked", { data: product })} >
           <Text>
             {product.location}
           </Text>
@@ -64,7 +64,7 @@ export default function Menu({ navigation }) {
         width: 180
       }}>
         <Image resizeMode="cover" source={{ uri: popular.image }} style={styles.rectangleIcon3} />
-        <TouchableOpacity onPress={() => navigation.navigate("Billboardclicked")} >
+        <TouchableOpacity onPress={() => navigation.navigate("Billboardclicked", { data: popular })} >
           <Text>
             {popular.location}
           </Text>

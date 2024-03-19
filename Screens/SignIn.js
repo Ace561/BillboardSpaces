@@ -694,7 +694,7 @@ const styles = StyleSheet.create({
     },
     button: {
         fontSize: 14,
-        // fontWeight: "500",
+        fontWeight: "500",
         color: "#fff",
         // textAlign: "left"
     },
