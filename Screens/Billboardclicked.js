@@ -289,24 +289,51 @@
 
 
 import React from 'react';
-import { StyleSheet, Text, View, TextInput, SafeAreaView, Image, StatusBar, Modal, Pressable, TouchableOpacity, TouchableWithoutFeedback } from 'react-native'
+import { StyleSheet, Text, View, ScrollView, TextInput, SafeAreaView, Image, StatusBar, Modal, Pressable, TouchableOpacity, TouchableWithoutFeedback } from 'react-native'
 import { AntDesign } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
+import { Table, Row, Rows } from 'react-native-table-component';
 
 const Billboardclicked = ({ route }) => {
-  // Access the data of the clicked popular component from the navigation parameters
+  const tableData = [
+    ['Location', route.params.data.location],
+    ['Size', route.params.data.size],
+    ['Target Audience', '30'],
+  ];
   const { data } = route.params;
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingLeft: 16 }}>
-        <AntDesign name="arrowleft" size={40} color="#383838" />
-        <MaterialCommunityIcons name="dots-vertical" size={24} color="#383838" />
-      </View>
-      <View style={{ alignItems: 'center', marginTop: 10, }}>
-        <Image resizeMode="cover" source={{ uri: data.image }} style={styles.billboardImage} />
-      </View>
-      <Text style={styles.billboardLocation}>{data.location}</Text>
+      <ScrollView style={{ marginBottom: 5 }} horizontal={false} showsVerticalScrollIndicator={false}>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingLeft: 16, paddingRight: 10 }}>
+          <AntDesign name="arrowleft" size={40} color="#383838" />
+          <MaterialCommunityIcons name="dots-vertical" size={24} color="#383838" />
+        </View>
+
+
+        <View style={{ alignItems: 'center', marginTop: 10, }}>
+          <Image resizeMode="cover" source={{ uri: data.image }} style={styles.billboardImage} />
+        </View>
+
+
+        <View style={styles.rectangle1}>
+          <TouchableOpacity>
+            <Image style={{ width: 40, height: 40, borderRadius: 100 }} source={require("../assets/profilePicture.jpeg")} />
+          </TouchableOpacity>
+          <Text style={{ fontSize: 16, fontWeight: '400', marginLeft: 5 }}>Greyfield. co</Text>
+          <View style={{ flex: 1, alignItems: 'flex-end', paddingRight: 10 }}>
+            <TouchableOpacity style={{ justifyContent: 'center', borderRadius: 10, width: '50%', height: 40, borderWidth: 1, borderColor: '#0080FE', }}>
+              <Text style={{ color: '#0080FE', alignSelf: 'center' }}>View Profile</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+
+        <Text style={{ fontWeight: '400', fontSize: 22, marginTop: 10, paddingLeft: 20 }}>Description</Text>
+        <Table style={{ width: "90%", borderRadius: 10, overflow: 'hidden', marginLeft: 20, marginTop: 10,  }} borderStyle={{ borderWidth: 1, borderColor: '#999999', }}>
+          <Rows data={tableData} textStyle={styles.tableText} />
+        </Table>
+      </ScrollView>
     </SafeAreaView>
   );
 };
@@ -319,15 +346,28 @@ const styles = {
   billboardImage: {
     width: '90%',
     height: 274,
-    borderRadius:10
+    borderRadius: 10
   },
-  billboardLocation: {
-    fontSize: 20,
-    fontWeight: 'bold',
+  rectangle1: {
+    width: "100%",
+    height: 40,
+    // backgroundColor: "blu/e",
+    paddingLeft: 20,
+    marginTop: '5%',
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  tableContainer: {
+    overflow: 'hidden',
+    paddingLeft: 20,
     marginTop: 10,
-    marginLeft: 10,
   },
-  // Add more styles as needed
+  tableText: {
+    margin: 10,
+  },
+  boldText: {
+    fontWeight: 'bold',
+  },
 };
 
 export default Billboardclicked;

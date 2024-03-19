@@ -164,10 +164,12 @@ export default function HomeScreen({ navigation }) {
                     <TouchableOpacity>
                         <Image style={{ width: 40, height: 40, borderRadius: 100 }} source={require("../assets/profilePicture.jpeg")} />
                     </TouchableOpacity>
-                    <Text style={{ fontSize: 22, marginLeft: 5 }}>Welcome,</Text>
-                    <TouchableOpacity style={{ marginLeft: '50%' }}>
-                        <MaterialIcons name="notifications-none" size={30} color="black" />
-                    </TouchableOpacity>
+                    <Text style={{ fontSize: 22, marginLeft: 5 }}>Welcome</Text>
+                    <View style={{ flex: 1, alignItems: 'flex-end', paddingRight:10  }}>
+                        <TouchableOpacity>
+                            <MaterialIcons name="notifications-none" size={30} color="black" />
+                        </TouchableOpacity>
+                    </View>
                 </View>
                 <View style={styles.adsContainer}>
                     <Image style={styles.ads} source={require("../assets/ad1.png")} />
@@ -186,7 +188,7 @@ export default function HomeScreen({ navigation }) {
 
                 <Image resizeMode='contain' source={require('../assets/Discover.png')} style={{
                     marginLeft: 25,
-                    width:'90%',
+                    width: '90%',
                     marginTop: 10,
                 }} />
 
@@ -223,10 +225,9 @@ const styles = StyleSheet.create({
 
     },
     rectangle1: {
-        width: 342,
+        width: "100%",
         height: 40,
-        // backgroundColor: "blue",
-        alignSelf: 'center',
+        paddingLeft: 20,
         marginTop: '5%',
         flexDirection: 'row',
         alignItems: 'center',
