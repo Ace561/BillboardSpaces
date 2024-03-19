@@ -13,7 +13,7 @@ const Tab = createBottomTabNavigator();
 
 const CustomTabBarButton = ({ children, onPress }) => (
     <TouchableOpacity onPress={onPress} style={{
-        top: -25,
+        top: -20,
         justifyContent: 'center',
         alignItems: 'center',
     }}>
@@ -33,6 +33,7 @@ const Tabs = () => {
         <Tab.Navigator
             screenOptions={{
                 tabBarShowLabel: false,
+                tabBarHideOnKeyboard:true,
                 tabBarStyle: {
                     backgroundColor: "#FFFFFF", // Set your desired background color here
                     height: 72                              

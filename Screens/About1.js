@@ -380,7 +380,9 @@ const styles = StyleSheet.create({
     },
     fullName: {
         padding: 10,
-        fontWeight: '400'
+        fontWeight: '400',
+        width: '100%'
+
     },
     focusedInput: {
         borderColor: "#0080fe", // Change border color when focused

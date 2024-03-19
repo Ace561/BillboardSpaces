@@ -331,7 +331,8 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight:'400',
     textAlign: "left",
-    left: 10
+    left: 10,
+    width: '100%'
   },
   passwordToggle: {
     position: 'absolute',

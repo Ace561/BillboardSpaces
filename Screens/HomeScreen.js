@@ -16,7 +16,7 @@ export default function HomeScreen({ navigation }) {
                 width: 180
             }}>
                 <Image resizeMode="cover" source={{ uri: product.image }} style={styles.rectangleIcon2} />
-                <TouchableOpacity onPress={() => navigation.navigate("Billboardclicked")} >
+                <TouchableOpacity onPress={() => navigation.navigate("Billboardclicked", { data: product })} >
                     <Text>
                         {product.location}
                     </Text>
@@ -35,7 +35,7 @@ export default function HomeScreen({ navigation }) {
                 width: 180
             }}>
                 <Image resizeMode="cover" source={{ uri: popular.image }} style={styles.rectangleIcon3} />
-                <TouchableOpacity onPress={() => navigation.navigate("Billboardclicked")} >
+                <TouchableOpacity onPress={() => navigation.navigate("Billboardclicked", { data: popular })} >
                     <Text>
                         {popular.location}
                     </Text>
@@ -184,10 +184,10 @@ export default function HomeScreen({ navigation }) {
                 </View>
                 <Text style={styles.newlyAdded}>Discover</Text>
 
-                <Image source={require('../assets/Discover.png')} style={{
+                <Image resizeMode='contain' source={require('../assets/Discover.png')} style={{
                     marginLeft: 25,
-                    marginTop: 16,
-                    marginBottom: 15
+                    width:'90%',
+                    marginTop: 10,
                 }} />
 
                 <Text style={styles.newlyAdded}>Upcoming Events</Text>

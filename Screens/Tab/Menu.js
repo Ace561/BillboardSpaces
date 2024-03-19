@@ -8,13 +8,40 @@ import { refreshToken } from '../authUtils';
 
 
 export default function Menu({ navigation }) {
+  const [fieldModalVisible, setFieldModalVisible] = useState(false);
+  const [stateModalVisible, setStateModalVisible] = useState(false);
+  const [selectedText, setSelectedText] = useState('');
+  const [selectedState, setSelectedState] = useState('');
+
+
+  const openStateModal = () => {
+    setStateModalVisible(true);
+  };
+  const closeStateModal = () => {
+    setStateModalVisible(false);
+  };
+  const openFieldModal = () => {
+    setFieldModalVisible(true);
+  };
+  const closeFieldModal = () => {
+    setFieldModalVisible(false);
+  };
+  const handleTextSelection = (text) => {
+    setSelectedText(text);
+    closeFieldModal();
+  };
+  const handleStateSelection = (text) => {
+    setSelectedState(text);
+    closeStateModal();
+  };
+
+
   const ProductComponent = ({ product }) => {
     return (
 
       <View style={{
         padding: 5,
         flex: 1,
-        // backgroundColor:'red',
         width: 180
       }}>
         <Image resizeMode="cover" source={{ uri: product.image }} style={styles.rectangleIcon2} />
@@ -172,14 +199,14 @@ export default function Menu({ navigation }) {
           }}>
             Marketplace
           </Text>
-          <Text style={{
+          {/* <Text style={{
             fontSize: 14,
             color: '#0080FE',
             fontWeight: '500',
             paddingTop:10,
           }}>
             Explore map
-          </Text>
+          </Text> */}
         </View>
 
         <View style={styles.searchContainer}>
@@ -209,24 +236,77 @@ export default function Menu({ navigation }) {
           paddingLeft: 25,
           alignItems: 'center',
         }}>
-          <Text style={{
+          < Text style={{
             fontSize: 16,
             fontWeight: '500',
             marginTop: 10
           }}>
-            Location
+            {selectedState !== '' ? selectedState : 'Location'}
           </Text>
-          <AntDesign style={styles.arrow} name="down" size={16} color="black" />
-          <Text style={{
+          <AntDesign  onPress={openStateModal} style={styles.arrow} name="down" size={16} color="black" />
+          <Text  style={{
             fontSize: 16,
             fontWeight: '500',
             marginTop: 10,
             paddingLeft: 20,
           }}>
-            Size
+            {selectedText !== '' ? selectedText : 'Size'}
           </Text>
-          <AntDesign style={styles.arrow} name="down" size={16} color="black" />
+          <AntDesign onPress={openFieldModal} style={styles.arrow} name="down" size={16} color="black" />
         </View>
+
+        <Modal visible={stateModalVisible} transparent={true} animationType="slide">
+          <Pressable style={styles.modalContainer2} onPress={closeStateModal}>
+            <View style={styles.modalContent2}>
+              <ScrollView>
+                <TouchableOpacity onPress={() => handleStateSelection('abia')}>
+                  <Text style={styles.billboardOwner}>Abia</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => handleStateSelection('  Adamawa')}>
+                  <Text style={styles.billboardOwner}>Adamawa</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => handleStateSelection('  Akwaibom')}>
+                  <Text style={styles.billboardOwner}>Akwaibom</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => handleStateSelection('  Anambra')}>
+                  <Text style={styles.billboardOwner}>Anambra</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => handleStateSelection('  Bauchi')}>
+                  <Text style={styles.billboardOwner}>Bauchi</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => handleStateSelection('  Benue')}>
+                  <Text style={styles.billboardOwner}>Benue</Text>
+                </TouchableOpacity>
+              </ScrollView>
+            </View>
+          </Pressable>
+        </Modal>
+
+
+        <Modal visible={fieldModalVisible} transparent={true} animationType="slide">
+          <Pressable style={styles.modalContainer} onPress={closeFieldModal}>
+            <View style={styles.modalContent}>
+              <TouchableOpacity onPress={() => handleTextSelection('Potrait')}>
+                <Text style={styles.billboardOwner}>Potrait</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => handleTextSelection('Large Format')}>
+                <Text style={styles.billboardOwner}>Large Format</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => handleTextSelection('48 Sheet')}>
+                <Text style={styles.billboardOwner}>48 Sheet</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => handleTextSelection('Spectacular Billboard')}>
+                <Text style={styles.billboardOwner}>Spectacular Billboard</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => handleTextSelection('Gantry')}>
+                <Text style={styles.billboardOwner}>Gantry</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => handleTextSelection('Unipole')}>
+                <Text style={styles.billboardOwner}>Unipole</Text>
+              </TouchableOpacity>
+            </View>
+          </Pressable>
+        </Modal>
 
         <Text style={styles.newlyAdded}>Featured</Text>
         <View style={styles.newlyAddedScroll}>
@@ -275,13 +355,14 @@ const styles = StyleSheet.create({
     width: "90%",
     height: 40,
     marginLeft: 25,
-    marginTop:16
+    marginTop: 16
   },
   searchText: {
     fontSize: 16,
     textAlign: "left",
     left: 10,
     fontWeight: '400',
+    width:'100%'
   },
   passwordToggle: {
     position: 'absolute',
@@ -324,6 +405,37 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginBottom: 10
+  },
+  modalContainer2: {
+    flex: 1,
+    paddingLeft: 25
+    // alignItems: 'center',
+  },
+  modalContent2: {
+    marginTop: '42%',
+    borderRadius: 10,
+    backgroundColor: "#f5faff",
+    padding: 15,
+    width: 243,
+    height: "30%",
+  },
+  modalContainer: {
+    flex: 1,
+    paddingLeft: "32%"
+  },
+  modalContent: {
+    marginTop: '57.5%',
+    borderRadius: 10,
+    backgroundColor: "#f5faff",
+    padding: 15,
+    width: "90%",
+    height: "30%",
+  },
+  billboardOwner: {
+    fontSize: 14,
+    fontWeight: "500",
+    color: "#383838",
+    padding: 10
   },
 
 })
