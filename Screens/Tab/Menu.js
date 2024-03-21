@@ -44,8 +44,8 @@ export default function Menu({ navigation }) {
         flex: 1,
         width: 180
       }}>
-        <Image resizeMode="cover" source={{ uri: product.image }} style={styles.rectangleIcon2} />
         <TouchableOpacity onPress={() => navigation.navigate("Billboardclicked", { data: product })} >
+          <Image resizeMode="cover" source={{ uri: product.image }} style={styles.rectangleIcon2} />
           <Text>
             {product.location}
           </Text>
@@ -63,8 +63,8 @@ export default function Menu({ navigation }) {
         // backgroundColor:'red',
         width: 180
       }}>
-        <Image resizeMode="cover" source={{ uri: popular.image }} style={styles.rectangleIcon3} />
         <TouchableOpacity onPress={() => navigation.navigate("Billboardclicked", { data: popular })} >
+          <Image resizeMode="cover" source={{ uri: popular.image }} style={styles.rectangleIcon3} />
           <Text>
             {popular.location}
           </Text>
@@ -243,8 +243,8 @@ export default function Menu({ navigation }) {
           }}>
             {selectedState !== '' ? selectedState : 'Location'}
           </Text>
-          <AntDesign  onPress={openStateModal} style={styles.arrow} name="down" size={16} color="black" />
-          <Text  style={{
+          <AntDesign onPress={openStateModal} style={styles.arrow} name="down" size={16} color="black" />
+          <Text style={{
             fontSize: 16,
             fontWeight: '500',
             marginTop: 10,
@@ -362,7 +362,7 @@ const styles = StyleSheet.create({
     textAlign: "left",
     left: 10,
     fontWeight: '400',
-    width:'100%'
+    width: '100%'
   },
   passwordToggle: {
     position: 'absolute',

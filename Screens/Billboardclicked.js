@@ -18,12 +18,18 @@ const Billboardclicked = ({ route, navigation }) => {
     navigation.navigate('Set Advertising Duration')
   }
 
+  const handleShowDetails = () => {
+    setShowDetails(currentState => !currentState);
+  };
+  
+
+
 
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={{ marginBottom: 5 }} horizontal={false} showsVerticalScrollIndicator={false}>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingLeft: 16, paddingRight: 10 }}>
-          <AntDesign onPress={() => navigation.goBack()} name="arrowleft" size={40} color="#383838" />
+          <AntDesign onPress={() => navigation.goBack()} name="arrowleft" size={30} color="#383838" />
           <MaterialCommunityIcons name="dots-vertical" size={24} color="#383838" />
         </View>
 
@@ -55,7 +61,7 @@ const Billboardclicked = ({ route, navigation }) => {
           <Text style={{ fontSize: 16, marginBottom: 10, fontWeight: '400' }}>
             Design and Services
           </Text>
-          <AntDesign onPress={() => setShowDetails(!showDetails)} name={showDetails ? "up" : "down"} size={20} color="black" />
+          <AntDesign onPress={handleShowDetails} name={showDetails ? "up" : "down"} size={20} color="black" />
         </View>
 
         {showDetails && (

@@ -15,8 +15,8 @@ export default function HomeScreen({ navigation }) {
                 // backgroundColor:'red',
                 width: 180
             }}>
-                <Image resizeMode="cover" source={{ uri: product.image }} style={styles.rectangleIcon2} />
                 <TouchableOpacity onPress={() => navigation.navigate("Billboardclicked", { data: product })} >
+                    <Image resizeMode="cover" source={{ uri: product.image }} style={styles.rectangleIcon2} />
                     <Text>
                         {product.location}
                     </Text>
@@ -34,8 +34,8 @@ export default function HomeScreen({ navigation }) {
                 // backgroundColor:'red',
                 width: 180
             }}>
-                <Image resizeMode="cover" source={{ uri: popular.image }} style={styles.rectangleIcon3} />
                 <TouchableOpacity onPress={() => navigation.navigate("Billboardclicked", { data: popular })} >
+                    <Image resizeMode="cover" source={{ uri: popular.image }} style={styles.rectangleIcon3} />
                     <Text>
                         {popular.location}
                     </Text>
@@ -165,7 +165,7 @@ export default function HomeScreen({ navigation }) {
                         <Image style={{ width: 40, height: 40, borderRadius: 100 }} source={require("../assets/profilePicture.jpeg")} />
                     </TouchableOpacity>
                     <Text style={{ fontSize: 22, marginLeft: 5 }}>Welcome</Text>
-                    <View style={{ flex: 1, alignItems: 'flex-end', paddingRight:10  }}>
+                    <View style={{ flex: 1, alignItems: 'flex-end', paddingRight: 10 }}>
                         <TouchableOpacity>
                             <MaterialIcons name="notifications-none" size={30} color="black" />
                         </TouchableOpacity>
