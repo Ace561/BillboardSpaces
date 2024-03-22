@@ -309,7 +309,7 @@ const styles = StyleSheet.create({
     marginTop: '5%',
     // borderWidth: 1,
     width: "90%",
-    height: 40
+    height: 50
   },
   rectangleView2: {
     borderRadius: 10,
@@ -325,7 +325,7 @@ const styles = StyleSheet.create({
     elevation: 2,
     shadowOpacity: 1,
     width: "90%",
-    height: 40
+    height: 50
   },
   email: {
     fontSize: 12,

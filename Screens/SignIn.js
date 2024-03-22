@@ -376,142 +376,152 @@ export default function CreatAccount({ navigation }) {
                         </View>
 
                         <Modal visible={modalVisible} transparent={true} animationType="fade">
-                            <Pressable style={styles.modalContainer} onPress={closeModal}>
-                                <TouchableWithoutFeedback onPress={() => console.log('Tapped inside modal')}>
-                                    <View style={styles.modalContent}>
-                                        <Text style={styles.forgotYourPassword1}>Forgot your password?</Text>
-                                        <Text style={styles.noWorriesJust1}>{`No worries! Just follow the steps below to
+                            <KeyboardAvoidingView
+                                style={{ flex: 1 }}
+                                behavior={Platform.OS === "ios" ? "padding" : "height"}
+                            >
+                                <Pressable style={styles.modalContainer} onPress={closeModal}>
+                                    <TouchableWithoutFeedback onPress={() => console.log('Tapped inside modal')}>
+                                        <View style={styles.modalContent}>
+                                            <Text style={styles.forgotYourPassword1}>Forgot your password?</Text>
+                                            <Text style={styles.noWorriesJust1}>{`No worries! Just follow the steps below to
 reset it`}</Text>
 
-                                        <View style={[styles.rectangleView2,
-                                        modalEmailFocused && { borderColor: "#0080fe", borderWidth: 1 }
-                                        ]}>
-                                            <TextInput
-                                                style={styles.email}
-                                                placeholder="Email"
-                                                value={mordalEmail}
-                                                onChangeText={text => setMordalEmail(text)}
-                                                onFocus={handleModalEmailFocus}
-                                                onBlur={handleInputBlur}
-                                            />
-                                        </View>
+                                            <View style={[styles.rectangleView2,
+                                            modalEmailFocused && { borderColor: "#0080fe", borderWidth: 1 }
+                                            ]}>
+                                                <TextInput
+                                                    style={styles.email}
+                                                    placeholder="Email"
+                                                    value={mordalEmail}
+                                                    onChangeText={text => setMordalEmail(text)}
+                                                    onFocus={handleModalEmailFocus}
+                                                    onBlur={handleInputBlur}
+                                                />
+                                            </View>
 
-                                        <TouchableOpacity onPress={handleNext} style={styles.buttonParent}>
-                                            {isLoading2 ? (
-                                                <ActivityIndicator size="small" />
-                                            ) : (
-                                                <Text style={styles.button}>Next</Text>
-                                            )}
-                                        </TouchableOpacity>
-                                    </View>
-                                </TouchableWithoutFeedback>
-                            </Pressable>
+                                            <TouchableOpacity onPress={handleNext} style={styles.buttonParent}>
+                                                {isLoading2 ? (
+                                                    <ActivityIndicator size="small" />
+                                                ) : (
+                                                    <Text style={styles.button}>Next</Text>
+                                                )}
+                                            </TouchableOpacity>
+                                        </View>
+                                    </TouchableWithoutFeedback>
+                                </Pressable>
+                            </KeyboardAvoidingView>
                         </Modal>
 
                         <Modal visible={otpModalVisible} transparent={true} animationType="fade">
-                            <Pressable style={styles.modalContainer} onPress={closeOtpModal}>
-                                <TouchableWithoutFeedback onPress={() => console.log('Tapped inside OTP modal')}>
-                                    <View style={styles.otpmodalContent}>
-                                        <Text style={styles.otp1}>Enter OTP sent to Email</Text>
-                                        <Text style={styles.otp2}>Enter 6-digit OTP sent to Email</Text>
-                                        <View style={styles.otpContainer}>
-                                            <View style={[styles.otpBox, otp1Focused && { borderColor: "#0080fe", borderWidth: 1 }]}>
-                                                <TextInput
-                                                    style={styles.otpText}
-                                                    keyboardType='number-pad'
-                                                    maxLength={1}
-                                                    ref={firstInput}
-                                                    onChangeText={(text) => {
-                                                        setOtp({ ...otp, 1: text })
-                                                        text && secondInput.current.focus()
-                                                    }}
-                                                    onFocus={handleOtp1Focus}
-                                                    onBlur={handleInputBlur}
+                            <KeyboardAvoidingView
+                                style={{ flex: 1 }}
+                                behavior={Platform.OS === "ios" ? "padding" : "height"}
+                            >
+                                <Pressable style={styles.modalContainer} onPress={closeOtpModal}>
+                                    <TouchableWithoutFeedback onPress={() => console.log('Tapped inside OTP modal')}>
+                                        <View style={styles.otpmodalContent}>
+                                            <Text style={styles.otp1}>Enter OTP sent to Email</Text>
+                                            <Text style={styles.otp2}>Enter 6-digit OTP sent to Email</Text>
+                                            <View style={styles.otpContainer}>
+                                                <View style={[styles.otpBox, otp1Focused && { borderColor: "#0080fe", borderWidth: 1 }]}>
+                                                    <TextInput
+                                                        style={styles.otpText}
+                                                        keyboardType='number-pad'
+                                                        maxLength={1}
+                                                        ref={firstInput}
+                                                        onChangeText={(text) => {
+                                                            setOtp({ ...otp, 1: text })
+                                                            text && secondInput.current.focus()
+                                                        }}
+                                                        onFocus={handleOtp1Focus}
+                                                        onBlur={handleInputBlur}
 
-                                                />
-                                            </View>
-                                            <View style={[styles.otpBox, otp2Focused && { borderColor: "#0080fe", borderWidth: 1 }]}>
-                                                <TextInput
-                                                    style={styles.otpText}
-                                                    keyboardType='number-pad'
-                                                    maxLength={1}
-                                                    ref={secondInput}
-                                                    onChangeText={(text) => {
-                                                        setOtp({ ...otp, 2: text })
-                                                        text ? thirdtInput.current.focus() : firstInput.current.focus()
-                                                    }}
-                                                    onFocus={handleOtp2Focus}
-                                                    onBlur={handleInputBlur}
+                                                    />
+                                                </View>
+                                                <View style={[styles.otpBox, otp2Focused && { borderColor: "#0080fe", borderWidth: 1 }]}>
+                                                    <TextInput
+                                                        style={styles.otpText}
+                                                        keyboardType='number-pad'
+                                                        maxLength={1}
+                                                        ref={secondInput}
+                                                        onChangeText={(text) => {
+                                                            setOtp({ ...otp, 2: text })
+                                                            text ? thirdtInput.current.focus() : firstInput.current.focus()
+                                                        }}
+                                                        onFocus={handleOtp2Focus}
+                                                        onBlur={handleInputBlur}
 
-                                                />
-                                            </View>
-                                            <View style={[styles.otpBox, otp3Focused && { borderColor: "#0080fe", borderWidth: 1 }]}>
-                                                < TextInput
-                                                    style={styles.otpText}
-                                                    keyboardType='number-pad'
-                                                    maxLength={1}
-                                                    ref={thirdtInput}
-                                                    onChangeText={(text) => {
-                                                        setOtp({ ...otp, 3: text })
-                                                        text ? fourthInput.current.focus() : secondInput.current.focus()
-                                                    }}
-                                                    onFocus={handleOtp3Focus}
-                                                    onBlur={handleInputBlur}
-                                                />
-                                            </View>
-                                            <View style={[styles.otpBox, otp4Focused && { borderColor: "#0080fe", borderWidth: 1 }]}>
-                                                < TextInput
-                                                    style={styles.otpText}
-                                                    keyboardType='number-pad'
-                                                    maxLength={1}
-                                                    ref={fourthInput}
-                                                    onChangeText={(text) => {
-                                                        setOtp({ ...otp, 4: text })
-                                                        text ? fifthInput.current.focus() : thirdtInput.current.focus()
-                                                    }}
-                                                    onFocus={handleOtp4Focus}
-                                                    onBlur={handleInputBlur}
+                                                    />
+                                                </View>
+                                                <View style={[styles.otpBox, otp3Focused && { borderColor: "#0080fe", borderWidth: 1 }]}>
+                                                    < TextInput
+                                                        style={styles.otpText}
+                                                        keyboardType='number-pad'
+                                                        maxLength={1}
+                                                        ref={thirdtInput}
+                                                        onChangeText={(text) => {
+                                                            setOtp({ ...otp, 3: text })
+                                                            text ? fourthInput.current.focus() : secondInput.current.focus()
+                                                        }}
+                                                        onFocus={handleOtp3Focus}
+                                                        onBlur={handleInputBlur}
+                                                    />
+                                                </View>
+                                                <View style={[styles.otpBox, otp4Focused && { borderColor: "#0080fe", borderWidth: 1 }]}>
+                                                    < TextInput
+                                                        style={styles.otpText}
+                                                        keyboardType='number-pad'
+                                                        maxLength={1}
+                                                        ref={fourthInput}
+                                                        onChangeText={(text) => {
+                                                            setOtp({ ...otp, 4: text })
+                                                            text ? fifthInput.current.focus() : thirdtInput.current.focus()
+                                                        }}
+                                                        onFocus={handleOtp4Focus}
+                                                        onBlur={handleInputBlur}
 
 
-                                                />
-                                            </View>
-                                            <View style={[styles.otpBox, otp5Focused && { borderColor: "#0080fe", borderWidth: 1 }]}>
-                                                < TextInput
-                                                    style={styles.otpText}
-                                                    keyboardType='number-pad'
-                                                    maxLength={1}
-                                                    ref={fifthInput}
-                                                    onChangeText={(text) => {
-                                                        setOtp({ ...otp, 5: text })
-                                                        text ? sixthInput.current.focus() : fourthInput.current.focus()
-                                                    }}
-                                                    onFocus={handleOtp5Focus}
-                                                    onBlur={handleInputBlur}
+                                                    />
+                                                </View>
+                                                <View style={[styles.otpBox, otp5Focused && { borderColor: "#0080fe", borderWidth: 1 }]}>
+                                                    < TextInput
+                                                        style={styles.otpText}
+                                                        keyboardType='number-pad'
+                                                        maxLength={1}
+                                                        ref={fifthInput}
+                                                        onChangeText={(text) => {
+                                                            setOtp({ ...otp, 5: text })
+                                                            text ? sixthInput.current.focus() : fourthInput.current.focus()
+                                                        }}
+                                                        onFocus={handleOtp5Focus}
+                                                        onBlur={handleInputBlur}
 
-                                                />
-                                            </View>
-                                            <View style={[styles.otpBox, otp6Focused && { borderColor: "#0080fe", borderWidth: 1 }]}>
-                                                < TextInput
-                                                    style={styles.otpText}
-                                                    keyboardType='number-pad'
-                                                    maxLength={1}
-                                                    ref={sixthInput}
-                                                    onChangeText={(text) => {
-                                                        setOtp({ ...otp, 6: text })
-                                                        !text && fifthInput.current.focus()
-                                                    }}
-                                                    onFocus={handleOtp6Focus}
-                                                    onBlur={handleInputBlur}
+                                                    />
+                                                </View>
+                                                <View style={[styles.otpBox, otp6Focused && { borderColor: "#0080fe", borderWidth: 1 }]}>
+                                                    < TextInput
+                                                        style={styles.otpText}
+                                                        keyboardType='number-pad'
+                                                        maxLength={1}
+                                                        ref={sixthInput}
+                                                        onChangeText={(text) => {
+                                                            setOtp({ ...otp, 6: text })
+                                                            !text && fifthInput.current.focus()
+                                                        }}
+                                                        onFocus={handleOtp6Focus}
+                                                        onBlur={handleInputBlur}
 
-                                                />
+                                                    />
+                                                </View>
                                             </View>
+                                            <TouchableOpacity onPress={openNewPasswordModalVisible} style={styles.buttonParent}>
+                                                <Text style={styles.button}>Next</Text>
+                                            </TouchableOpacity>
                                         </View>
-                                        <TouchableOpacity onPress={openNewPasswordModalVisible} style={styles.buttonParent}>
-                                            <Text style={styles.button}>Next</Text>
-                                        </TouchableOpacity>
-                                    </View>
-                                </TouchableWithoutFeedback>
-                            </Pressable>
+                                    </TouchableWithoutFeedback>
+                                </Pressable>
+                            </KeyboardAvoidingView>
                         </Modal>
 
 
@@ -659,7 +669,7 @@ const styles = StyleSheet.create({
         marginTop: '5%',
         // borderWidth: 1,
         width: "90%",
-        height: 40
+        height: 50
     },
     rectangleView2: {
         borderRadius: 10,
@@ -675,7 +685,7 @@ const styles = StyleSheet.create({
         elevation: 2,
         shadowOpacity: 1,
         width: "90%",
-        height: 40
+        height: 50
     },
     email: {
         fontSize: 12,

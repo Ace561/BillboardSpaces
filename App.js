@@ -14,7 +14,11 @@ import About1 from './Screens/About1';
 import HomeScreen from './Screens/HomeScreen';
 import Billboardclicked from './Screens/Billboardclicked';
 import Tabs from './Screens/Tab/Tabs';
-import SetAdvertisingDuration from './SetAdvertisingDuration';
+import SetAdvertisingDuration from './Screens/SetAdvertisingDuration';
+import Subscription from './Screens/Subscription';
+import Advertisement from './Screens/Advertisement';
+import MaintenanceBooking from './Screens/MaintenanceBooking';
+import BookingForm from './Screens/BookingForm';
 
 const Stack = createStackNavigator();
 
@@ -37,7 +41,11 @@ function App() {
           <Stack.Screen options={{ headerShown: false }} name="About" component={About} />
           <Stack.Screen options={{ headerShown: false }} name="About1" component={About1} />
           <Stack.Screen options={{ headerShown: false }} name="Billboardclicked" component={Billboardclicked} />
-          <Stack.Screen options={{  }} name="Set Advertising Duration" component={SetAdvertisingDuration} />
+          <Stack.Screen options={{}} name="Set Advertising Duration" component={SetAdvertisingDuration} />
+          <Stack.Screen options={{}} name="Subscription" component={Subscription} />
+          <Stack.Screen options={{}} name="Advertisement" component={Advertisement} />
+          <Stack.Screen options={{}} name="Maintenance Booking" component={MaintenanceBooking} />
+          <Stack.Screen options={{}} name="Booking Form" component={BookingForm} />
         </Stack.Navigator>
       </NavigationContainer>
     </AuthProvider>
