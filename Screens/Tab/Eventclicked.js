@@ -12,6 +12,23 @@ const Eventclicked = ({ route, navigation }) => {
         navigation.navigate('Set Advertising Duration')
     }
 
+    const startTime = data.start_time;
+
+    // Convert start time to a readable format
+    let readableTime = '';
+    if (startTime) {
+        const [hours, minutes, seconds] = startTime.split(':');
+        const totalHours = parseInt(hours, 10);
+        const days = Math.floor(totalHours / 24);
+        const remainingHours = totalHours % 24;
+
+        // Convert hours to 12-hour format with AM/PM
+        const formattedHours = remainingHours > 12 ? remainingHours - 12 : remainingHours;
+        const amPm = remainingHours >= 12 ? 'PM' : 'AM';
+
+        readableTime = `${formattedHours}:${minutes}:${seconds} ${amPm} on day ${days + 1}`;
+    }
+
 
     return (
         <SafeAreaView style={styles.container}>
@@ -64,12 +81,12 @@ const Eventclicked = ({ route, navigation }) => {
                                 {data.location}
                             </Text>
                         </View>
-                        <View style={{ flexDirection:'row', gap:2}}>
+                        <View style={{ flexDirection: 'row', gap: 2 }}>
                             {/* <Text>10th-20th September, 2023, 5PM CAT</Text> */}
-                            <Text>{data.start_time}</Text>
-                            <Text>{data.end_time}</Text>
-                            <Text>{data.start_date}</Text>
-                            <Text>{data.end_date}</Text>
+                            <Text>{readableTime}</Text>
+                            {/* <Text>{data.end_time}</Text> */}
+                            {/* <Text>{data.start_date}</Text> */}
+                            {/* <Text>{data.end_date}</Text> */}
                         </View>
                     </View>
 

@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { View, Text, ScrollView, TouchableOpacity, Platform, Modal, StyleSheet, Pressable, TextInput, SafeAreaView, StatusBar, KeyboardAvoidingView, ActivityIndicator } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
+import { refreshToken } from './authUtils';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function About1({ navigation, route }) {
 
@@ -25,10 +27,12 @@ export default function About1({ navigation, route }) {
 
     const handleDone = async () => {
         try {
+            const storedAccess = await AsyncStorage.getItem('access');
             setIsLoading(true)
             const response = await fetch(`https://bb-spaces.onrender.com/auth/update-profile/${userId}/`, {
                 method: 'PUT',
                 headers: {
+                    'Authorization': `Bearer ${storedAccess}`,
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({

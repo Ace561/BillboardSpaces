@@ -2,6 +2,8 @@ import { StyleSheet, Text, View, StatusBar, ImageBackground, TouchableOpacity, T
 import React, { useState, useEffect } from 'react';
 import * as ImagePicker from 'expo-image-picker';
 import { AntDesign } from '@expo/vector-icons';
+import { refreshToken } from '../authUtils';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 export default function AddBillboard() {
@@ -60,6 +62,79 @@ export default function AddBillboard() {
 
   const backgroundImage = selectedImage ? { uri: selectedImage } : require('/Billboard Spaces/BillboardSpaces/assets/imageupload.png');
 
+  // const uploadData = async () => {
+  //   try {
+  //     const storedAccess = await AsyncStorage.getItem('access');
+  //     const response = await fetch('https://bb-spaces.onrender.com/billboards/create/', {
+  //       method: 'POST',
+  //       headers: {
+  //         'Authorization': `Bearer ${storedAccess}`,
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify({
+  //         image: selectedImage,
+  //         size: selectedText,
+  //         state: selectedState,
+  //         target_audience: fullName,
+  //         location: displayName,
+  //         rentPrice: phoneNumber,
+  //       }),
+  //     });
+
+  //     if (!response.ok) {
+  //       throw new Error('Failed to upload data');
+  //     }
+
+  //     // Handle successful upload response if needed
+  //     const data = await response.json();
+  //     console.log('Upload successful:', data);
+
+  //   } catch (error) {
+  //     console.error('Error uploading data:', error);
+  //   }
+  // };
+
+
+
+  const uploadData = async () => {
+    try {
+      const storedAccess = await AsyncStorage.getItem('access');
+      const formData = new FormData();
+      formData.append('image', {
+        uri: selectedImage,
+        type: 'image/jpeg', // Adjust the type according to your image type
+        name: 'image.jpg' // Adjust the name as needed
+      });
+      formData.append('size', selectedText);
+      formData.append('state', selectedState);
+      formData.append('target_audience', fullName);
+      formData.append('location', displayName);
+      formData.append('price', phoneNumber);
+
+      const response = await fetch('https://bb-spaces.onrender.com/billboards/create/', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${storedAccess}`,
+          'Content-Type': 'multipart/form-data',
+        },
+        body: formData
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to upload');
+      }
+
+      // Optionally, handle success response
+      console.log('Post uploaded successfully');
+      // You can reset the modal caption and selected image here if needed
+      setSelectedImage(null);
+
+    } catch (error) {
+      console.error('Error uploading post:', error);
+      // Optionally, handle error
+    }
+  };
+
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -107,7 +182,7 @@ export default function AddBillboard() {
             <Modal visible={fieldModalVisible} transparent={true} animationType="slide">
               <Pressable style={styles.modalContainer} onPress={closeFieldModal}>
                 <View style={styles.modalContent}>
-                  <TouchableOpacity onPress={() => handleTextSelection('Potrait')}>
+                  <TouchableOpacity onPress={() => handleTextSelection('potrait')}>
                     <Text style={styles.billboardOwner}>Potrait</Text>
                   </TouchableOpacity>
                   <TouchableOpacity onPress={() => handleTextSelection('Large Format')}>
@@ -152,7 +227,7 @@ export default function AddBillboard() {
                     <TouchableOpacity onPress={() => handleStateSelection('abia')}>
                       <Text style={styles.billboardOwner}>Abia</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => handleStateSelection('  Adamawa')}>
+                    <TouchableOpacity onPress={() => handleStateSelection('  adamawa')}>
                       <Text style={styles.billboardOwner}>Adamawa</Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => handleStateSelection('  Akwaibom')}>
@@ -173,7 +248,7 @@ export default function AddBillboard() {
             </Modal>
           </View>
 
-          <View style={{
+          {/* <View style={{
             marginTop: 10,
             paddingLeft: 16,
           }}>
@@ -190,7 +265,7 @@ export default function AddBillboard() {
                 </View>
               </TouchableOpacity>
             </View>
-          </View>
+          </View> */}
 
 
           <View style={{
@@ -234,7 +309,7 @@ export default function AddBillboard() {
           </View>
 
 
-          <TouchableOpacity style={styles.buttonParent}>
+          <TouchableOpacity onPress={uploadData} style={styles.buttonParent}>
             <Text style={styles.button}>Next</Text>
           </TouchableOpacity>
         </ScrollView>
@@ -370,8 +445,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: 'center',
     // alignSelf: 'center',
-    marginBottom:20,
-    marginLeft:16
+    marginBottom: 20,
+    marginLeft: 16
   },
   button: {
     fontSize: 14,

@@ -19,7 +19,7 @@ export default function Annoucment() {
   const [activeButton, setActiveButton] = useState('ad');
   const [activeText, setActiveText] = useState('ad');
   const [modalVisible, setModalVisible] = useState(false);
-  const [mordalCaption, setMordalCaption] = useState('');
+  const [modalCaption, setModalCaption] = useState('');
   const [selectedImage, setSelectedImage] = useState(null);
 
 
@@ -113,7 +113,7 @@ export default function Annoucment() {
           <TouchableOpacity>
             <Image style={{ width: 40, height: 40, borderRadius: 100 }} source={require("/Billboard Spaces/BillboardSpaces/assets/profilePicture.jpeg")} />
           </TouchableOpacity>
-          <Text style={{ fontSize: 16, marginLeft: 5, fontWeight: '500' }}>{post.caption}</Text>
+          <Text style={{ fontSize: 16, marginLeft: 5, fontWeight: '500' }}>{post.user.business_name}</Text>
         </View>
         <Text style={{ fontWeight: '400', fontSize: 16, paddingLeft: 16, marginTop: 5 }}>{post.caption}</Text>
         <Image resizeMode='cover' style={{ marginLeft: 16, marginTop: 20, width: "90%", height: 228, borderRadius: 20 }} source={{ uri: post.image }} />
@@ -157,9 +157,9 @@ export default function Annoucment() {
         type: 'image/jpeg', // Adjust the type according to your image type
         name: 'image.jpg' // Adjust the name as needed
       });
-      formData.append('caption', mordalCaption);
+      formData.append('caption', modalCaption);
 
-      const response = await fetch('YOUR_UPLOAD_ENDPOINT_URL', {
+      const response = await fetch('https://bb-spaces.onrender.com/posts/create/', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${storedAccess}`,
@@ -241,8 +241,8 @@ export default function Annoucment() {
                           <TextInput
                             style={styles.Caption}
                             placeholder="Write Caption"
-                            value={mordalCaption}
-                            onChangeText={text => setMordalCaption(text)} />
+                            value={modalCaption}
+                            onChangeText={text => setModalCaption(text)} />
                         </View>
 
 
