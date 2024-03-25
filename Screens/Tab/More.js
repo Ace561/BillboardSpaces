@@ -16,6 +16,15 @@ export default function More({ navigation }) {
   const handleMaintenanceBooking = () => {
     navigation.navigate('Maintenance Booking')
   };
+  const handleHelp = () => {
+    navigation.navigate('Help and Support')
+  };
+  const handleRefferrals = () => {
+    navigation.navigate('Refferrals')
+  };
+  const handleMyBillboard = () => {
+    navigation.navigate('My Billboards')
+  };
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -33,21 +42,21 @@ export default function More({ navigation }) {
                 <Text style={{ alignSelf: 'center', color: '#ffffff', }}>Advertising Agent</Text>
               </View>
               <Text style={{ fontWeight: '500', fontSize: 14, color: '#ffffff', alignSelf: 'center', marginTop: 10 }}>Apple Advertisers</Text>
-              <TouchableOpacity style={{ width: 100, height: 40, borderRadius: 10, borderWidth: 1, justifyContent: 'center', marginTop: 10, borderColor: '#ffffff' }}>
+              <TouchableOpacity onPress={()=>{navigation.navigate('My Profile')}} style={{ width: 100, height: 40, borderRadius: 10, borderWidth: 1, justifyContent: 'center', marginTop: 10, borderColor: '#ffffff' }}>
                 <Text style={{ fontWeight: '500', fontSize: 14, color: '#ffffff', alignSelf: 'center' }}>View Profile</Text>
               </TouchableOpacity>
             </View>
           </View>
         </View>
 
-        <View style={{ flexDirection: 'row', marginTop: 30, marginLeft: 16 }}>
+        <Pressable onPress={handleMyBillboard} resizeMode='contain' style={{ flexDirection: 'row', marginTop: 30, marginLeft: 16 }}>
           <Image style={{ width: "7%", height: 24 }} source={require('/Billboard Spaces/BillboardSpaces/assets/pin.png')} />
-          <Text style={{ paddingLeft: 20, fontSize: 16, fontWeight: '500' }}>My Billboards</Text>
-        </View>
-        <View style={{ flexDirection: 'row', marginTop: 30, marginLeft: 16 }}>
-          <Image style={{ width: "6.5%", height: 24 }} source={require('/Billboard Spaces/BillboardSpaces/assets/event.png')} />
-          <Text style={{ paddingLeft: 20, fontSize: 16, fontWeight: '500' }}>Event Calender</Text>
-        </View>
+          <Text style={{ paddingLeft: 20, fontSize: 16, fontWeight: '500', alignSelf: 'center' }}>My Billboards</Text>
+        </Pressable>
+        <Pressable style={{ flexDirection: 'row', marginTop: 30, marginLeft: 16 }}>
+          <Image resizeMode='contain' style={{ width: "6.5%", height: 24 }} source={require('/Billboard Spaces/BillboardSpaces/assets/event.png')} />
+          <Text style={{ paddingLeft: 20, fontSize: 16, fontWeight: '500', alignSelf: 'center' }}>Event Calender</Text>
+        </Pressable>
 
 
         <View style={{ width: '90%', marginTop: 40, borderWidth: 1, borderColor: '#0080FE', alignSelf: 'center' }}></View>
@@ -55,28 +64,28 @@ export default function More({ navigation }) {
 
 
         <Pressable onPress={handleSubscription} style={{ flexDirection: 'row', marginTop: 30, marginLeft: 16, }}>
-          <Image style={{ width: "7.9%", height: 24 }} source={require('/Billboard Spaces/BillboardSpaces/assets/subscribtion.png')} />
-          <Text style={{ paddingLeft: 20, fontSize: 16, fontWeight: '500' }}>Subscription</Text>
+          <Image resizeMode='contain' style={{ width: "7.9%", height: 24 }} source={require('/Billboard Spaces/BillboardSpaces/assets/subscribtion.png')} />
+          <Text style={{ paddingLeft: 20, fontSize: 16, fontWeight: '500', alignSelf: 'center' }}>Subscription</Text>
         </Pressable>
         <Pressable onPress={handleAdvertisement} style={{ flexDirection: 'row', marginTop: 30, marginLeft: 16 }}>
-          <Image style={{ width: "8.5%", height: 24 }} source={require('/Billboard Spaces/BillboardSpaces/assets/advert.png')} />
-          <Text style={{ paddingLeft: 20, fontSize: 16, fontWeight: '500' }}>Advertisement</Text>
+          <Image resizeMode='contain' style={{ width: "8.5%", height: 24 }} source={require('/Billboard Spaces/BillboardSpaces/assets/advert.png')} />
+          <Text style={{ paddingLeft: 20, fontSize: 16, fontWeight: '500', alignSelf: 'center' }}>Advertisement</Text>
         </Pressable>
         <Pressable onPress={handleMaintenanceBooking} style={{ flexDirection: 'row', marginTop: 30, marginLeft: 16 }}>
-          <Image style={{ width: "6.5%", height: 24 }} source={require('/Billboard Spaces/BillboardSpaces/assets/maintanance.png')} />
-          <Text style={{ paddingLeft: 20, fontSize: 16, fontWeight: '500' }}>Maintenance Booking</Text>
+          <Image resizeMode='contain' style={{ width: "6.5%", height: 24 }} source={require('/Billboard Spaces/BillboardSpaces/assets/maintanance.png')} />
+          <Text style={{ paddingLeft: 20, fontSize: 16, fontWeight: '500', alignSelf: 'center' }}>Maintenance Booking</Text>
         </Pressable>
         <Pressable style={{ flexDirection: 'row', marginTop: 30, marginLeft: 16 }}>
-          <Image style={{ width: "6.5%", height: 24 }} source={require('/Billboard Spaces/BillboardSpaces/assets/analys.png')} />
-          <Text style={{ paddingLeft: 20, fontSize: 16, fontWeight: '500' }}>Analytics and Reporting</Text>
+          <Image resizeMode='contain' style={{ width: "6.5%", height: 24 }} source={require('/Billboard Spaces/BillboardSpaces/assets/analys.png')} />
+          <Text style={{ paddingLeft: 20, fontSize: 16, fontWeight: '500', alignSelf: 'center' }}>Analytics and Reporting</Text>
         </Pressable>
-        <Pressable style={{ flexDirection: 'row', marginTop: 30, marginLeft: 16 }}>
-          <Image style={{ width: "6.5%", height: 24 }} source={require('/Billboard Spaces/BillboardSpaces/assets/referal.png')} />
-          <Text style={{ paddingLeft: 20, fontSize: 16, fontWeight: '500' }}>Referrals</Text>
+        <Pressable onPress={handleRefferrals} style={{ flexDirection: 'row', marginTop: 30, marginLeft: 16 }}>
+          <Image resizeMode='contain' style={{ width: "6.5%", height: 24 }} source={require('/Billboard Spaces/BillboardSpaces/assets/referal.png')} />
+          <Text style={{ paddingLeft: 20, fontSize: 16, fontWeight: '500', alignSelf: 'center' }}>Referrals</Text>
         </Pressable>
-        <Pressable style={{ flexDirection: 'row', marginTop: 30, marginLeft: 16 }}>
-          <Image style={{ width: "6.5%", height: 24 }} source={require('/Billboard Spaces/BillboardSpaces/assets/help.png')} />
-          <Text style={{ paddingLeft: 20, fontSize: 16, fontWeight: '500' }}>Help and Support</Text>
+        <Pressable onPress={handleHelp} style={{ flexDirection: 'row', marginTop: 30, marginLeft: 16 }}>
+          <Image resizeMode='contain' style={{ width: "6.5%", height: 24 }} source={require('/Billboard Spaces/BillboardSpaces/assets/help.png')} />
+          <Text style={{ paddingLeft: 20, fontSize: 16, fontWeight: '500', alignSelf: 'center' }}>Help and Support</Text>
         </Pressable>
 
 
@@ -85,8 +94,8 @@ export default function More({ navigation }) {
 
 
         <View style={{ flexDirection: 'row', marginTop: 30, marginLeft: 16, marginBottom: 20 }}>
-          <Image style={{ width: "6%", height: 24 }} source={require('/Billboard Spaces/BillboardSpaces/assets/logout.png')} />
-          <Text style={{ paddingLeft: 20, fontSize: 16, fontWeight: '500' }}>Log Out</Text>
+          <Image resizeMode='contain' style={{ width: "6%", height: 24 }} source={require('/Billboard Spaces/BillboardSpaces/assets/logout.png')} />
+          <Text style={{ paddingLeft: 20, fontSize: 16, fontWeight: '500', alignSelf: 'center' }}>Log Out</Text>
         </View>
 
 

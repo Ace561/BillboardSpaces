@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, ScrollView, TextInput, SafeAreaView, Image, Sta
 import { AntDesign } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
-import { Table, Row, Rows } from 'react-native-table-component';
+import { Table, Row, Rows, Cell } from 'react-native-table-component';
 
 const Billboardclicked = ({ route, navigation }) => {
   const tableData = [
@@ -21,15 +21,16 @@ const Billboardclicked = ({ route, navigation }) => {
   const handleShowDetails = () => {
     setShowDetails(currentState => !currentState);
   };
-  
+
 
 
 
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={{ marginBottom: 5 }} horizontal={false} showsVerticalScrollIndicator={false}>
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingLeft: 16, paddingRight: 10 }}>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingLeft: 16, paddingRight: 10 , paddingTop:10}}>
           <AntDesign onPress={() => navigation.goBack()} name="arrowleft" size={30} color="#383838" />
+          <Image style={{alignSelf:'center'}} source={require("/Billboard Spaces/BillboardSpaces/assets/available.png")} />
           <MaterialCommunityIcons name="dots-vertical" size={24} color="#383838" />
         </View>
 
@@ -46,7 +47,7 @@ const Billboardclicked = ({ route, navigation }) => {
           <Text style={{ fontSize: 16, fontWeight: '400', marginLeft: 5 }}>Greyfield. co</Text>
           <View style={{ flex: 1, alignItems: 'flex-end', paddingRight: 10 }}>
             <TouchableOpacity style={{ justifyContent: 'center', borderRadius: 10, width: '50%', height: 40, borderWidth: 1, borderColor: '#0080FE', }}>
-              <Text style={{ color: '#0080FE', alignSelf: 'center' }}>View Profile</Text>
+              <Text style={{ color: '#0080FE', alignSelf: 'center' }}>Explore More</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -54,6 +55,7 @@ const Billboardclicked = ({ route, navigation }) => {
         <Text style={{ fontWeight: '400', fontSize: 22, marginTop: 10, paddingLeft: 20 }}>Description</Text>
         <Table style={{ width: "90%", borderRadius: 10, overflow: 'hidden', marginLeft: 20, marginTop: 10, }} borderStyle={{ borderWidth: 1, borderColor: '#999999', }}>
           <Rows data={tableData} textStyle={styles.tableText} />
+
         </Table>
 
 
@@ -123,6 +125,11 @@ const styles = {
     fontSize: 14,
     fontWeight: "500",
     color: "#fff",
+  },
+  cellText: {
+    fontSize: 14,
+    fontWeight: '500',
+    color: '#0080FE',
   },
 };
 

@@ -5,6 +5,9 @@ import { AntDesign } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
+import { refreshToken } from '../authUtils';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 
 
@@ -98,6 +101,90 @@ export default function Annoucment() {
   };
 
   console.log('Selected image:', selectedImage); // Log selected image state for debugging
+
+  const [post, setPost] = useState([]);
+  const [error, setError] = useState(null);
+
+
+  const Post = ({ post }) => {
+    return (
+      <View style={{ flex: 1 }}>
+        <View style={styles.rectangle1}>
+          <TouchableOpacity>
+            <Image style={{ width: 40, height: 40, borderRadius: 100 }} source={require("/Billboard Spaces/BillboardSpaces/assets/profilePicture.jpeg")} />
+          </TouchableOpacity>
+          <Text style={{ fontSize: 16, marginLeft: 5, fontWeight: '500' }}>{post.caption}</Text>
+        </View>
+        <Text style={{ fontWeight: '400', fontSize: 16, paddingLeft: 16, marginTop: 5 }}>{post.caption}</Text>
+        <Image resizeMode='cover' style={{ marginLeft: 16, marginTop: 20, width: "90%", height: 228, borderRadius: 20 }} source={{ uri: post.image }} />
+      </View>
+    );
+  };
+
+
+  useEffect(() => {
+    const fetchPost = async () => {
+      try {
+        // Retrieve the access token from AsyncStorage
+        const storedAccess = await AsyncStorage.getItem('access');
+
+        const response = await fetch('https://bb-spaces.onrender.com/posts/', {
+          headers: {
+            'Authorization': `Bearer ${storedAccess}` // Use the retrieved token in the request headers
+          }
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to fetch posts');
+        }
+
+        const data = await response.json();
+        setPost(data);
+      } catch (error) {
+        console.error('Error fetching posts:', error);
+        setError(error.message);
+      }
+    };
+    fetchPost();
+  }, []); // Remove 'access' from the dependencies array since it's not needed here
+
+  const uploadPost = async () => {
+    try {
+      const storedAccess = await AsyncStorage.getItem('access');
+      const formData = new FormData();
+      formData.append('image', {
+        uri: selectedImage,
+        type: 'image/jpeg', // Adjust the type according to your image type
+        name: 'image.jpg' // Adjust the name as needed
+      });
+      formData.append('caption', mordalCaption);
+
+      const response = await fetch('YOUR_UPLOAD_ENDPOINT_URL', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${storedAccess}`,
+          'Content-Type': 'multipart/form-data',
+        },
+        body: formData
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to upload post');
+      }
+
+      // Optionally, handle success response
+      console.log('Post uploaded successfully');
+      // You can reset the modal caption and selected image here if needed
+      setModalCaption('');
+      setSelectedImage(null);
+
+    } catch (error) {
+      console.error('Error uploading post:', error);
+      // Optionally, handle error
+    }
+  };
+
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={{ marginBottom: 5 }} horizontal={false} showsVerticalScrollIndicator={false}>
@@ -132,19 +219,14 @@ export default function Annoucment() {
             </View>
             <Text style={{ paddingTop: 10, fontSize: 22, fontWeight: '400', marginLeft: 16 }}>Popular Advert</Text>
 
-
-            <View>
-              <View style={styles.rectangle1}>
-                <TouchableOpacity>
-                  <Image style={{ width: 40, height: 40, borderRadius: 100 }} source={require("/Billboard Spaces/BillboardSpaces/assets/profilePicture.jpeg")} />
-                </TouchableOpacity>
-                <Text style={{ fontSize: 16, marginLeft: 5, fontWeight: '500' }}>NAMSA-Agency for Drugs</Text>
+            <View style={{}}>
+              <View style={{}} >
+                {post && post.map((post, index) => (
+                  <Post key={index} post={post} />
+                ))}
               </View>
-              <Text style={{ fontWeight: '400', fontSize: 16, paddingLeft: 16, marginTop: 5 }}>
-                SAY NO TO FAKE DRUGS
-              </Text>
-              <Image resizeMode='cover' style={{ marginLeft: 16, marginTop: 20, width: "90%", height: 228, borderRadius: 20 }} source={require("/Billboard Spaces/BillboardSpaces/assets/profilePicture.jpeg")} />
             </View>
+
             <Modal visible={modalVisible} transparent={true} animationType="fade">
               <KeyboardAvoidingView
                 style={{ flex: 1 }}
@@ -177,7 +259,7 @@ export default function Annoucment() {
                           {selectedImage && <Image source={{ uri: selectedImage }} style={{ width: '90%', height: 250, borderRadius: 17.72, marginTop: 10, marginLeft: 16 }} />}
                         </Pressable>
 
-                        <TouchableOpacity style={{ marginTop: 20, backgroundColor: '#0080FE', width: '60%', height: 48, borderRadius: 10, alignSelf: 'center', justifyContent: 'center', marginBottom: 10 }}>
+                        <TouchableOpacity onPress={uploadPost} style={{ marginTop: 20, backgroundColor: '#0080FE', width: '60%', height: 48, borderRadius: 10, alignSelf: 'center', justifyContent: 'center', marginBottom: 10 }}>
                           <Text style={{ color: '#ffff', alignSelf: 'center' }}>Post Advertisement</Text>
                         </TouchableOpacity>
                       </ScrollView>
@@ -298,17 +380,17 @@ export default function Annoucment() {
               marginLeft: 16,
               flexDirection: 'row',
               marginTop: 20,
-              width:'90%',
+              width: '90%',
             }}>
               <Image resizeMode="cover" source={require('/Billboard Spaces/BillboardSpaces/assets/profilePicture.jpeg')} style={styles.rectangleIcon} />
-              <View style={{ flexDirection: 'column', padding:5 }}>
+              <View style={{ flexDirection: 'column', padding: 5 }}>
                 <Text>Akwaibom Secreteriat Advertising Agency</Text>
-                <View style={{flexDirection:'row',}}>
+                <View style={{ flexDirection: 'row', }}>
                   <FontAwesome5 name="user-friends" size={20} color="#383838" />
                   <Text>120k members</Text>
                 </View>
               </View>
-              </TouchableOpacity>
+            </TouchableOpacity>
           </View>
         )}
       </ScrollView>
@@ -456,7 +538,7 @@ const styles = StyleSheet.create({
   },
   passwordToggle: {
     position: 'absolute',
-    right: 15,
+    right: 10,
     top: '50%',
     transform: [{ translateY: -12 }],
   },

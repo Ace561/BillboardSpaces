@@ -19,6 +19,14 @@ import Subscription from './Screens/Subscription';
 import Advertisement from './Screens/Advertisement';
 import MaintenanceBooking from './Screens/MaintenanceBooking';
 import BookingForm from './Screens/BookingForm';
+import Refferrals from './Screens/Refferrals';
+import Help from './Screens/Help';
+import ContactUs from './Screens/ContactUs';
+import MyBillboard from './Screens/MyBillboard';
+import Billboardclicked2 from './Screens/Billboardclicked2';
+import Notification from './Screens/Notification';
+import Eventclicked from './Screens/Tab/Eventclicked';
+import MyProfile from './Screens/MyProfile';
 
 const Stack = createStackNavigator();
 
@@ -41,11 +49,19 @@ function App() {
           <Stack.Screen options={{ headerShown: false }} name="About" component={About} />
           <Stack.Screen options={{ headerShown: false }} name="About1" component={About1} />
           <Stack.Screen options={{ headerShown: false }} name="Billboardclicked" component={Billboardclicked} />
+          <Stack.Screen options={{ headerShown: false }} name="Billboardclicked2" component={Billboardclicked2} />
+          <Stack.Screen options={{ headerShown: false }} name="Notification" component={Notification} />
+          <Stack.Screen options={{ headerShown: false }} name="Eventclicked" component={Eventclicked} />
           <Stack.Screen options={{}} name="Set Advertising Duration" component={SetAdvertisingDuration} />
           <Stack.Screen options={{}} name="Subscription" component={Subscription} />
           <Stack.Screen options={{}} name="Advertisement" component={Advertisement} />
           <Stack.Screen options={{}} name="Maintenance Booking" component={MaintenanceBooking} />
           <Stack.Screen options={{}} name="Booking Form" component={BookingForm} />
+          <Stack.Screen options={{}} name="Refferrals" component={Refferrals} />
+          <Stack.Screen options={{}} name="Help and Support" component={Help} />
+          <Stack.Screen options={{}} name="Contact Us" component={ContactUs} />
+          <Stack.Screen options={{}} name="My Billboards" component={MyBillboard} />
+          <Stack.Screen options={{}} name="My Profile" component={MyProfile} />
         </Stack.Navigator>
       </NavigationContainer>
     </AuthProvider>

@@ -43,6 +43,24 @@ export default function HomeScreen({ navigation }) {
             </View>
         );
     };
+    const EventComponent = ({ events }) => {
+        return (
+
+            <View style={{
+                padding: 5,
+                flex: 1,
+                // backgroundColor:'red',
+                width: 180
+            }}>
+                <TouchableOpacity onPress={() => navigation.navigate("Eventclicked", { data: events })} >
+                    <Image resizeMode="cover" source={{ uri: events.image }} style={styles.rectangleIcon3} />
+                    <Text>
+                        {events.name}
+                    </Text>
+                </TouchableOpacity>
+            </View>
+        );
+    };
 
     const splitIntoRows = (data) => {
         const rows = [];
@@ -56,6 +74,8 @@ export default function HomeScreen({ navigation }) {
     const [popular, setPopular] = useState([]);
     const [products, setProducts] = useState([]);
     const [error, setError] = useState(null);
+    const [events, setEvents] = useState([]);
+
 
     useEffect(() => {
         const fetchProducts = async () => {
@@ -124,7 +144,7 @@ export default function HomeScreen({ navigation }) {
                     if (response.status === 401) {
                         const newAccessToken = await refreshToken();
                         // Use the new access token to make the request
-                        const newResponse = await fetch('https://bb-spaces.onrender.com/billboards/all/', {
+                        const newResponse = await fetch('https://bb-spaces.onrender.com/new/', {
                             headers: {
                                 'Authorization': `Bearer ${newAccessToken}`
                             }
@@ -157,16 +177,69 @@ export default function HomeScreen({ navigation }) {
         return <Text>{error}</Text>;
     }
 
+
+    // events
+    useEffect(() => {
+        const fetchEvents = async () => {
+            try {
+                // Retrieve the access token from AsyncStorage
+                const storedAccess = await AsyncStorage.getItem('access');
+
+                const response = await fetch('https://bb-spaces.onrender.com/events/', {
+                    headers: {
+                        'Authorization': `Bearer ${storedAccess}` // Use the retrieved token in the request headers
+                    }
+                });
+
+                if (!response.ok) {
+                    if (response.status === 401) {
+                        const newAccessToken = await refreshToken();
+                        // Use the new access token to make the request
+                        const newResponse = await fetch('https://bb-spaces.onrender.com/events/', {
+                            headers: {
+                                'Authorization': `Bearer ${newAccessToken}`
+                            }
+                        });
+
+                        if (!newResponse.ok) {
+                            throw new Error('Failed to fetch products after token refresh');
+                        }
+
+                        const newData = await newResponse.json();
+                        setProducts(newData);
+                    } else {
+                        // If the response status is not 401, handle other errors
+                        throw new Error('Failed to fetch products');
+                    }
+                } else {
+                    // If the response is ok, set the products
+                    const data = await response.json();
+                    setEvents(data);
+                }
+            } catch (error) {
+                console.error('Error fetching products:', error);
+                setError(error.message);
+            }
+        };
+        fetchEvents();
+    }, []);
+
+    if (error) {
+        return <Text>{error}</Text>;
+    }
+
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView style={{ marginBottom: 5 }} horizontal={false} showsVerticalScrollIndicator={false}>
                 <View style={styles.rectangle1}>
-                    <TouchableOpacity>
+                    <View>
                         <Image style={{ width: 40, height: 40, borderRadius: 100 }} source={require("../assets/profilePicture.jpeg")} />
-                    </TouchableOpacity>
+                    </View>
                     <Text style={{ fontSize: 22, marginLeft: 5 }}>Welcome</Text>
                     <View style={{ flex: 1, alignItems: 'flex-end', paddingRight: 10 }}>
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={()=>{
+                            navigation.navigate('Notification')
+                        }}>
                             <MaterialIcons name="notifications-none" size={30} color="black" />
                         </TouchableOpacity>
                     </View>
@@ -197,8 +270,8 @@ export default function HomeScreen({ navigation }) {
                 <View style={styles.newlyAddedScroll}>
                     <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} >
                         <View style={styles.img2} >
-                            {products && products.map((product, index) => (
-                                <ProductComponent key={index} product={product} />
+                            {events && events.map((events, index) => (
+                                <EventComponent key={index} events={events} />
                             ))}
                         </View>
                     </ScrollView>
