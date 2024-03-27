@@ -3,6 +3,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import React, { useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { refreshToken } from './authUtils'; // Import the refreshToken function
+import { BASE_URL } from '../apiConfig';
 
 export default function HomeScreen({ navigation }) {
 
@@ -79,11 +80,12 @@ export default function HomeScreen({ navigation }) {
 
     useEffect(() => {
         const fetchProducts = async () => {
+            const endpointUrl = `${BASE_URL}/billboards/new/`;
             try {
                 // Retrieve the access token from AsyncStorage
                 const storedAccess = await AsyncStorage.getItem('access');
 
-                const response = await fetch('https://bb-spaces.onrender.com/billboards/new/', {
+                const response = await fetch(endpointUrl, {
                     headers: {
                         'Authorization': `Bearer ${storedAccess}` // Use the retrieved token in the request headers
                     }
@@ -93,7 +95,7 @@ export default function HomeScreen({ navigation }) {
                     if (response.status === 401) {
                         const newAccessToken = await refreshToken();
                         // Use the new access token to make the request
-                        const newResponse = await fetch('https://bb-spaces.onrender.com/billboards/new/', {
+                        const newResponse = await fetch(endpointUrl, {
                             headers: {
                                 'Authorization': `Bearer ${newAccessToken}`
                             }
@@ -130,11 +132,12 @@ export default function HomeScreen({ navigation }) {
 
     useEffect(() => {
         const fetchPopular = async () => {
+            const endpointUrl = `${BASE_URL}/billboards/new/`;
             try {
                 // Retrieve the access token from AsyncStorage
                 const storedAccess = await AsyncStorage.getItem('access');
 
-                const response = await fetch('https://bb-spaces.onrender.com/billboards/new/', {
+                const response = await fetch(endpointUrl, {
                     headers: {
                         'Authorization': `Bearer ${storedAccess}` // Use the retrieved token in the request headers
                     }
@@ -144,7 +147,7 @@ export default function HomeScreen({ navigation }) {
                     if (response.status === 401) {
                         const newAccessToken = await refreshToken();
                         // Use the new access token to make the request
-                        const newResponse = await fetch('https://bb-spaces.onrender.com/new/', {
+                        const newResponse = await fetch(endpointUrl, {
                             headers: {
                                 'Authorization': `Bearer ${newAccessToken}`
                             }
@@ -181,11 +184,12 @@ export default function HomeScreen({ navigation }) {
     // events
     useEffect(() => {
         const fetchEvents = async () => {
+            const endpointUrl = `${BASE_URL}/events/`;
             try {
                 // Retrieve the access token from AsyncStorage
                 const storedAccess = await AsyncStorage.getItem('access');
 
-                const response = await fetch('https://bb-spaces.onrender.com/events/', {
+                const response = await fetch(endpointUrl, {
                     headers: {
                         'Authorization': `Bearer ${storedAccess}` // Use the retrieved token in the request headers
                     }
@@ -195,7 +199,7 @@ export default function HomeScreen({ navigation }) {
                     if (response.status === 401) {
                         const newAccessToken = await refreshToken();
                         // Use the new access token to make the request
-                        const newResponse = await fetch('https://bb-spaces.onrender.com/events/', {
+                        const newResponse = await fetch(endpointUrl, {
                             headers: {
                                 'Authorization': `Bearer ${newAccessToken}`
                             }
@@ -237,7 +241,7 @@ export default function HomeScreen({ navigation }) {
                     </View>
                     <Text style={{ fontSize: 22, marginLeft: 5 }}>Welcome</Text>
                     <View style={{ flex: 1, alignItems: 'flex-end', paddingRight: 10 }}>
-                        <TouchableOpacity onPress={()=>{
+                        <TouchableOpacity onPress={() => {
                             navigation.navigate('Notification')
                         }}>
                             <MaterialIcons name="notifications-none" size={30} color="black" />

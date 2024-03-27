@@ -4,6 +4,7 @@ import * as ImagePicker from 'expo-image-picker';
 import { AntDesign } from '@expo/vector-icons';
 import { refreshToken } from '../authUtils';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { BASE_URL } from '../../apiConfig';
 
 
 export default function AddBillboard() {
@@ -62,41 +63,9 @@ export default function AddBillboard() {
 
   const backgroundImage = selectedImage ? { uri: selectedImage } : require('/Billboard Spaces/BillboardSpaces/assets/imageupload.png');
 
-  // const uploadData = async () => {
-  //   try {
-  //     const storedAccess = await AsyncStorage.getItem('access');
-  //     const response = await fetch('https://bb-spaces.onrender.com/billboards/create/', {
-  //       method: 'POST',
-  //       headers: {
-  //         'Authorization': `Bearer ${storedAccess}`,
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: JSON.stringify({
-  //         image: selectedImage,
-  //         size: selectedText,
-  //         state: selectedState,
-  //         target_audience: fullName,
-  //         location: displayName,
-  //         rentPrice: phoneNumber,
-  //       }),
-  //     });
-
-  //     if (!response.ok) {
-  //       throw new Error('Failed to upload data');
-  //     }
-
-  //     // Handle successful upload response if needed
-  //     const data = await response.json();
-  //     console.log('Upload successful:', data);
-
-  //   } catch (error) {
-  //     console.error('Error uploading data:', error);
-  //   }
-  // };
-
-
-
   const uploadData = async () => {
+    const endpointUrl = `${BASE_URL}/billboards/create/`;
+
     try {
       const storedAccess = await AsyncStorage.getItem('access');
       const formData = new FormData();
@@ -111,7 +80,7 @@ export default function AddBillboard() {
       formData.append('location', displayName);
       formData.append('price', phoneNumber);
 
-      const response = await fetch('https://bb-spaces.onrender.com/billboards/create/', {
+      const response = await fetch(endpointUrl, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${storedAccess}`,

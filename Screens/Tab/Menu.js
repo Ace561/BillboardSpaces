@@ -4,7 +4,7 @@ import { AntDesign } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { MaterialIcons } from '@expo/vector-icons';
 import { refreshToken } from '../authUtils';
-
+import { BASE_URL } from '../../apiConfig';
 
 
 export default function Menu({ navigation }) {
@@ -88,11 +88,12 @@ export default function Menu({ navigation }) {
 
   useEffect(() => {
     const fetchProducts = async () => {
+      const endpointUrl = `${BASE_URL}/billboards/new/`;
       try {
         // Retrieve the access token from AsyncStorage
         const storedAccess = await AsyncStorage.getItem('access');
 
-        const response = await fetch('https://bb-spaces.onrender.com/billboards/new/', {
+        const response = await fetch(endpointUrl, {
           headers: {
             'Authorization': `Bearer ${storedAccess}` // Use the retrieved token in the request headers
           }
@@ -102,7 +103,7 @@ export default function Menu({ navigation }) {
           if (response.status === 401) {
             const newAccessToken = await refreshToken();
             // Use the new access token to make the request
-            const newResponse = await fetch('https://bb-spaces.onrender.com/billboards/new/', {
+            const newResponse = await fetch(endpointUrl, {
               headers: {
                 'Authorization': `Bearer ${newAccessToken}`
               }
@@ -139,11 +140,12 @@ export default function Menu({ navigation }) {
 
   useEffect(() => {
     const fetchPopular = async () => {
+      const endpointUrl = `${BASE_URL}/billboards/all/`;
       try {
         // Retrieve the access token from AsyncStorage
         const storedAccess = await AsyncStorage.getItem('access');
 
-        const response = await fetch('https://bb-spaces.onrender.com/billboards/new/', {
+        const response = await fetch(endpointUrl, {
           headers: {
             'Authorization': `Bearer ${storedAccess}` // Use the retrieved token in the request headers
           }
@@ -153,7 +155,7 @@ export default function Menu({ navigation }) {
           if (response.status === 401) {
             const newAccessToken = await refreshToken();
             // Use the new access token to make the request
-            const newResponse = await fetch('https://bb-spaces.onrender.com/billboards/all/', {
+            const newResponse = await fetch(endpointUrl, {
               headers: {
                 'Authorization': `Bearer ${newAccessToken}`
               }

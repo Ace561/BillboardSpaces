@@ -61,7 +61,7 @@ function App() {
           <Stack.Screen options={{}} name="Help and Support" component={Help} />
           <Stack.Screen options={{}} name="Contact Us" component={ContactUs} />
           <Stack.Screen options={{}} name="My Billboards" component={MyBillboard} />
-          <Stack.Screen options={{}} name="My Profile" component={MyProfile} />
+          <Stack.Screen options={{ headerShown: false }} name="My Profile" component={MyProfile} />
         </Stack.Navigator>
       </NavigationContainer>
     </AuthProvider>

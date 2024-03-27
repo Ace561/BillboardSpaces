@@ -7,6 +7,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { refreshToken } from '../authUtils';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { BASE_URL } from '../../apiConfig';
 
 
 
@@ -124,11 +125,12 @@ export default function Annoucment() {
 
   useEffect(() => {
     const fetchPost = async () => {
+      const endpointUrl = `${BASE_URL}/posts`;
       try {
         // Retrieve the access token from AsyncStorage
         const storedAccess = await AsyncStorage.getItem('access');
 
-        const response = await fetch('https://bb-spaces.onrender.com/posts/', {
+        const response = await fetch(endpointUrl, {
           headers: {
             'Authorization': `Bearer ${storedAccess}` // Use the retrieved token in the request headers
           }
@@ -149,6 +151,7 @@ export default function Annoucment() {
   }, []); // Remove 'access' from the dependencies array since it's not needed here
 
   const uploadPost = async () => {
+    const endpointUrl = `${BASE_URL}/posts/create/`;
     try {
       const storedAccess = await AsyncStorage.getItem('access');
       const formData = new FormData();
@@ -159,7 +162,7 @@ export default function Annoucment() {
       });
       formData.append('caption', modalCaption);
 
-      const response = await fetch('https://bb-spaces.onrender.com/posts/create/', {
+      const response = await fetch(endpointUrl, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${storedAccess}`,

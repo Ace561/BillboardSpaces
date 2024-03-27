@@ -43,7 +43,7 @@ export default function More({ navigation }) {
               </View>
               <Text style={{ fontWeight: '500', fontSize: 14, color: '#ffffff', alignSelf: 'center', marginTop: 10 }}>Apple Advertisers</Text>
               <TouchableOpacity onPress={()=>{navigation.navigate('My Profile')}} style={{ width: 100, height: 40, borderRadius: 10, borderWidth: 1, justifyContent: 'center', marginTop: 10, borderColor: '#ffffff' }}>
-                <Text style={{ fontWeight: '500', fontSize: 14, color: '#ffffff', alignSelf: 'center' }}>View Profile</Text>
+                <Text style={{ fontWeight: '500', fontSize: 14, color: '#ffffff', alignSelf: 'center' }}>Edit Profile</Text>
               </TouchableOpacity>
             </View>
           </View>

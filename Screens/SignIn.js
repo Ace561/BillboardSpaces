@@ -2,6 +2,7 @@ import { StyleSheet, Text, View, StatusBar, TouchableOpacity, TouchableWithoutFe
 import React, { useState, useRef } from 'react'
 import { Feather } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { BASE_URL } from '../apiConfig';
 
 export default function CreatAccount({ navigation }) {
     const [passwordVisible, setPasswordVisible] = useState(false);
@@ -157,9 +158,10 @@ export default function CreatAccount({ navigation }) {
     };
 
     const handleNext = async () => {
+        const endpointUrl = `${BASE_URL}/auth/password/reset/`;
         try {
             setIsLoading2(true);
-            const response = await fetch('https://bb-spaces.onrender.com/auth/password/reset/', {
+            const response = await fetch(endpointUrl, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -195,11 +197,12 @@ export default function CreatAccount({ navigation }) {
     };
 
     const handleLogin = async () => {
+        const endpointUrl = `${BASE_URL}/auth/login/`;
         try {
             setIsLoading(true);
 
             // Use fetch to send the login request
-            const response = await fetch('https://bb-spaces.onrender.com/auth/login/', {
+            const response = await fetch(endpointUrl, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -251,6 +254,7 @@ export default function CreatAccount({ navigation }) {
 
     // Function to handle submission of new password, confirm password, email, and OTP
     const handleSubmitPassword = async () => {
+        const endpointUrl = `${BASE_URL}/auth/password/reset/confirm/`;
         try {
             // Validate that passwords match
             if (newPassword !== confirmPassword) {
@@ -259,7 +263,7 @@ export default function CreatAccount({ navigation }) {
             }
 
             // Call API endpoint to reset password
-            const response = await fetch('https://bb-spaces.onrender.com/auth/password/reset/confirm/', {
+            const response = await fetch(endpointUrl, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

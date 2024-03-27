@@ -5,6 +5,7 @@ import { Fontisto } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { BASE_URL } from '../apiConfig';
 
 export default function MyBillboard({ navigation }) {
     const [billboard, setBillboard] = useState([])
@@ -12,11 +13,12 @@ export default function MyBillboard({ navigation }) {
 
     useEffect(() => {
         const fetchBillboards = async () => {
+            const endpointUrl = `${BASE_URL}/billboards/user/`;
             try {
                 // Retrieve the access token from AsyncStorage
                 const storedAccess = await AsyncStorage.getItem('access');
 
-                const response = await fetch('https://bb-spaces.onrender.com/billboards/user/', {
+                const response = await fetch(endpointUrl, {
                     headers: {
                         'Authorization': `Bearer ${storedAccess}` // Use the retrieved token in the request headers
                     }
