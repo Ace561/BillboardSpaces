@@ -27,6 +27,7 @@ import Billboardclicked2 from './Screens/Billboardclicked2';
 import Notification from './Screens/Notification';
 import Eventclicked from './Screens/Tab/Eventclicked';
 import MyProfile from './Screens/MyProfile';
+import EventCalender from './Screens/EventCalender';
 
 const Stack = createStackNavigator();
 
@@ -62,6 +63,7 @@ function App() {
           <Stack.Screen options={{}} name="Contact Us" component={ContactUs} />
           <Stack.Screen options={{}} name="My Billboards" component={MyBillboard} />
           <Stack.Screen options={{ headerShown: false }} name="My Profile" component={MyProfile} />
+          <Stack.Screen options={{ headerShown: false }} name="EventCalender" component={EventCalender} />
         </Stack.Navigator>
       </NavigationContainer>
     </AuthProvider>

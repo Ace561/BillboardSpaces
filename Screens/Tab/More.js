@@ -25,6 +25,9 @@ export default function More({ navigation }) {
   const handleMyBillboard = () => {
     navigation.navigate('My Billboards')
   };
+  const handleEventCalender = () => {
+    navigation.navigate('EventCalender')
+  };
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -42,7 +45,7 @@ export default function More({ navigation }) {
                 <Text style={{ alignSelf: 'center', color: '#ffffff', }}>Advertising Agent</Text>
               </View>
               <Text style={{ fontWeight: '500', fontSize: 14, color: '#ffffff', alignSelf: 'center', marginTop: 10 }}>Apple Advertisers</Text>
-              <TouchableOpacity onPress={()=>{navigation.navigate('My Profile')}} style={{ width: 100, height: 40, borderRadius: 10, borderWidth: 1, justifyContent: 'center', marginTop: 10, borderColor: '#ffffff' }}>
+              <TouchableOpacity onPress={() => { navigation.navigate('My Profile') }} style={{ width: 100, height: 40, borderRadius: 10, borderWidth: 1, justifyContent: 'center', marginTop: 10, borderColor: '#ffffff' }}>
                 <Text style={{ fontWeight: '500', fontSize: 14, color: '#ffffff', alignSelf: 'center' }}>Edit Profile</Text>
               </TouchableOpacity>
             </View>
@@ -53,7 +56,7 @@ export default function More({ navigation }) {
           <Image style={{ width: "7%", height: 24 }} source={require('/Billboard Spaces/BillboardSpaces/assets/pin.png')} />
           <Text style={{ paddingLeft: 20, fontSize: 16, fontWeight: '500', alignSelf: 'center' }}>My Billboards</Text>
         </Pressable>
-        <Pressable style={{ flexDirection: 'row', marginTop: 30, marginLeft: 16 }}>
+        <Pressable onPress={handleEventCalender} style={{ flexDirection: 'row', marginTop: 30, marginLeft: 16 }}>
           <Image resizeMode='contain' style={{ width: "6.5%", height: 24 }} source={require('/Billboard Spaces/BillboardSpaces/assets/event.png')} />
           <Text style={{ paddingLeft: 20, fontSize: 16, fontWeight: '500', alignSelf: 'center' }}>Event Calender</Text>
         </Pressable>

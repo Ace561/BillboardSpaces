@@ -89,10 +89,6 @@ const Eventclicked = ({ route, navigation }) => {
                             {/* <Text>{data.end_date}</Text> */}
                         </View>
                     </View>
-
-
-
-
                 </View>
 
             </ScrollView>
