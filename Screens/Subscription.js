@@ -30,7 +30,7 @@ export default function Subscription({ navigation }) {
             <ScrollView showsVerticalScrollIndicator={false}>
                 {showAdDetails && (
                     <View>
-                        <Image style={{ width: '55%', height: 133.38, alignSelf: 'center' }} source={require('/Billboard Spaces/BillboardSpaces/assets/sub.png')} />
+                        <Image style={{ width: '55%', height: 133.38, alignSelf: 'center' }} source={require('../assets/sub.png')} />
 
                         <View style={{ marginTop: 20, width: '100%', height: 54 }}>
                             <Text style={{ fontWeight: '400', fontSize: 22, alignSelf: 'center' }}>
@@ -38,14 +38,14 @@ export default function Subscription({ navigation }) {
                             </Text>
                         </View>
 
-                        <Image style={{ width: 333, marginTop: 30, height: 213, alignSelf: 'center' }} source={require('/Billboard Spaces/BillboardSpaces/assets/sub2.png')} />
+                        <Image style={{ width: 333, marginTop: 30, height: 213, alignSelf: 'center' }} source={require('../assets/sub2.png')} />
 
                     </View>
                 )}
 
                 {showBillboardDetails && (
                     <View>
-                        <Image style={{ width: '40%', height: 133.38, alignSelf: 'center' }} source={require('/Billboard Spaces/BillboardSpaces/assets/sub3.png')} />
+                        <Image style={{ width: '40%', height: 133.38, alignSelf: 'center' }} source={require('../assets/sub3.png')} />
 
                         <View style={{ marginTop: 20, width: '100%', height: 54 }}>
                             <Text style={{ fontWeight: '400', fontSize: 22, alignSelf: 'center' }}>
@@ -53,7 +53,7 @@ export default function Subscription({ navigation }) {
                             </Text>
                         </View>
 
-                        <Image style={{ width: 333, marginTop: 30, height: 213, alignSelf: 'center' }} source={require('/Billboard Spaces/BillboardSpaces/assets/sub2.png')} />
+                        <Image style={{ width: 333, marginTop: 30, height: 213, alignSelf: 'center' }} source={require('../assets/sub2.png')} />
 
                     </View>
                 )}

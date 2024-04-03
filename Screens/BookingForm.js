@@ -2,71 +2,81 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, ScrollView, TextInput, SafeAreaView, Image, StatusBar, Pressable, TouchableOpacity, TouchableWithoutFeedback, Modal, KeyboardAvoidingView } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { refreshToken } from './authUtils';
+import { BASE_URL } from '../apiConfig';
+import { Ionicons } from '@expo/vector-icons';
 
-export default function BookingForm() {
+
+export default function BookingForm({ navigation }) {
   const [fullName, setFullName] = useState('');
   const [describtion, setDescribtion] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [date, setDate] = useState('');
   const [email, setEmail] = useState('');
   const [preTime, setPreTime] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
 
-  useEffect(() => {
-    const getRefreshToken = async () => {
-      try {
-        const storedRefreshToken = await AsyncStorage.getItem('refreshToken');
-        if (storedRefreshToken) {
-          setRefreshToken(storedRefreshToken);
-        }
-      } catch (error) {
-        console.error('Error retrieving refresh token:', error);
-      }
-    };
-    getRefreshToken();
-  }, []);
-
-  const handleBooking = () => {
-    const formData = {
-      bookingDetails: {
-        location: fullName,
-        description: describtion,
-        phone_number: phoneNumber,
-        dapreferred_datete: date,
-        email: email,
-        preferred_time: preTime
-      }
-    };
-
-    fetch('https://example.com/booking', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${refreshToken}` // Include refresh token in the request headers
-      },
-      body: JSON.stringify(formData),
-    })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Failed to book maintenance');
-        }
-        return response.json();
-      })
-      .then(data => {
-        // Handle successful booking response
-        console.log('Booking successful:', data);
-      })
-      .catch(error => {
-        console.error('Error booking maintenance:', error);
-        // Log error response
-        console.error('Error response:', error.response);
+  const handleBooking = async ({ route }) => {
+    const endpointUrl = `${BASE_URL}/maintenance/`;
+    try {
+      const storedAccess = await AsyncStorage.getItem('access');
+      setIsLoading(true)
+      const response = await fetch(endpointUrl, {
+        method: 'PUT',
+        headers: {
+          'Authorization': `Bearer ${storedAccess}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          phone_number: phoneNumber,
+          preferred_date: date,
+          description: describtion,
+          location: fullName,
+          preferred_time: preTime,
+          email: email,
+        }),
       });
+
+      if (response.ok) {
+        navigation.navigate('Home');
+      } else {
+        console.error('PUT request failed:', response.status);
+        alert('Failed to update user data');
+      }
+    } catch (error) {
+      console.error('An error occurred during PUT request:', error.message);
+      alert('Failed to update user data');
+
+      // Log response if available
+      if (error.response) {
+        try {
+          const errorResponseData = await error.response.json();
+          console.log('Error response data:', errorResponseData);
+        } catch (jsonError) {
+          console.error('Failed to parse error response as JSON:', jsonError.message);
+        }
+      }
+    }
   };
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <KeyboardAvoidingView style={styles.container} behavior='height' enabled>
         <ScrollView>
+          <View style={{ flexDirection: 'row', gap: 16, marginTop: 10 }}>
+            <Ionicons onPress={() => {
+              navigation.goBack()
+            }} name="arrow-back-outline" size={35} color="black" />
+            <Text style={{
+              fontWeight: '500',
+              fontSize: 22,
+              lineHeight: 26.63,
+              alignSelf: 'center'
+            }}>
+              Booking Form
+            </Text>
+          </View>
+
           <View style={{
             paddingLeft: 16,
           }}>

@@ -30,7 +30,7 @@ export default function Notification() {
                         lineHeight: 33.89
                     }}>Notification</Text>
                     <TouchableOpacity onPress={openModal}>
-                        <Image style={{}} source={require("/Billboard Spaces/BillboardSpaces/assets/cat.png")} />
+                        <Image style={{}} source={require("../assets/cat.png")} />
                     </TouchableOpacity>
                 </View>
 
@@ -106,7 +106,7 @@ export default function Notification() {
                         flexDirection: 'row',
                         gap: 6
                     }}>
-                        <Image source={require("/Billboard Spaces/BillboardSpaces/assets/notify.png")} />
+                        <Image source={require("../assets/notify.png")} />
                         <View style={{
                             flexDirection: 'column',
                             width: '70%'
@@ -143,7 +143,7 @@ export default function Notification() {
                         flexDirection: 'row',
                         gap: 6
                     }}>
-                        <Image source={require("/Billboard Spaces/BillboardSpaces/assets/explore.png")} />
+                        <Image source={require("../assets/explore.png")} />
                         <View style={{
                             flexDirection: 'column',
                             width: '70%'

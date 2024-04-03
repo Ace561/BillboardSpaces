@@ -3,6 +3,7 @@ import { View, Text, ScrollView, TouchableOpacity, Platform, Modal, StyleSheet, 
 import { AntDesign } from '@expo/vector-icons';
 import { refreshToken } from './authUtils';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { BASE_URL } from '../apiConfig';
 
 export default function About1({ navigation, route }) {
 
@@ -26,10 +27,11 @@ export default function About1({ navigation, route }) {
     const [displayNameFocused, setDisplayNameFocused] = useState(false);
 
     const handleDone = async () => {
+        const endpointUrl = `${BASE_URL}/auth/update-profile/${userId}/`;
         try {
             const storedAccess = await AsyncStorage.getItem('access');
             setIsLoading(true)
-            const response = await fetch(`https://bb-spaces.onrender.com/auth/update-profile/${userId}/`, {
+            const response = await fetch(endpointUrl, {
                 method: 'PUT',
                 headers: {
                     'Authorization': `Bearer ${storedAccess}`,

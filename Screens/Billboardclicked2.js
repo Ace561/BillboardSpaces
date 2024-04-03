@@ -9,10 +9,12 @@ import { Ionicons } from '@expo/vector-icons';
 
 
 
-const Billboardclicked2 = ({ navigation }) => {
+
+const Billboardclicked2 = ({ route, navigation }) => {
+    const { data } = route.params;
     const tableData = [
-        ['Location', 'uku'],
-        ['Size', 'uku'],
+        ['Location', route.params.data.location],
+        ['Size', route.params.data.size],
         ['Target Audience', '30'],
     ];
     const [showDetails, setShowDetails] = useState(false);
@@ -45,13 +47,13 @@ const Billboardclicked2 = ({ navigation }) => {
                 </View>
 
                 <View style={{ alignItems: 'center', marginTop: 10, }}>
-                    <Image resizeMode="cover" source={require('/Billboard Spaces/BillboardSpaces/assets/profilePicture.jpeg')} style={styles.billboardImage} />
+                    <Image resizeMode="cover" source={{ uri: data.image }} style={styles.billboardImage} />
                 </View>
                 <View style={{
                     flexDirection: 'row',
                     gap: 5,
                     marginRight: 20,
-                    marginTop:10
+                    marginTop: 10
                 }}>
                     <Text style={{
                         fontSize: 12,

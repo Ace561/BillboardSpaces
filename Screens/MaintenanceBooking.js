@@ -1,11 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, ScrollView, TextInput, SafeAreaView, Image, StatusBar, Pressable, TouchableOpacity, TouchableWithoutFeedback, Modal, KeyboardAvoidingView } from 'react-native'
+import { Ionicons } from '@expo/vector-icons';
 
 
 export default function MaintenanceBooking({ navigation }) {
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView showsVerticalScrollIndicator={false}>
+                <View style={{ flexDirection: 'row', gap: 16, marginTop: 10 }}>
+                    <Ionicons onPress={() => {
+                        navigation.goBack()
+                    }} name="arrow-back-outline" size={35} color="black" />
+                    <Text style={{
+                        fontWeight: '500',
+                        fontSize: 22,
+                        lineHeight: 26.63,
+                        alignSelf: 'center'
+                    }}>
+                        Maintenance Booking
+                    </Text>
+                </View>
                 <Text style={{ paddingTop: 10, fontWeight: '500', marginLeft: 16, fontSize: 18 }}>Additional Information</Text>
                 <View style={{ marginTop: 10, width: '85%', height: 76, marginLeft: 16, flexDirection: 'row' }}>
                     <Text style={{ fontWeight: '500', fontSize: 16, }}>Emergency Maintenance:
@@ -35,7 +49,7 @@ export default function MaintenanceBooking({ navigation }) {
                     </Text>
                 </View>
 
-                <TouchableOpacity onPress={()=>{
+                <TouchableOpacity onPress={() => {
                     navigation.navigate('Booking Form')
                 }} style={{ marginTop: 50, width: '90%', alignSelf: 'center', height: 40, backgroundColor: '#0080FE', justifyContent: 'center', borderRadius: 10 }}>
                     <Text style={{ color: '#FFFFFF', fontWeight: '500', fontSize: 14, alignSelf: 'center' }}>Proceed to Booking</Text>

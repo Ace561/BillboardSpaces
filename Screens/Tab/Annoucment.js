@@ -125,7 +125,7 @@ export default function Annoucment() {
 
   useEffect(() => {
     const fetchPost = async () => {
-      const endpointUrl = `${BASE_URL}/posts`;
+      const endpointUrl = `${BASE_URL}/posts/`;
       try {
         // Retrieve the access token from AsyncStorage
         const storedAccess = await AsyncStorage.getItem('access');

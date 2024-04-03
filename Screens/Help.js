@@ -11,15 +11,15 @@ export default function Help({ navigation }) {
                     <Pressable onPress={() => {
                         navigation.navigate('Contact Us')
                     }} style={{ flexDirection: 'row', marginTop: 10, marginLeft: 16, gap: 24 }}>
-                        <Image resizeMode='contain' style={{ width: "6.5%", height: 24 }} source={require('/Billboard Spaces/BillboardSpaces/assets/Phone.png')} />
+                        <Image resizeMode='contain' style={{ width: "6.5%", height: 24 }} source={require('../assets/Phone.png')} />
                         <Text style={{ fontSize: 16, fontWeight: '500', alignSelf: 'center' }}>Contact Us</Text>
                     </Pressable>
                     <Pressable style={{ flexDirection: 'row', marginLeft: 16, gap: 24 }}>
-                        <Image resizeMode='contain' style={{ width: "6.5%", height: 24 }} source={require('/Billboard Spaces/BillboardSpaces/assets/About.png')} />
+                        <Image resizeMode='contain' style={{ width: "6.5%", height: 24 }} source={require('../assets/About.png')} />
                         <Text style={{ fontSize: 16, fontWeight: '500', alignSelf: 'center' }}>Terms and Privacy Policy</Text>
                     </Pressable>
                     <Pressable style={{ flexDirection: 'row', marginLeft: 16, gap: 24 }}>
-                        <Image resizeMode='contain' style={{ width: "6.5%", height: 24 }} source={require('/Billboard Spaces/BillboardSpaces/assets/About.png')} />
+                        <Image resizeMode='contain' style={{ width: "6.5%", height: 24 }} source={require('../assets/About.png')} />
                         <Text style={{ fontSize: 16, fontWeight: '500', alignSelf: 'center' }}>About</Text>
                     </Pressable>
 

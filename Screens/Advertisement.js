@@ -7,10 +7,10 @@ export default function Advertisement() {
         <SafeAreaView style={styles.container}>
             <ScrollView showsVerticalScrollIndicator={false}>
                 <TouchableOpacity style={{ width: '90%', height: 76, borderWidth: 1, alignSelf: 'center', flexDirection: 'row', borderColor: '#0080FE', borderRadius: 10, justifyContent: 'center' , marginTop:20}}>
-                    <Image style={{ alignSelf: 'center' }} source={require('/Billboard Spaces/BillboardSpaces/assets/Advert1.png')} />
+                    <Image style={{ alignSelf: 'center' }} source={require('../assets/Advert1.png')} />
                 </TouchableOpacity>
                 <TouchableOpacity style={{ width: '90%', height: 76, borderWidth: 1, alignSelf: 'center', flexDirection: 'row', borderColor: '#0080FE', borderRadius: 10, justifyContent: 'center', marginTop:30 }}>
-                    <Image style={{ alignSelf: 'center' }} source={require('/Billboard Spaces/BillboardSpaces/assets/advert2.png')} />
+                    <Image style={{ alignSelf: 'center' }} source={require('../assets/advert2.png')} />
                 </TouchableOpacity>
             </ScrollView>
         </SafeAreaView>

@@ -56,8 +56,8 @@ function App() {
           <Stack.Screen options={{}} name="Set Advertising Duration" component={SetAdvertisingDuration} />
           <Stack.Screen options={{}} name="Subscription" component={Subscription} />
           <Stack.Screen options={{}} name="Advertisement" component={Advertisement} />
-          <Stack.Screen options={{}} name="Maintenance Booking" component={MaintenanceBooking} />
-          <Stack.Screen options={{}} name="Booking Form" component={BookingForm} />
+          <Stack.Screen options={{ headerShown: false }} name="Maintenance Booking" component={MaintenanceBooking} />
+          <Stack.Screen options={{ headerShown: false }} name="Booking Form" component={BookingForm} />
           <Stack.Screen options={{}} name="Refferrals" component={Refferrals} />
           <Stack.Screen options={{}} name="Help and Support" component={Help} />
           <Stack.Screen options={{}} name="Contact Us" component={ContactUs} />

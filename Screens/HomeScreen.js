@@ -1,9 +1,15 @@
-import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View, StatusBar, SafeAreaView } from 'react-native'
+import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View, StatusBar, SafeAreaView, Dimensions } from 'react-native'
 import { MaterialIcons } from '@expo/vector-icons';
 import React, { useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { refreshToken } from './authUtils'; // Import the refreshToken function
 import { BASE_URL } from '../apiConfig';
+import slide1 from '../assets/slide1.png'
+import slide2 from '../assets/slide2.png'
+import slide3 from '../assets/slide3.png'
+
+const WIDTH = Dimensions.get('window').width;
+const HEIGHT = Dimensions.get('window').height;
 
 export default function HomeScreen({ navigation }) {
 
@@ -232,6 +238,26 @@ export default function HomeScreen({ navigation }) {
         return <Text>{error}</Text>;
     }
 
+    const images = [
+        slide1,
+        slide2,
+        slide3
+    ]
+
+
+
+    const [imgActive, setimgActive] = useState(0);
+
+    onchange = (nativeEvent) => {
+        if (nativeEvent) {
+            const slide = Math.ceil(nativeEvent.contentOffset.x / nativeEvent.layoutMeasurement.width)
+            if (slide != imgActive) {
+                setimgActive(slide);
+            }
+        }
+
+    }
+
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView style={{ marginBottom: 5 }} horizontal={false} showsVerticalScrollIndicator={false}>
@@ -248,9 +274,43 @@ export default function HomeScreen({ navigation }) {
                         </TouchableOpacity>
                     </View>
                 </View>
-                <View style={styles.adsContainer}>
-                    <Image style={styles.ads} source={require("../assets/ad1.png")} />
+
+
+                <View style={styles.wrap}>
+                    <ScrollView
+                        onScroll={({ nativeEvent }) => onchange(nativeEvent)}
+                        showsHorizontalScrollIndicator={false}
+                        pagingEnabled
+                        horizontal
+                        style={styles.wrap}
+                    >
+                        {
+                            images.map((image, index) =>
+                                <Image
+                                    key={index}
+                                    resizeMode='stretch'
+                                    style={styles.wrap}
+                                    source={image}
+                                />
+                            )
+                        }
+                    </ScrollView>
+                    <View style={styles.wrapDot}>
+                        {
+                            images.map((e, index) =>
+                                <Text
+                                    key={e}
+                                    style={imgActive == index ? styles.dotActive : styles.dot}
+                                >
+                                    ●
+                                </Text>
+                            )
+                        }
+
+                    </View>
                 </View>
+
+
                 <Text style={styles.newlyAdded}>Newly Added</Text>
                 <View style={styles.newlyAddedScroll}>
                     <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} >
@@ -312,9 +372,25 @@ const styles = StyleSheet.create({
     ads: {
         width: 343
     },
-    adsContainer: {
-        alignItems: 'center',
-        marginTop: 20
+    wrap: {
+        width: WIDTH,
+        height: HEIGHT * 0.25,
+        paddingTop: 10,
+        borderRadius: 10
+    },
+    wrapDot: {
+        position: 'absolute',
+        bottom: 0,
+        flexDirection: 'row',
+        alignSelf: 'center'
+    },
+    dotActive: {
+        margin: 3,
+        color: 'black',
+    },
+    dot: {
+        margin: 3,
+        color: 'white'
     },
     newlyAdded: {
         fontSize: 22,

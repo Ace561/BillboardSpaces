@@ -41,7 +41,7 @@ export default function MyBillboard({ navigation }) {
     const BillboardComp = ({ billboard }) => {
         return (
             <Pressable onPress={() => {
-                navigation.navigate('Billboardclicked2')
+                navigation.navigate('Billboardclicked2' , { data: billboard })
             }}>
                 <View style={{
                     flexDirection: 'row',

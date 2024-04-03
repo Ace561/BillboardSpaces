@@ -14,7 +14,7 @@ import {
 } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import { BASE_URL } from '../apiConfig';
 
 export default function CreateAccount({ navigation }) {
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -61,7 +61,7 @@ export default function CreateAccount({ navigation }) {
     setPasswordFocused(false);
     setConfirmPasswordFocused(false);
   };
-  
+
   // const Signup = async () => {
   //   try {
   //     setIsLoading(true);
@@ -132,81 +132,80 @@ export default function CreateAccount({ navigation }) {
   //   }
   // };
   const Signup = async () => {
+    const endpointUrl = `${BASE_URL}/auth/create/`;
     try {
-        setIsLoading(true);
+      setIsLoading(true);
 
-        // Use fetch to send the signup request
-        const response = await fetch(
-            "https://bb-spaces.onrender.com/auth/create/",
-            {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    password: password,
-                    email: email,
-                    password2: confirmPassword,
-                }),
-            }
-        );
+      // Use fetch to send the signup request
+      const response = await fetch(endpointUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          password: password,
+          email: email,
+          password2: confirmPassword,
+        }),
+      }
+      );
 
-        // Log the details of the response
-        console.log("Response Status:", response.status);
-        console.log("Response Headers:", response.headers);
-        const responseData = await response.json();
-        console.log("Response Data:", responseData);
+      // Log the details of the response
+      console.log("Response Status:", response.status);
+      console.log("Response Headers:", response.headers);
+      const responseData = await response.json();
+      console.log("Response Data:", responseData);
 
-        if (response.ok) {
-            console.log("Signup Successful:", responseData);
-            // Extract tokens from responseData
-            const access = responseData.access;
-            const refresh = responseData.refresh;
+      if (response.ok) {
+        console.log("Signup Successful:", responseData);
+        // Extract tokens from responseData
+        const access = responseData.access;
+        const refresh = responseData.refresh;
 
-            // Store tokens securely
-            await AsyncStorage.setItem('access', access);
-            await AsyncStorage.setItem('refresh', refresh);
+        // Store tokens securely
+        await AsyncStorage.setItem('access', access);
+        await AsyncStorage.setItem('refresh', refresh);
 
-            // Extract user_id from responseData
-            const userId = responseData.id;
+        // Extract user_id from responseData
+        const userId = responseData.id;
 
-            // Construct URL for profile update endpoint
-            const profileUpdateUrl = `https://bb-spaces.onrender.com/auth/update-profile/${userId}/`;
+        // Construct URL for profile update endpoint
+        const profileUpdateUrl = `${BASE_URL}/auth/update-profile/${userId}/`;
 
-            // Send request to update profile
-            const profileUpdateResponse = await fetch(profileUpdateUrl, {
-                method: "PUT", // or "PATCH" depending on your API
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    // Include any profile update data here
-                }),
-            });
+        // Send request to update profile
+        const profileUpdateResponse = await fetch(profileUpdateUrl, {
+          method: "PUT", // or "PATCH" depending on your API
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            // Include any profile update data here
+          }),
+        });
 
-            // Handle response for profile update if needed
+        // Handle response for profile update if needed
 
-            // Handle navigation or state updates on successful signup
-            navigation.navigate("About1", { userId: responseData.id });
-        } else {
-            console.error("Signup Error:", responseData);
+        // Handle navigation or state updates on successful signup
+        navigation.navigate("About1", { userId: responseData.id });
+      } else {
+        console.error("Signup Error:", responseData);
 
-            // Extract and show error messages in an alert
-            const errorMessages = Object.values(responseData.errors).flat();
-            alert(`Signup failed. ${errorMessages.join("\n")}`);
-        }
+        // Extract and show error messages in an alert
+        const errorMessages = Object.values(responseData.errors).flat();
+        alert(`Signup failed. ${errorMessages.join("\n")}`);
+      }
     } catch (error) {
-        console.error("Error:", error);
+      console.error("Error:", error);
 
-        // Handle other errors, e.g., network issues
-        const errorMessage =
-            error.message ||
-            "Signup failed. Please check your network connection.";
-        alert(errorMessage);
+      // Handle other errors, e.g., network issues
+      const errorMessage =
+        error.message ||
+        "Signup failed. Please check your network connection.";
+      alert(errorMessage);
     } finally {
-        setIsLoading(false);
+      setIsLoading(false);
     }
-};
+  };
 
 
 
@@ -408,7 +407,7 @@ const styles = StyleSheet.create({
   },
   email: {
     fontSize: 12,
-    fontWeight:'400',
+    fontWeight: '400',
     textAlign: "left",
     left: 10,
     width: '100%'

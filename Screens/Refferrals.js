@@ -91,7 +91,7 @@ export default function Refferrals() {
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView showsVerticalScrollIndicator={false}>
-                <Image resizeMode='contain' style={{ marginTop: 10, alignSelf: 'center', width: '80%', height: 261 }} source={require('/Billboard Spaces/BillboardSpaces/assets/refferrals.png')} />
+                <Image resizeMode='contain' style={{ marginTop: 10, alignSelf: 'center', width: '80%', height: 261 }} source={require('../assets/refferrals.png')} />
 
 
 
@@ -105,7 +105,7 @@ export default function Refferrals() {
                     <View style={{ flexDirection: 'row', alignSelf: 'center', gap: 24 }}>
                         <FontAwesome5 name="facebook" size={24} color="#0080FE" onPress={shareOnFacebook} />
                         <Pressable onPress={shareOnTwitter} style={{ alignSelf: 'center' }}>
-                            <Image style={{ width: 15.2, height: 16, alignSelf: 'center', }} resizeMode='contain' source={require('/Billboard Spaces/BillboardSpaces/assets/X.png')} />
+                            <Image style={{ width: 15.2, height: 16, alignSelf: 'center', }} resizeMode='contain' source={require('../assets/X.png')} />
                         </Pressable>
                         <AntDesign onPress={shareOnLinkedIn} name="linkedin-square" size={24} color="#0080FE" />
 

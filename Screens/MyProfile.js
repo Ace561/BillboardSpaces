@@ -36,7 +36,7 @@ export default function MyProfile({ navigation }) {
 
     console.log('Selected image:', selectedImage); // Log selected image state for debugging
 
-    const backgroundImage = selectedImage ? { uri: selectedImage } : require('/Billboard Spaces/BillboardSpaces/assets/imageupload.png');
+    const backgroundImage = selectedImage ? { uri: selectedImage } : require('../assets/imageupload.png');
 
     const handleEditMode = () => {
         setEditMode(currentMode => !currentMode);
@@ -129,7 +129,7 @@ export default function MyProfile({ navigation }) {
                         }}>
                         </Image>
                         <TouchableOpacity style={{ top: '60%', right: '20%' }} onPress={openImagePickerAsync}>
-                        <Image resizeMode='contain'  source={require("/Billboard Spaces/BillboardSpaces/assets/cam.png")} />
+                        <Image resizeMode='contain'  source={require("../assets/cam.png")} />
                         </TouchableOpacity>
                     </View>
                     <View style={{

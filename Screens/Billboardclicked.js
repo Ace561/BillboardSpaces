@@ -30,7 +30,7 @@ const Billboardclicked = ({ route, navigation }) => {
       <ScrollView style={{ marginBottom: 5 }} horizontal={false} showsVerticalScrollIndicator={false}>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingLeft: 16, paddingRight: 10 , paddingTop:10}}>
           <AntDesign onPress={() => navigation.goBack()} name="arrowleft" size={30} color="#383838" />
-          <Image style={{alignSelf:'center'}} source={require("/Billboard Spaces/BillboardSpaces/assets/available.png")} />
+          <Image style={{alignSelf:'center'}} source={require('../assets/available.png')} />
           <MaterialCommunityIcons name="dots-vertical" size={24} color="#383838" />
         </View>
 
