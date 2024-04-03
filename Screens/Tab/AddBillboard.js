@@ -61,7 +61,7 @@ export default function AddBillboard() {
 
   console.log('Selected image:', selectedImage); // Log selected image state for debugging
 
-  const backgroundImage = selectedImage ? { uri: selectedImage } : require('/Billboard Spaces/BillboardSpaces/assets/imageupload.png');
+  const backgroundImage = selectedImage ? { uri: selectedImage } : require('../assets/imageupload.png');
 
   const uploadData = async () => {
     const endpointUrl = `${BASE_URL}/billboards/create/`;

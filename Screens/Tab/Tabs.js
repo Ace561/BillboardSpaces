@@ -70,7 +70,7 @@ const Tabs = () => {
             <Tab.Screen name="AddBillboard" component={AddBillboard} options={{
                 headerShown: false,
                 tabBarIcon: ({ focused }) => (
-                    <Image source={(require('/Billboard Spaces/BillboardSpaces/assets/AddBill.png'))}
+                    <Image source={(require('../assets/AddBill.png'))}
                         resizeMode='contain' />
                 ),
                 tabBarButton: (props) => (

@@ -112,7 +112,7 @@ export default function Annoucment() {
       <View style={{ flex: 1 }}>
         <View style={styles.rectangle1}>
           <TouchableOpacity>
-            <Image style={{ width: 40, height: 40, borderRadius: 100 }} source={require("/Billboard Spaces/BillboardSpaces/assets/profilePicture.jpeg")} />
+            <Image style={{ width: 40, height: 40, borderRadius: 100 }} source={require("../assets/profilePicture.jpeg")} />
           </TouchableOpacity>
           <Text style={{ fontSize: 16, marginLeft: 5, fontWeight: '500' }}>{post.user.business_name}</Text>
         </View>
@@ -212,11 +212,11 @@ export default function Annoucment() {
           <View>
             <View style={styles.rectangle1}>
               <TouchableOpacity>
-                <Image style={{ width: 40, height: 40, borderRadius: 100 }} source={require("/Billboard Spaces/BillboardSpaces/assets/profilePicture.jpeg")} />
+                <Image style={{ width: 40, height: 40, borderRadius: 100 }} source={require("../assets/profilePicture.jpeg")} />
               </TouchableOpacity>
               <View style={{ flex: 1, alignItems: 'flex-end', paddingRight: 10 }}>
                 <TouchableOpacity onPress={openModal} style={{ justifyContent: 'center', width: '91.5%', height: 40 }}>
-                  <Image style={{}} source={require('/Billboard Spaces/BillboardSpaces/assets/announcement.png')} />
+                  <Image style={{}} source={require('../assets/announcement.png')} />
                 </TouchableOpacity>
               </View>
             </View>
@@ -251,10 +251,10 @@ export default function Annoucment() {
 
                         <View style={{ flexDirection: 'row', marginTop: '5%' }}>
                           <TouchableOpacity onPress={openImagePickerAsync} style={{ marginLeft: 16, width: '32%' }}>
-                            <Image source={require('/Billboard Spaces/BillboardSpaces/assets/addImage.png')} />
+                            <Image source={require('../assets/addImage.png')} />
                           </TouchableOpacity>
                           <TouchableOpacity onPress={() => openCameraPickerAsync(true)} style={{ marginLeft: 16, width: '32%' }}>
-                            <Image source={require('/Billboard Spaces/BillboardSpaces/assets/takePic.png')} />
+                            <Image source={require('../assets/takePic.png')} />
                           </TouchableOpacity>
                         </View>
 
@@ -368,7 +368,7 @@ export default function Annoucment() {
                   width: 122
                 }}>
                   <TouchableOpacity>
-                    <Image resizeMode="cover" source={require('/Billboard Spaces/BillboardSpaces/assets/profilePicture.jpeg')} style={styles.rectangleIcon2} />
+                    <Image resizeMode="cover" source={require('../assets/profilePicture.jpeg')} style={styles.rectangleIcon2} />
                     <Text style={{ fontSize: 16, fontWeight: '400', color: '#383838' }}>
                       Advertisement Agency Of Naija
                     </Text>
@@ -385,7 +385,7 @@ export default function Annoucment() {
               marginTop: 20,
               width: '90%',
             }}>
-              <Image resizeMode="cover" source={require('/Billboard Spaces/BillboardSpaces/assets/profilePicture.jpeg')} style={styles.rectangleIcon} />
+              <Image resizeMode="cover" source={require('../assets/profilePicture.jpeg')} style={styles.rectangleIcon} />
               <View style={{ flexDirection: 'column', padding: 5 }}>
                 <Text>Akwaibom Secreteriat Advertising Agency</Text>
                 <View style={{ flexDirection: 'row', }}>
