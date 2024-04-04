@@ -13,7 +13,7 @@ import About from './Screens/About';
 import About1 from './Screens/About1';
 import HomeScreen from './Screens/HomeScreen';
 import Billboardclicked from './Screens/Billboardclicked';
-import Tabs from './Screens/Tab/Tabs';
+import Tabs from './Tab/Tabs';
 import SetAdvertisingDuration from './Screens/SetAdvertisingDuration';
 import Subscription from './Screens/Subscription';
 import Advertisement from './Screens/Advertisement';
@@ -25,7 +25,7 @@ import ContactUs from './Screens/ContactUs';
 import MyBillboard from './Screens/MyBillboard';
 import Billboardclicked2 from './Screens/Billboardclicked2';
 import Notification from './Screens/Notification';
-import Eventclicked from './Screens/Tab/Eventclicked';
+import Eventclicked from './Tab/Eventclicked'
 import MyProfile from './Screens/MyProfile';
 import EventCalender from './Screens/EventCalender';
 

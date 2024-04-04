@@ -1,10 +1,10 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import HomeScreen from "../HomeScreen";
-import AddBillboard from "../Tab/AddBillboard"
+import HomeScreen from "../Screens/HomeScreen";
+import AddBillboard from "./AddBillboard"
 import Menu from "./Menu";
-import More from "../Tab/More"
-import Annoucment from "../Tab/Annoucment"
+import More from "./More"
+import Annoucment from "./Annoucment"
 import { Foundation } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';

@@ -2,9 +2,9 @@ import { StyleSheet, Text, View, StatusBar, ImageBackground, TouchableOpacity, T
 import React, { useState, useEffect } from 'react';
 import * as ImagePicker from 'expo-image-picker';
 import { AntDesign } from '@expo/vector-icons';
-import { refreshToken } from '../authUtils';
+import { refreshToken } from '../Screens/authUtils';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { BASE_URL } from '../../apiConfig';
+import { BASE_URL } from '../apiConfig';
 
 
 export default function AddBillboard() {

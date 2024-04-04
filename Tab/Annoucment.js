@@ -5,9 +5,9 @@ import { AntDesign } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
-import { refreshToken } from '../authUtils';
+import { refreshToken } from '../Screens/authUtils';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { BASE_URL } from '../../apiConfig';
+import { BASE_URL } from '../apiConfig';
 
 
 

@@ -3,8 +3,8 @@ import React, { useState, useEffect } from 'react';
 import { AntDesign } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { MaterialIcons } from '@expo/vector-icons';
-import { refreshToken } from '../authUtils';
-import { BASE_URL } from '../../apiConfig';
+import { refreshToken } from '../Screens/authUtils';
+import { BASE_URL } from '../apiConfig';
 
 
 export default function Menu({ navigation }) {
