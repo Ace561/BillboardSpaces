@@ -12,6 +12,11 @@ export default function Menu({ navigation }) {
   const [stateModalVisible, setStateModalVisible] = useState(false);
   const [selectedText, setSelectedText] = useState('');
   const [selectedState, setSelectedState] = useState('');
+  const [searchKeyword, setSearchKeyword] = useState('');
+  const [popular, setPopular] = useState([]);
+  const [products, setProducts] = useState([]);
+  const [error, setError] = useState(null);
+  const [searchResults, setSearchResults] = useState([]);
 
 
   const openStateModal = () => {
@@ -81,10 +86,6 @@ export default function Menu({ navigation }) {
     return rows;
   };
 
-
-  const [popular, setPopular] = useState([]);
-  const [products, setProducts] = useState([]);
-  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -187,6 +188,53 @@ export default function Menu({ navigation }) {
   if (error) {
     return <Text>{error}</Text>;
   }
+
+  const fetchSearchResults = async () => {
+    const endpointUrl = `${BASE_URL}/billboards/all/?search_keyword=${searchKeyword}&location=${selectedState}&size=${selectedText}`;
+    try {
+      const storedAccess = await AsyncStorage.getItem('access');
+
+      const response = await fetch(endpointUrl, {
+        headers: {
+          'Authorization': `Bearer ${storedAccess}`
+        }
+      });
+
+      if (!response.ok) {
+        if (response.status === 401) {
+          const newAccessToken = await refreshToken();
+          // Use the new access token to make the request
+          const newResponse = await fetch(endpointUrl, {
+            headers: {
+              'Authorization': `Bearer ${newAccessToken}`
+            }
+          });
+
+          if (!newResponse.ok) {
+            throw new Error('Failed to fetch products after token refresh');
+          }
+
+          const newData = await newResponse.json();
+          setSearchResults(newData);
+        } else {
+          throw new Error('Failed to fetch products');
+        }
+      } else {
+        const data = await response.json();
+        console.log(endpointUrl);
+        console.log(data);
+        setSearchResults(data);
+      }
+    } catch (error) {
+      console.error('Error fetching results:', error);
+      setError(error.message);
+    }
+  };
+
+  const handleSearch = () => {
+    fetchSearchResults();
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={{ marginBottom: 5 }} horizontal={false} showsVerticalScrollIndicator={false}>
@@ -201,25 +249,19 @@ export default function Menu({ navigation }) {
           }}>
             Marketplace
           </Text>
-          {/* <Text style={{
-            fontSize: 14,
-            color: '#0080FE',
-            fontWeight: '500',
-            paddingTop:10,
-          }}>
-            Explore map
-          </Text> */}
         </View>
 
         <View style={styles.searchContainer}>
           <TextInput
             style={styles.searchText}
             placeholder="Search"
-          // value={password}
-          // onChangeText={text => setPassword(text)}
+            onChangeText={(text) => setSearchKeyword(text)}
+            onSubmitEditing={handleSearch}
           />
           <TouchableOpacity
-            style={styles.passwordToggle}          >
+            style={styles.passwordToggle}
+            onPress={handleSearch}
+          >
             <AntDesign name="search1" size={24} color="#CCCCCC" />
           </TouchableOpacity>
         </View>
@@ -238,7 +280,7 @@ export default function Menu({ navigation }) {
           paddingLeft: 25,
           alignItems: 'center',
         }}>
-          < Text style={{
+          <Text style={{
             fontSize: 16,
             fontWeight: '500',
             marginTop: 10
@@ -310,30 +352,49 @@ export default function Menu({ navigation }) {
           </Pressable>
         </Modal>
 
-        <Text style={styles.newlyAdded}>Featured</Text>
-        <View style={styles.newlyAddedScroll}>
-          <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} >
-            <View style={styles.img2} >
-              {products && products.map((product, index) => (
-                <ProductComponent key={index} product={product} />
+
+        {searchResults.length > 0 ? (
+          <>
+            <Text style={styles.newlyAdded}>Search Results</Text>
+            <View style={styles.popularContainer}>
+              {splitIntoRows(searchResults).map((row, rowIndex) => (
+                <View key={rowIndex} style={styles.popularRow}>
+                  {row.map((item, itemIndex) => (
+                    <PopularComponent key={itemIndex} popular={item} />
+                  ))}
+                </View>
               ))}
             </View>
-          </ScrollView>
-        </View>
-        <Text style={styles.newlyAdded}>Popular</Text>
-        <View style={styles.popularContainer}>
-          {splitIntoRows(popular).map((row, rowIndex) => (
-            <View key={rowIndex} style={styles.popularRow}>
-              {row.map((item, itemIndex) => (
-                <PopularComponent key={itemIndex} popular={item} />
+          </>
+        ) : (
+          <>
+            <Text style={styles.newlyAdded}>Featured</Text>
+            <View style={styles.newlyAddedScroll}>
+              <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} >
+                <View style={styles.img2} >
+                  {products && products.map((product, index) => (
+                    <ProductComponent key={index} product={product} />
+                  ))}
+                </View>
+              </ScrollView>
+            </View>
+            <Text style={styles.newlyAdded}>Popular</Text>
+            <View style={styles.popularContainer}>
+              {splitIntoRows(popular).map((row, rowIndex) => (
+                <View key={rowIndex} style={styles.popularRow}>
+                  {row.map((item, itemIndex) => (
+                    <PopularComponent key={itemIndex} popular={item} />
+                  ))}
+                </View>
               ))}
             </View>
-          ))}
-        </View>
+          </>
+        )}
 
       </ScrollView>
     </SafeAreaView>
-  )
+  );
+
 }
 
 const styles = StyleSheet.create({
