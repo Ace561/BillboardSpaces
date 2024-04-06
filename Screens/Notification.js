@@ -140,7 +140,8 @@ export default function Notification() {
                                 <Text style={{
                                     fontWeight: '500',
                                     fontSize: 16,
-                                    color: '#383838'
+                                    color: '#383838',
+                                    textTransform: 'capitalize'
                                 }}>{notification.type}</Text>
                                 <Text>{notification.message}</Text>
                                 <Text style={{
