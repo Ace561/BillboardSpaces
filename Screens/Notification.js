@@ -62,6 +62,7 @@ export default function Notification() {
                     backgroundColor: '#E5F2FF',
                     width: '100%',
                     height: 114,
+                    marginTop:10
                 }}>
                     <View style={{
                         top: 20,

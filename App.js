@@ -3,10 +3,6 @@ import { StatusBar } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { AuthProvider } from './Screens/authContext';
-import Onboarding1 from './Screens/Onboarding1'
-import Onboarding2 from './Screens/Onboarding2';
-import Onboarding3 from './Screens/Onboarding3';
-import Onboarding4 from './Screens/Onboarding4';
 import CreatAccount from './Screens/CreatAccount';
 import SignIn from './Screens/SignIn';
 import About from './Screens/About';
@@ -28,6 +24,8 @@ import Notification from './Screens/Notification';
 import Eventclicked from './Tab/Eventclicked'
 import MyProfile from './Screens/MyProfile';
 import EventCalender from './Screens/EventCalender';
+import Onboarding from './Screens/Onboarding';
+import ExploreMore from './Screens/ExploreMore';
 
 const Stack = createStackNavigator();
 
@@ -39,17 +37,15 @@ function App() {
   return (
     <AuthProvider>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Onboarding1">
+        <Stack.Navigator initialRouteName="Onboarding">
           <Stack.Screen options={{ headerShown: false }} name="Home" component={Tabs} />
-          <Stack.Screen options={{ headerShown: false }} name="Onboarding1" component={Onboarding1} />
-          <Stack.Screen options={{ headerShown: false }} name="Onboarding2" component={Onboarding2} />
-          <Stack.Screen options={{ headerShown: false }} name="Onboarding3" component={Onboarding3} />
-          <Stack.Screen options={{ headerShown: false }} name="Onboarding4" component={Onboarding4} />
+          <Stack.Screen options={{ headerShown: false }} name="Onboarding" component={Onboarding} />
           <Stack.Screen options={{ headerShown: false }} name="CreatAccount" component={CreatAccount} />
           <Stack.Screen options={{ headerShown: false }} name="SignIn" component={SignIn} />
           <Stack.Screen options={{ headerShown: false }} name="About" component={About} />
           <Stack.Screen options={{ headerShown: false }} name="About1" component={About1} />
           <Stack.Screen options={{ headerShown: false }} name="Billboardclicked" component={Billboardclicked} />
+          <Stack.Screen options={{ headerShown: false }} name="ExploreMore" component={ExploreMore} />
           <Stack.Screen options={{ headerShown: false }} name="Billboardclicked2" component={Billboardclicked2} />
           <Stack.Screen options={{ headerShown: false }} name="Notification" component={Notification} />
           <Stack.Screen options={{ headerShown: false }} name="Eventclicked" component={Eventclicked} />

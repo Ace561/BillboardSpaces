@@ -106,7 +106,7 @@ export default function MyProfile({ navigation }) {
                 enabled>
                 <ScrollView>
                     <View style={{ flexDirection: 'row', gap: 16, marginTop: 10 }}>
-                        <Ionicons onPress={()=>{
+                        <Ionicons onPress={() => {
                             navigation.goBack()
                         }} name="arrow-back-outline" size={35} color="black" />
                         <Text style={{
@@ -129,14 +129,14 @@ export default function MyProfile({ navigation }) {
                         }}>
                         </Image>
                         <TouchableOpacity style={{ top: '60%', right: '20%' }} onPress={openImagePickerAsync}>
-                        <Image resizeMode='contain'  source={require("../assets/cam.png")} />
+                            <Image resizeMode='contain' source={require("../assets/cam.png")} />
                         </TouchableOpacity>
                     </View>
                     <View style={{
                         flexDirection: 'row',
                         marginRight: 16,
                         justifyContent: 'space-between',
-                        marginTop:40
+                        marginTop: 40
                     }}>
                         <Text style={{
                             fontWeight: '400',
@@ -240,6 +240,12 @@ export default function MyProfile({ navigation }) {
                             </View>
                         </View>
                     </View>
+
+                    <View style={{ marginTop: '40%', alignItems: 'center', marginBottom: 20 }}>
+                        <TouchableOpacity style={styles.buttonParent}>
+                            <Text style={styles.button}>Save Changes</Text>
+                        </TouchableOpacity>
+                    </View>
                 </ScrollView>
             </KeyboardAvoidingView>
         </SafeAreaView>
@@ -274,6 +280,21 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         width: '90%',
+    },
+    button: {
+        fontSize: 14,
+        fontWeight: "500",
+        color: "#fff",
+    },
+    buttonParent: {
+        borderRadius: 10,
+        backgroundColor: "#0080FE",
+        width: "90%",
+        // marginTop: '40%',
+        height: 48,
+        alignItems: "center",
+        justifyContent: 'center',
+        alignSelf: 'center',
     },
 
 })

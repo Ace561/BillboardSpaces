@@ -6,6 +6,11 @@ import { MaterialIcons } from '@expo/vector-icons';
 
 export default function More({ navigation }) {
 
+  useEffect(() => {
+    // Set status bar color when component mounts
+    StatusBar.setBackgroundColor('#0080FE'); // Change color as per your requirement
+  }, []);
+  
   const handleSubscription = () => {
     navigation.navigate('Subscription')
   };

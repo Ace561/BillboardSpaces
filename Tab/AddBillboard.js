@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, StatusBar, ImageBackground, TouchableOpacity, TouchableWithoutFeedback, Modal, Image, TextInput, Pressable, KeyboardAvoidingView, SafeAreaView, ActivityIndicator, ScrollView, Button } from 'react-native'
+import { StyleSheet, Text, View, StatusBar, ImageBackground, TouchableOpacity, TouchableWithoutFeedback, Modal, Image, TextInput, Pressable, KeyboardAvoidingView, SafeAreaView, ActivityIndicator, ScrollView, Button, } from 'react-native'
 import React, { useState, useEffect } from 'react';
 import * as ImagePicker from 'expo-image-picker';
 import { AntDesign } from '@expo/vector-icons';
@@ -13,6 +13,7 @@ export default function AddBillboard() {
   const [stateModalVisible, setStateModalVisible] = useState(false);
   const [selectedText, setSelectedText] = useState('');
   const [selectedState, setSelectedState] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const [fullName, setFullName] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [displayName, setDisplayName] = useState('');
@@ -67,6 +68,7 @@ export default function AddBillboard() {
     const endpointUrl = `${BASE_URL}/billboards/create/`;
 
     try {
+      setIsLoading(true);
       const storedAccess = await AsyncStorage.getItem('access');
       const formData = new FormData();
       formData.append('image', {
@@ -154,19 +156,19 @@ export default function AddBillboard() {
                   <TouchableOpacity onPress={() => handleTextSelection('potrait')}>
                     <Text style={styles.billboardOwner}>Potrait</Text>
                   </TouchableOpacity>
-                  <TouchableOpacity onPress={() => handleTextSelection('Large Format')}>
+                  <TouchableOpacity onPress={() => handleTextSelection('large-format')}>
                     <Text style={styles.billboardOwner}>Large Format</Text>
                   </TouchableOpacity>
-                  <TouchableOpacity onPress={() => handleTextSelection('48 Sheet')}>
+                  <TouchableOpacity onPress={() => handleTextSelection('48-sheet')}>
                     <Text style={styles.billboardOwner}>48 Sheet</Text>
                   </TouchableOpacity>
-                  <TouchableOpacity onPress={() => handleTextSelection('Spectacular Billboard')}>
+                  <TouchableOpacity onPress={() => handleTextSelection('spectacular-billboard')}>
                     <Text style={styles.billboardOwner}>Spectacular Billboard</Text>
                   </TouchableOpacity>
-                  <TouchableOpacity onPress={() => handleTextSelection('Gantry')}>
+                  <TouchableOpacity onPress={() => handleTextSelection('gantry')}>
                     <Text style={styles.billboardOwner}>Gantry</Text>
                   </TouchableOpacity>
-                  <TouchableOpacity onPress={() => handleTextSelection('Unipole')}>
+                  <TouchableOpacity onPress={() => handleTextSelection('unipole')}>
                     <Text style={styles.billboardOwner}>Unipole</Text>
                   </TouchableOpacity>
                 </View>
@@ -196,20 +198,135 @@ export default function AddBillboard() {
                     <TouchableOpacity onPress={() => handleStateSelection('abia')}>
                       <Text style={styles.billboardOwner}>Abia</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => handleStateSelection('  adamawa')}>
+                    <TouchableOpacity onPress={() => handleStateSelection('adamawa')}>
                       <Text style={styles.billboardOwner}>Adamawa</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => handleStateSelection('  Akwaibom')}>
+                    <TouchableOpacity onPress={() => handleStateSelection('akwaibom')}>
                       <Text style={styles.billboardOwner}>Akwaibom</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => handleStateSelection('  Anambra')}>
+                    <TouchableOpacity onPress={() => handleStateSelection('anambra')}>
                       <Text style={styles.billboardOwner}>Anambra</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => handleStateSelection('  Bauchi')}>
+                    <TouchableOpacity onPress={() => handleStateSelection('bauchi')}>
                       <Text style={styles.billboardOwner}>Bauchi</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => handleStateSelection('  Benue')}>
+                    <TouchableOpacity onPress={() => handleStateSelection('benue')}>
                       <Text style={styles.billboardOwner}>Benue</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => handleStateSelection('borno')}>
+                      <Text style={styles.billboardOwner}>Borno</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity onPress={() => handleStateSelection('cross River')}>
+                      <Text style={styles.billboardOwner}>Cross River</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity onPress={() => handleStateSelection('delta')}>
+                      <Text style={styles.billboardOwner}>Delta</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity onPress={() => handleStateSelection('ebonyi')}>
+                      <Text style={styles.billboardOwner}>Ebonyi</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity onPress={() => handleStateSelection('edo')}>
+                      <Text style={styles.billboardOwner}>Edo</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity onPress={() => handleStateSelection('ekiti')}>
+                      <Text style={styles.billboardOwner}>Ekiti</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity onPress={() => handleStateSelection('enugu')}>
+                      <Text style={styles.billboardOwner}>Enugu</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity onPress={() => handleStateSelection('gombe')}>
+                      <Text style={styles.billboardOwner}>Gombe</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity onPress={() => handleStateSelection('imo')}>
+                      <Text style={styles.billboardOwner}>Imo</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity onPress={() => handleStateSelection('jigawa')}>
+                      <Text style={styles.billboardOwner}>Jigawa</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity onPress={() => handleStateSelection('kaduna')}>
+                      <Text style={styles.billboardOwner}>Kaduna</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity onPress={() => handleStateSelection('kano')}>
+                      <Text style={styles.billboardOwner}>Kano</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity onPress={() => handleStateSelection('katsina')}>
+                      <Text style={styles.billboardOwner}>Katsina</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity onPress={() => handleStateSelection('kebbi')}>
+                      <Text style={styles.billboardOwner}>Kebbi</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity onPress={() => handleStateSelection('kogi')}>
+                      <Text style={styles.billboardOwner}>Kogi</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity onPress={() => handleStateSelection('kwara')}>
+                      <Text style={styles.billboardOwner}>Kwara</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity onPress={() => handleStateSelection('lagos')}>
+                      <Text style={styles.billboardOwner}>Lagos</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity onPress={() => handleStateSelection('nasarawa')}>
+                      <Text style={styles.billboardOwner}>Nasarawa</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity onPress={() => handleStateSelection('niger')}>
+                      <Text style={styles.billboardOwner}>Niger</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity onPress={() => handleStateSelection('ogun')}>
+                      <Text style={styles.billboardOwner}>Ogun</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity onPress={() => handleStateSelection('ondo')}>
+                      <Text style={styles.billboardOwner}>Ondo</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity onPress={() => handleStateSelection('osun')}>
+                      <Text style={styles.billboardOwner}>Osun</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity onPress={() => handleStateSelection('oyo')}>
+                      <Text style={styles.billboardOwner}>Oyo</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity onPress={() => handleStateSelection('plateau')}>
+                      <Text style={styles.billboardOwner}>Plateau</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity onPress={() => handleStateSelection('rivers')}>
+                      <Text style={styles.billboardOwner}>Rivers</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity onPress={() => handleStateSelection('sokoto')}>
+                      <Text style={styles.billboardOwner}>Sokoto</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity onPress={() => handleStateSelection('taraba')}>
+                      <Text style={styles.billboardOwner}>Taraba</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity onPress={() => handleStateSelection('yobe')}>
+                      <Text style={styles.billboardOwner}>Yobe</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity onPress={() => handleStateSelection('zamfara')}>
+                      <Text style={styles.billboardOwner}>Zamfara</Text>
                     </TouchableOpacity>
                   </ScrollView>
                 </View>
@@ -279,7 +396,11 @@ export default function AddBillboard() {
 
 
           <TouchableOpacity onPress={uploadData} style={styles.buttonParent}>
-            <Text style={styles.button}>Next</Text>
+            {isLoading ? (
+              <ActivityIndicator size="small" />
+            ) : (
+              <Text style={styles.button}>Next</Text>
+            )}
           </TouchableOpacity>
         </ScrollView>
       </KeyboardAvoidingView>

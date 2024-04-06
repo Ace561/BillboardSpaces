@@ -28,9 +28,8 @@ const Billboardclicked = ({ route, navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={{ marginBottom: 5 }} horizontal={false} showsVerticalScrollIndicator={false}>
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingLeft: 16, paddingRight: 10 , paddingTop:10}}>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingLeft: 16, paddingRight: 10, paddingTop: 10 }}>
           <AntDesign onPress={() => navigation.goBack()} name="arrowleft" size={30} color="#383838" />
-          <Image style={{alignSelf:'center'}} source={require('../assets/available.png')} />
           <MaterialCommunityIcons name="dots-vertical" size={24} color="#383838" />
         </View>
 
@@ -46,7 +45,9 @@ const Billboardclicked = ({ route, navigation }) => {
           </TouchableOpacity>
           <Text style={{ fontSize: 16, fontWeight: '400', marginLeft: 5 }}>Greyfield. co</Text>
           <View style={{ flex: 1, alignItems: 'flex-end', paddingRight: 10 }}>
-            <TouchableOpacity style={{ justifyContent: 'center', borderRadius: 10, width: '50%', height: 40, borderWidth: 1, borderColor: '#0080FE', }}>
+            <TouchableOpacity onPress={() => {
+              navigation.navigate('ExploreMore', { data })
+            }} style={{ justifyContent: 'center', borderRadius: 10, width: '50%', height: 40, borderWidth: 1, borderColor: '#0080FE', }}>
               <Text style={{ color: '#0080FE', alignSelf: 'center' }}>Explore More</Text>
             </TouchableOpacity>
           </View>

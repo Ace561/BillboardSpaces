@@ -20,6 +20,7 @@
     "git": "^0.1.5",
     "react": "18.2.0",
     "react-native": "0.72.10",
+    "react-native-app-intro-slider": "^4.0.4",
     "react-native-gesture-handler": "~2.12.0",
     "react-native-modern-datepicker": "^1.0.0-beta.91",
     "react-native-paper": "^5.12.3",

@@ -276,7 +276,7 @@ export default function HomeScreen({ navigation }) {
                 </View>
 
 
-                <View style={styles.wrap}>
+                <View>
                     <ScrollView
                         onScroll={({ nativeEvent }) => onchange(nativeEvent)}
                         showsHorizontalScrollIndicator={false}
@@ -288,8 +288,8 @@ export default function HomeScreen({ navigation }) {
                             images.map((image, index) =>
                                 <Image
                                     key={index}
-                                    resizeMode='stretch'
-                                    style={styles.wrap}
+                                    resizeMode='contain'
+                                    style={styles.wrap2}
                                     source={image}
                                 />
                             )
@@ -373,10 +373,14 @@ const styles = StyleSheet.create({
         width: 343
     },
     wrap: {
+        width: '100%',
+        paddingTop: 20,
+        borderRadius: 10,
+        alignSelf:'center'
+    },
+    wrap2: {
         width: WIDTH,
-        height: HEIGHT * 0.25,
-        paddingTop: 10,
-        borderRadius: 10
+        borderRadius: 10,
     },
     wrapDot: {
         position: 'absolute',
@@ -386,7 +390,7 @@ const styles = StyleSheet.create({
     },
     dotActive: {
         margin: 3,
-        color: 'black',
+        color: '#66B3FF',
     },
     dot: {
         margin: 3,
