@@ -2,10 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, ScrollView, TextInput, SafeAreaView, Image, StatusBar, Pressable, TouchableOpacity, TouchableWithoutFeedback, Modal, KeyboardAvoidingView } from 'react-native'
 import { AntDesign } from '@expo/vector-icons';
 import { Zocial } from '@expo/vector-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { BASE_URL } from '../apiConfig';
 
 export default function Notification() {
     const [modalVisible, setModalVisible] = useState(false);
-
+    const [notifications, setNotifications] = useState([]);
 
     const openModal = () => {
         setModalVisible(true);
@@ -14,6 +16,57 @@ export default function Notification() {
     const closeModal = () => {
         setModalVisible(false);
     };
+
+    useEffect(() => {
+        fetchNotifications();
+    }, []);
+
+    const fetchNotifications = async () => {
+        const endpointUrl = `${BASE_URL}/notifications/`
+        try {
+            const storedAccess = await AsyncStorage.getItem('access');
+            const response = await fetch(endpointUrl, {
+                headers: {
+                    'Authorization': `Bearer ${storedAccess}`,
+                    'Content-Type': 'multipart/form-data',
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to upload');
+            }
+
+            const data = await response.json();
+            setNotifications(data);
+        } catch (error) {
+            console.error('Error fetching notifications:', error);
+        }
+    };
+
+    const markAllAsRead = async () => {
+        const markAsReadEndpoint = 'https://bb-spaces.onrender.com/notifications/read/all/';
+
+        try {
+            const storedAccess = await AsyncStorage.getItem('access');
+            const response = await fetch(markAsReadEndpoint, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${storedAccess}`,
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to mark all as read');
+            }
+
+            fetchNotifications();
+
+        } catch (error) {
+            console.error('Error marking all as read:', error);
+        }
+    };
+
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView style={{ marginBottom: 5 }} horizontal={false} showsVerticalScrollIndicator={false}>
@@ -43,7 +96,7 @@ export default function Notification() {
                         <Pressable style={styles.modalContainer} onPress={closeModal}>
                             <TouchableWithoutFeedback onPress={() => console.log('Tapped inside modal')}>
                                 <View style={styles.modalContent}>
-                                    <TouchableOpacity style={{ flexDirection: 'row', gap: 16 }}>
+                                    <TouchableOpacity style={{ flexDirection: 'row', gap: 16 }} onPress={markAllAsRead}>
                                         <Zocial name="email" size={24} color="black" />
                                         <Text style={{
                                             fontWeight: '400',
@@ -58,116 +111,51 @@ export default function Notification() {
                         </Pressable>
                     </KeyboardAvoidingView>
                 </Modal>
-                <View style={{
-                    backgroundColor: '#E5F2FF',
-                    width: '100%',
-                    height: 114,
-                    marginTop:10
-                }}>
+
+                {notifications.map(notification => (
                     <View style={{
-                        top: 20,
-                        left: 30,
-                        flexDirection: 'row',
-                        gap: 6
+                        backgroundColor: '#FFF',
+                        width: '100%',
+                        height: 114,
                     }}>
-                        <AntDesign style={{}} name="checkcircle" size={35} color="#31C624" />
                         <View style={{
-                            flexDirection: 'column',
-                            width: '70%'
+                            top: 20,
+                            left: 30,
+                            flexDirection: 'row',
+                            gap: 6
                         }}>
-                            <Text style={{
-                                fontWeight: '500',
-                                fontSize: 16,
-                                color: '#383838'
-                            }}>Congratulations</Text>
-                            <Text>
-                                You Have Successfully Purchased a
-                                Billboard
-                            </Text>
-                            <Text style={{
-                                color: '#525252',
-                                fontWeight: '400',
-                                fontSize: 12
+                            {notification.type === 'congratulations' && (
+                                <AntDesign name="checkcircle" size={35} color="#31C624" />
+                            )}
+                            {notification.type === 'maintainance' && (
+                                <Image source={require("../assets/notify.png")} />
+                            )}
+                            {notification.type === 'explore' && (
+                                <Image source={require("../assets/notify.png")} />
+                            )}
+                            <View style={{
+                                flexDirection: 'column',
+                                width: '70%'
                             }}>
-                                Just Now
-                            </Text>
+                                <Text style={{
+                                    fontWeight: '500',
+                                    fontSize: 16,
+                                    color: '#383838',
+                                    textTransform: 'capitalize'
+                                }}>{notification.type}</Text>
+                                <Text>{notification.message}</Text>
+                                <Text style={{
+                                    color: '#525252',
+                                    fontWeight: '400',
+                                    fontSize: 12
+                                }}>
+                                    {new Date(notification.created_at).toLocaleString('en-US', { hour: '2-digit', minute: '2-digit' })}
+                                </Text>
+                            </View>
                         </View>
                     </View>
-                </View>
+                ))}
 
-
-                <View style={{
-                    backgroundColor: '#FFF',
-                    width: '100%',
-                    height: 114,
-                }}>
-                    <View style={{
-                        top: 20,
-                        left: 30,
-                        flexDirection: 'row',
-                        gap: 6
-                    }}>
-                        <Image source={require("../assets/notify.png")} />
-                        <View style={{
-                            flexDirection: 'column',
-                            width: '70%'
-                        }}>
-                            <Text style={{
-                                fontWeight: '500',
-                                fontSize: 16,
-                                color: '#383838'
-                            }}>Maintainance Booking</Text>
-                            <Text>
-                                You Have Successfully Purchased a
-                                Billboard
-                            </Text>
-                            <Text style={{
-                                color: '#525252',
-                                fontWeight: '400',
-                                fontSize: 12
-                            }}>
-                                Just Now
-                            </Text>
-                        </View>
-                    </View>
-                </View>
-
-
-                <View style={{
-                    backgroundColor: '#FFF',
-                    width: '100%',
-                    height: 114,
-                }}>
-                    <View style={{
-                        top: 20,
-                        left: 30,
-                        flexDirection: 'row',
-                        gap: 6
-                    }}>
-                        <Image source={require("../assets/explore.png")} />
-                        <View style={{
-                            flexDirection: 'column',
-                            width: '70%'
-                        }}>
-                            <Text style={{
-                                fontWeight: '500',
-                                fontSize: 16,
-                                color: '#383838'
-                            }}>Maintainance Booking</Text>
-                            <Text>
-                                You Have Successfully Purchased a
-                                Billboard
-                            </Text>
-                            <Text style={{
-                                color: '#525252',
-                                fontWeight: '400',
-                                fontSize: 12
-                            }}>
-                                Just Now
-                            </Text>
-                        </View>
-                    </View>
-                </View>
             </ScrollView>
         </SafeAreaView>
     )

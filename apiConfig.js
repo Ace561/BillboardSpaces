@@ -1,2 +1,2 @@
 // apiConfig.js
-export const BASE_URL = 'https://billboardspaces.onrender.com';
+export const BASE_URL = 'https://bb-spaces.onrender.com';
