@@ -280,7 +280,38 @@ export default function Menu({ navigation }) {
             <AntDesign name="search1" size={24} color="#CCCCCC" />
           </TouchableOpacity>
         </View>
-        <Text style={{
+        
+
+        {showSearchResults ? (
+          // Render search results
+          <>
+            <Text style={styles.newlyAdded}>Search Results</Text>
+            {searchResults.length > 0 ? (
+              <View style={styles.popularContainer}>
+                {splitIntoRows(searchResults).map((row, rowIndex) => (
+                  <View key={rowIndex} style={styles.popularRow}>
+                    {row.map((item, itemIndex) => (
+                      <PopularComponent key={itemIndex} popular={item} />
+                    ))}
+                  </View>
+                ))}
+              </View>
+            ) : (
+              // Display image when no search results
+              <View style={styles.noResultContainer}>
+                <Image
+                  source={require('../assets/marketError.png')}
+                  style={styles.noResultImage}
+                />
+                <Text style={styles.noResultText}>No results found</Text>
+              </View>
+            )}
+          </>
+        ) : (
+
+          // Render Featured and Popular components
+          <>
+          <Text style={{
           fontSize: 16,
           paddingLeft: 25,
           fontWeight: '500',
@@ -367,24 +398,6 @@ export default function Menu({ navigation }) {
           </Pressable>
         </Modal>
 
-        {/* Conditional rendering based on showSearchResults */}
-        {showSearchResults ? (
-          // Render search results
-          <>
-            <Text style={styles.newlyAdded}>Search Results</Text>
-            <View style={styles.popularContainer}>
-              {splitIntoRows(searchResults).map((row, rowIndex) => (
-                <View key={rowIndex} style={styles.popularRow}>
-                  {row.map((item, itemIndex) => (
-                    <PopularComponent key={itemIndex} popular={item} />
-                  ))}
-                </View>
-              ))}
-            </View>
-          </>
-        ) : (
-          // Render Featured and Popular components
-          <>
             <Text style={styles.newlyAdded}>Featured</Text>
             <View style={styles.newlyAddedScroll}>
               <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} >
@@ -516,5 +529,21 @@ const styles = StyleSheet.create({
     color: "#383838",
     padding: 10
   },
+  noResultContainer: {
+    alignContent: 'center',
+    alignSelf: 'center'
+  },
+  noResultImage: {
+    marginTop: 30
+  },
+  noResultText: {
+    fontWeight: '500',
+    fontSize: 22,
+    lineHeight: 26.63,
+    color: '#1E1E1E',
+    alignSelf: 'center',
+    paddingTop:50
+  }
+
 
 })
