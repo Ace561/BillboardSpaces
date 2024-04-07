@@ -17,6 +17,8 @@ export default function Menu({ navigation }) {
   const [products, setProducts] = useState([]);
   const [error, setError] = useState(null);
   const [searchResults, setSearchResults] = useState([]);
+  const [showSearchResults, setShowSearchResults] = useState(true);
+
 
 
   const openStateModal = () => {
@@ -64,7 +66,7 @@ export default function Menu({ navigation }) {
 
       <View style={{
         padding: 5,
-        flex: 1,
+        // flex: 1,
         // backgroundColor:'red',
         width: 180
       }}>
@@ -85,6 +87,19 @@ export default function Menu({ navigation }) {
     }
     return rows;
   };
+
+
+  useEffect(() => {
+    // Check if searchKeyword is empty
+    if (searchKeyword.trim() === '') {
+      // If searchKeyword is empty, set showSearchResults to false
+      setShowSearchResults(false);
+    } else {
+      // If searchKeyword is not empty, set showSearchResults to true
+      setShowSearchResults(true);
+    }
+  }, [searchKeyword]);
+
 
 
   useEffect(() => {
@@ -352,8 +367,9 @@ export default function Menu({ navigation }) {
           </Pressable>
         </Modal>
 
-
-        {searchResults.length > 0 ? (
+        {/* Conditional rendering based on showSearchResults */}
+        {showSearchResults ? (
+          // Render search results
           <>
             <Text style={styles.newlyAdded}>Search Results</Text>
             <View style={styles.popularContainer}>
@@ -367,6 +383,7 @@ export default function Menu({ navigation }) {
             </View>
           </>
         ) : (
+          // Render Featured and Popular components
           <>
             <Text style={styles.newlyAdded}>Featured</Text>
             <View style={styles.newlyAddedScroll}>
@@ -390,7 +407,6 @@ export default function Menu({ navigation }) {
             </View>
           </>
         )}
-
       </ScrollView>
     </SafeAreaView>
   );
