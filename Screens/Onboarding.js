@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, ImageBackground, Pressable, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, ImageBackground, Pressable, TouchableOpacity, StatusBar } from 'react-native';
 import AppIntroSlider from 'react-native-app-intro-slider';
 import { Ionicons } from '@expo/vector-icons'; // Add this import
 
@@ -31,6 +31,9 @@ const slides = [
 ];
 
 const OnboardingSlider = ({ navigation }) => {
+
+  StatusBar.setTranslucent(true);
+
   const renderPrevButton = () => (
     <View style={styles.vector} >
       <Ionicons style={styles.icon} name="ios-arrow-back" size={35} color="red" />

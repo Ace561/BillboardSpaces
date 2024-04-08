@@ -18,7 +18,7 @@ export default function HomeScreen({ navigation }) {
 
             <View style={{
                 padding: 5,
-                flex: 1,
+                // flex: 1,
                 // backgroundColor:'red',
                 width: 180
             }}>
@@ -37,7 +37,7 @@ export default function HomeScreen({ navigation }) {
 
             <View style={{
                 padding: 5,
-                flex: 1,
+                // flex: 1,
                 // backgroundColor:'red',
                 width: 180
             }}>
@@ -55,7 +55,7 @@ export default function HomeScreen({ navigation }) {
 
             <View style={{
                 padding: 5,
-                flex: 1,
+                // flex: 1,
                 // backgroundColor:'red',
                 width: 180
             }}>
@@ -373,10 +373,10 @@ const styles = StyleSheet.create({
         width: 343
     },
     wrap: {
-        width: '100%',
         paddingTop: 20,
         borderRadius: 10,
-        alignSelf:'center'
+        alignSelf:'center',
+        width: WIDTH,
     },
     wrap2: {
         width: WIDTH,

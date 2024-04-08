@@ -2,15 +2,21 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, ScrollView, TextInput, SafeAreaView, Image, StatusBar, Pressable, TouchableOpacity, TouchableWithoutFeedback, Modal, KeyboardAvoidingView } from 'react-native'
 import { FontAwesome5 } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
+import { useFocusEffect } from '@react-navigation/native'; // Import useFocusEffect from React Navigation
 
 
 export default function More({ navigation }) {
 
-  useEffect(() => {
-    // Set status bar color when component mounts
+  useFocusEffect(() => {
+    StatusBar.setBarStyle('dark-content'); // Change status bar style (light or dark)
     StatusBar.setBackgroundColor('#0080FE'); // Change color as per your requirement
-  }, []);
-  
+
+    return () => {
+      StatusBar.setBarStyle('dark-content'); // Change status bar style (light or dark)
+    };
+  });
+
+
   const handleSubscription = () => {
     navigation.navigate('Subscription')
   };

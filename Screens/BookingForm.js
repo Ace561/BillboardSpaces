@@ -15,14 +15,13 @@ export default function BookingForm({ navigation }) {
   const [preTime, setPreTime] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
-
   const handleBooking = async ({ route }) => {
     const endpointUrl = `${BASE_URL}/maintenance/`;
     try {
       const storedAccess = await AsyncStorage.getItem('access');
       setIsLoading(true)
       const response = await fetch(endpointUrl, {
-        method: 'PUT',
+        method: 'POST', // Changed method to POST
         headers: {
           'Authorization': `Bearer ${storedAccess}`,
           'Content-Type': 'application/json',
@@ -36,17 +35,17 @@ export default function BookingForm({ navigation }) {
           email: email,
         }),
       });
-
+  
       if (response.ok) {
         navigation.navigate('Home');
       } else {
-        console.error('PUT request failed:', response.status);
-        alert('Failed to update user data');
+        console.error('POST request failed:', response.status);
+        alert('Failed to create booking');
       }
     } catch (error) {
-      console.error('An error occurred during PUT request:', error.message);
-      alert('Failed to update user data');
-
+      console.error('An error occurred during POST request:', error.message);
+      alert('Failed to create booking');
+  
       // Log response if available
       if (error.response) {
         try {

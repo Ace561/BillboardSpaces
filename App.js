@@ -29,9 +29,8 @@ import ExploreMore from './Screens/ExploreMore';
 
 const Stack = createStackNavigator();
 
-
 function App() {
-  StatusBar.setHidden(false);
+  // StatusBar.setHidden(false);
   StatusBar.setTranslucent(true);
 
   return (
