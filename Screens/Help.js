@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, ScrollView, TextInput, SafeAreaView, Image, StatusBar, Pressable, TouchableOpacity, TouchableWithoutFeedback, Modal, KeyboardAvoidingView, Linking } from 'react-native'
+import { Ionicons } from '@expo/vector-icons';
 
 export default function Help({ navigation }) {
 
@@ -7,6 +8,19 @@ export default function Help({ navigation }) {
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView style={{ marginBottom: 5 }} horizontal={false} showsVerticalScrollIndicator={false}>
+                <View style={{ flexDirection: 'row', gap: 16, marginTop: 10 }}>
+                    <Ionicons onPress={() => {
+                        navigation.goBack()
+                    }} name="arrow-back-outline" size={35} color="black" />
+                    <Text style={{
+                        fontWeight: '500',
+                        fontSize: 22,
+                        lineHeight: 26.63,
+                        alignSelf: 'center'
+                    }}>
+                        Help and Support
+                    </Text>
+                </View>
                 <View style={{ gap: 32 }}>
                     <Pressable onPress={() => {
                         navigation.navigate('Contact Us')
@@ -30,4 +44,9 @@ export default function Help({ navigation }) {
     )
 }
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
+    },
+})

@@ -12,7 +12,7 @@ import { BASE_URL } from '../apiConfig';
 
 
 
-export default function Annoucment() {
+export default function Annoucment({ navigation }) {
 
   const [showBillboardDetails, setShowBillboardDetails] = useState(false);
   const [showAdDetails, setShowAdDetails] = useState(true);
@@ -187,6 +187,10 @@ export default function Annoucment() {
     }
   };
 
+  const BillboardRequ = () => {
+    navigation.navigate('BillboardRequ')
+  }
+
 
   return (
     <SafeAreaView style={styles.container}>
@@ -201,9 +205,9 @@ export default function Annoucment() {
           <TouchableOpacity onPress={toggleBillboardDetails} style={[styles.buttonParent2, activeButton === 'billboard' ? styles.activeButton : null]}>
             <Text style={[styles.button, activeText === 'billboard' ? styles.activeText : null]}>Billboard Requirements</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={toggleForumDetails} style={[styles.buttonParent3, activeButton === 'forum' ? styles.activeButton : null]}>
+          {/* <TouchableOpacity onPress={toggleForumDetails} style={[styles.buttonParent3, activeButton === 'forum' ? styles.activeButton : null]}>
             <Text style={[styles.button, activeText === 'forum' ? styles.activeText : null]}>Forums</Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </ScrollView>
 
 
@@ -295,7 +299,7 @@ export default function Annoucment() {
               </TouchableOpacity>
             </View>
             <Text style={{ fontSize: 22, fontWeight: '500', marginLeft: 16, marginTop: '20%' }}>Available States</Text>
-            <Text style={styles.state}>Abia</Text>
+            <Text onPress={BillboardRequ} style={styles.state}>Abia</Text>
             <Text style={styles.state}>Adamawa</Text>
             <Text style={styles.state}>Akwa Ibom</Text>
             <Text style={styles.state}>Anambra</Text>

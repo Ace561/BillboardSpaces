@@ -2,7 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, ScrollView, TextInput, SafeAreaView, Image, StatusBar, Pressable, TouchableOpacity, TouchableWithoutFeedback, Modal, KeyboardAvoidingView, Linking } from 'react-native'
 import { Feather } from '@expo/vector-icons';
 import { Fontisto } from '@expo/vector-icons';
-export default function ContactUs() {
+import { Ionicons } from '@expo/vector-icons';
+
+
+
+export default function ContactUs({ navigation }) {
     const phoneNumber = '+2348950382728'; // Replace this with your desired phone number
     const emailAddress = 'billboardspacesng@gmail.com'; // Replace this with your desired email address
 
@@ -18,6 +22,19 @@ export default function ContactUs() {
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView style={{ marginBottom: 5 }} horizontal={false} showsVerticalScrollIndicator={false}>
+                <View style={{ flexDirection: 'row', gap: 16, marginTop: 10 }}>
+                    <Ionicons onPress={() => {
+                        navigation.goBack()
+                    }} name="arrow-back-outline" size={35} color="black" />
+                    <Text style={{
+                        fontWeight: '500',
+                        fontSize: 22,
+                        lineHeight: 26.63,
+                        alignSelf: 'center'
+                    }}>
+                        Contact Us
+                    </Text>
+                </View>
                 <View style={{ alignSelf: 'center', width: '80%', height: 57, marginTop: 10 }}>
                     <Text style={{ fontSize: 16, fontWeight: '400', textAlign: 'justify', lineHeight: 19 }}>
                         You can reach out to us via any of our
@@ -62,4 +79,9 @@ export default function ContactUs() {
     )
 }
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
+    },
+})

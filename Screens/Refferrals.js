@@ -3,6 +3,7 @@ import { Share, StyleSheet, Text, View, ScrollView, TextInput, SafeAreaView, Ima
 import { FontAwesome5 } from '@expo/vector-icons';
 import { FontAwesome6 } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
 
 
 const shareOnFacebook = () => {
@@ -87,10 +88,24 @@ const shareApp = async () => {
     }
 };
 
-export default function Refferrals() {
+export default function Refferrals({navigation}) {
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView showsVerticalScrollIndicator={false}>
+                <View style={{ flexDirection: 'row', gap: 16, marginTop: 10 }}>
+                    <Ionicons onPress={() => {
+                        navigation.goBack()
+                    }} name="arrow-back-outline" size={35} color="black" />
+                    <Text style={{
+                        fontWeight: '500',
+                        fontSize: 22,
+                        lineHeight: 26.63,
+                        alignSelf: 'center'
+                    }}>
+                        Refferrals
+                    </Text>
+                </View>
+
                 <Image resizeMode='contain' style={{ marginTop: 10, alignSelf: 'center', width: '80%', height: 261 }} source={require('../assets/refferrals.png')} />
 
 
@@ -118,4 +133,9 @@ export default function Refferrals() {
     )
 }
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
+    },
+})

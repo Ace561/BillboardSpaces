@@ -41,7 +41,7 @@ export default function MyBillboard({ navigation }) {
     const BillboardComp = ({ billboard }) => {
         return (
             <Pressable onPress={() => {
-                navigation.navigate('Billboardclicked2' , { data: billboard })
+                navigation.navigate('Billboardclicked2', { data: billboard })
             }}>
                 <View style={{
                     flexDirection: 'row',
@@ -67,7 +67,7 @@ export default function MyBillboard({ navigation }) {
                     </View>
                 </View>
                 <View style={{ alignItems: 'center', marginTop: 10, }}>
-                    <Image resizeMode="cover" source={{uri:billboard.image}} style={styles.billboardImage} />
+                    <Image resizeMode="cover" source={{ uri: billboard.image }} style={styles.billboardImage} />
                 </View>
                 <View style={{
                     flexDirection: 'row',
@@ -110,15 +110,27 @@ export default function MyBillboard({ navigation }) {
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView showsVerticalScrollIndicator={false}>
+                <View style={{ flexDirection: 'row', gap: 16, marginTop: 10 }}>
+                    <Ionicons onPress={() => {
+                        navigation.goBack()
+                    }} name="arrow-back-outline" size={35} color="black" />
+                    <Text style={{
+                        fontWeight: '500',
+                        fontSize: 22,
+                        lineHeight: 26.63,
+                        alignSelf: 'center'
+                    }}>
+                        My Billboards
+                    </Text>
+                </View>
 
-                
-            <View style={{}}>
-              <View style={{}} >
-                {billboard && billboard.map((billboard, index) => (
-                  <BillboardComp key={index} billboard={billboard} />
-                ))}
-              </View>
-            </View>
+                <View style={{}}>
+                    <View style={{}} >
+                        {billboard && billboard.map((billboard, index) => (
+                            <BillboardComp key={index} billboard={billboard} />
+                        ))}
+                    </View>
+                </View>
                 {/* <Pressable onPress={() => {
                     navigation.navigate('Billboardclicked2')
                 }}>
@@ -192,6 +204,7 @@ export default function MyBillboard({ navigation }) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
         marginBottom: 10
     },
     billboardImage: {

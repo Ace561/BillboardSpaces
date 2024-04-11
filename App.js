@@ -26,6 +26,7 @@ import MyProfile from './Screens/MyProfile';
 import EventCalender from './Screens/EventCalender';
 import Onboarding from './Screens/Onboarding';
 import ExploreMore from './Screens/ExploreMore';
+import BillboardRequ from './Screens/BillboardRequ';
 
 const Stack = createStackNavigator();
 
@@ -49,16 +50,17 @@ function App() {
           <Stack.Screen options={{ headerShown: false }} name="Notification" component={Notification} />
           <Stack.Screen options={{ headerShown: false }} name="Eventclicked" component={Eventclicked} />
           <Stack.Screen options={{}} name="Set Advertising Duration" component={SetAdvertisingDuration} />
-          <Stack.Screen options={{}} name="Subscription" component={Subscription} />
-          <Stack.Screen options={{}} name="Advertisement" component={Advertisement} />
+          <Stack.Screen options={{ headerShown: false }} name="Subscription" component={Subscription} />
+          <Stack.Screen options={{ headerShown: false }} name="Advertisement" component={Advertisement} />
           <Stack.Screen options={{ headerShown: false }} name="Maintenance Booking" component={MaintenanceBooking} />
           <Stack.Screen options={{ headerShown: false }} name="Booking Form" component={BookingForm} />
-          <Stack.Screen options={{}} name="Refferrals" component={Refferrals} />
-          <Stack.Screen options={{}} name="Help and Support" component={Help} />
-          <Stack.Screen options={{}} name="Contact Us" component={ContactUs} />
-          <Stack.Screen options={{}} name="My Billboards" component={MyBillboard} />
+          <Stack.Screen options={{ headerShown: false }} name="Refferrals" component={Refferrals} />
+          <Stack.Screen options={{ headerShown: false }} name="Help and Support" component={Help} />
+          <Stack.Screen options={{ headerShown: false }} name="Contact Us" component={ContactUs} />
+          <Stack.Screen options={{ headerShown: false }} name="My Billboards" component={MyBillboard} />
           <Stack.Screen options={{ headerShown: false }} name="My Profile" component={MyProfile} />
           <Stack.Screen options={{ headerShown: false }} name="EventCalender" component={EventCalender} />
+          <Stack.Screen options={{ headerShown: false }} name="BillboardRequ" component={BillboardRequ} />
         </Stack.Navigator>
       </NavigationContainer>
     </AuthProvider>

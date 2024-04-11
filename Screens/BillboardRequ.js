@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, ScrollView, TextInput, SafeAreaView, Image, StatusBar, Pressable, TouchableOpacity, TouchableWithoutFeedback, Modal, KeyboardAvoidingView } from 'react-native'
+import { AntDesign } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 
 
-export default function Advertisement({navigation}) {
+
+export default function BillboardRequ({ navigation }) {
     return (
         <SafeAreaView style={styles.container}>
-            <ScrollView showsVerticalScrollIndicator={false}>
+            <ScrollView style={{ marginBottom: 5 }} horizontal={false} showsVerticalScrollIndicator={false}>
                 <View style={{ flexDirection: 'row', gap: 16, marginTop: 10 }}>
                     <Ionicons onPress={() => {
                         navigation.goBack()
@@ -17,15 +19,9 @@ export default function Advertisement({navigation}) {
                         lineHeight: 26.63,
                         alignSelf: 'center'
                     }}>
-                        Advertisement
+                        Abia State
                     </Text>
                 </View>
-                <TouchableOpacity style={{ width: '90%', height: 76, borderWidth: 1, alignSelf: 'center', flexDirection: 'row', borderColor: '#0080FE', borderRadius: 10, justifyContent: 'center', marginTop: 20 }}>
-                    <Image style={{ alignSelf: 'center' }} source={require('../assets/Advert1.png')} />
-                </TouchableOpacity>
-                <TouchableOpacity style={{ width: '90%', height: 76, borderWidth: 1, alignSelf: 'center', flexDirection: 'row', borderColor: '#0080FE', borderRadius: 10, justifyContent: 'center', marginTop: 30 }}>
-                    <Image style={{ alignSelf: 'center' }} source={require('../assets/advert2.png')} />
-                </TouchableOpacity>
             </ScrollView>
         </SafeAreaView>
     )

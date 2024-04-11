@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, ScrollView, TextInput, SafeAreaView, Image, StatusBar, Pressable, TouchableOpacity, TouchableWithoutFeedback, Modal, KeyboardAvoidingView } from 'react-native'
+import { Ionicons } from '@expo/vector-icons';
 
 
 export default function Subscription({ navigation }) {
@@ -28,6 +29,19 @@ export default function Subscription({ navigation }) {
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView showsVerticalScrollIndicator={false}>
+                <View style={{ flexDirection: 'row', gap: 16, marginTop: 10 }}>
+                    <Ionicons onPress={() => {
+                        navigation.goBack()
+                    }} name="arrow-back-outline" size={35} color="black" />
+                    <Text style={{
+                        fontWeight: '500',
+                        fontSize: 22,
+                        lineHeight: 26.63,
+                        alignSelf: 'center'
+                    }}>
+                        Subscription
+                    </Text>
+                </View>
                 {showAdDetails && (
                     <View>
                         <Image style={{ width: '55%', height: 133.38, alignSelf: 'center' }} source={require('../assets/sub.png')} />
