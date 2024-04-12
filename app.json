@@ -32,6 +32,20 @@
       "eas": {
         "projectId": "759cf1cf-45cb-40fd-bfcb-40677dd4a2ab"
       }
+    },
+    "plugins": [
+      [
+        "expo-updates",
+        {
+          "username": "uku_joseph"
+        }
+      ]
+    ],
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/759cf1cf-45cb-40fd-bfcb-40677dd4a2ab"
     }
   }
 }
