@@ -213,6 +213,55 @@ export default function CreateAccount({ navigation }) {
     navigation.navigate('SignIn');
   };
 
+
+  const SignupWithGoogle = async () => {
+    const endpointUrl = `${BASE_URL}/auth/google-signup/`;
+    try {
+      setIsLoading(true);
+
+      // Use fetch to send the signup request
+      const response = await fetch(endpointUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          // If any additional data is required for Google signup, include it here
+        }),
+      });
+
+      // Log the details of the response
+      console.log("Response Status:", response.status);
+      console.log("Response Headers:", response.headers);
+      const responseData = await response.json();
+      console.log("Response Data:", responseData);
+
+      if (response.ok) {
+        console.log("Google Signup Successful:", responseData);
+        // Handle navigation or state updates on successful Google signup
+        // For example, you may navigate to a different screen or update state to indicate successful signup
+      } else {
+        console.error("Google Signup Error:", responseData);
+
+        // Extract and show error messages in an alert
+        const errorMessage = responseData.message || "Google signup failed.";
+        alert(errorMessage);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+
+      // Handle other errors, e.g., network issues
+      const errorMessage =
+        error.message ||
+        "Google signup failed. Please check your network connection.";
+      alert(errorMessage);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+
+
   return (
     <KeyboardAvoidingView style={styles.container} behavior="height" enabled>
       <ScrollView>
