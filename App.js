@@ -29,6 +29,7 @@ import EventCalender from './Screens/EventCalender';
 import Onboarding from './Screens/Onboarding';
 import ExploreMore from './Screens/ExploreMore';
 import BillboardRequ from './Screens/BillboardRequ';
+import AddDocument from './Screens/AddDocument';
 
 const Stack = createStackNavigator();
 
@@ -99,6 +100,7 @@ function App() {
           <Stack.Screen options={{ headerShown: false }} name="My Profile" component={MyProfile} />
           <Stack.Screen options={{ headerShown: false }} name="EventCalender" component={EventCalender} />
           <Stack.Screen options={{ headerShown: false }} name="BillboardRequ" component={BillboardRequ} />
+          <Stack.Screen options={{ headerShown: false }} name="AddDocument" component={AddDocument} />
         </Stack.Navigator>
       </NavigationContainer>
     </AuthProvider>

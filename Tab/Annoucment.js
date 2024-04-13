@@ -25,6 +25,15 @@ export default function Annoucment({ navigation }) {
 
 
 
+  const [notifyModalVisible, setNotifyModalVisible] = useState(false);
+
+  const openNotifyModal = () => {
+    setNotifyModalVisible(true);
+  };
+
+  const closeNotifyModal = () => {
+    setNotifyModalVisible(false);
+  };
 
 
   const toggleAdDetails = () => {
@@ -295,7 +304,7 @@ export default function Annoucment({ navigation }) {
                 </TouchableOpacity>
               </View>
               <TouchableOpacity style={{ paddingRight: 10, marginTop: 12 }}>
-                <MaterialCommunityIcons name="dots-vertical" size={24} color="#383838" />
+                <MaterialCommunityIcons onPress={openNotifyModal} name="dots-vertical" size={24} color="#383838" />
               </TouchableOpacity>
             </View>
             <Text style={{ fontSize: 22, fontWeight: '500', marginLeft: 16, marginTop: '20%' }}>Available States</Text>
@@ -336,8 +345,30 @@ export default function Annoucment({ navigation }) {
             <Text style={styles.state}>Yobe</Text>
             <Text style={styles.state}>Zamfara</Text>
 
-
-
+            <Modal visible={notifyModalVisible} transparent={true} animationType="fade">
+              <KeyboardAvoidingView
+                style={{ flex: 1 }}
+                behavior={Platform.OS === "ios" ? "padding" : "height"}
+              >
+                <Pressable style={styles.notifyModalContainer} onPress={closeNotifyModal}>
+                  <TouchableWithoutFeedback onPress={() => console.log('Tapped inside modal')}>
+                    <View style={styles.notifyModalContent}>
+                      <TouchableOpacity style={{ flexDirection: 'row', gap: 16 }} onPress={() => {
+                        navigation.navigate('AddDocument')
+                      }}>
+                        <Text style={{
+                          fontWeight: '400',
+                          fontSize: 16,
+                          alignSelf: 'center'
+                        }}>
+                          Add Document
+                        </Text>
+                      </TouchableOpacity>
+                    </View>
+                  </TouchableWithoutFeedback>
+                </Pressable>
+              </KeyboardAvoidingView>
+            </Modal>
           </View>
         )}
 
@@ -565,6 +596,21 @@ const styles = StyleSheet.create({
     borderRadius: 203.39,
     height: 55.93,
     width: 60
+  },
+  notifyModalContainer: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  notifyModalContent: {
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
+    backgroundColor: "#fff",
+    padding: 20,
+    width: "100%",
+    height: 100,
+    justifyContent: 'center',
+    // alignItems: 'center'
   },
 
 })
