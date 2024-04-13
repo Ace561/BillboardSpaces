@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, View, Image, TouchableOpacity, StatusBar } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import HomeScreen from "../Screens/HomeScreen";
 import AddBillboard from "./AddBillboard"
@@ -29,6 +29,9 @@ const CustomTabBarButton = ({ children, onPress }) => (
 )
 
 const Tabs = () => {
+
+    StatusBar.setBarStyle('dark-content'); // Change status bar style (light or dark)
+    StatusBar.setBackgroundColor('#0080FE'); // Change color as per your requirement
     return (
         <Tab.Navigator
             screenOptions={{

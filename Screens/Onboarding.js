@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, ImageBackground, Pressable, TouchableOpacity, S
 import AppIntroSlider from 'react-native-app-intro-slider';
 import { Ionicons } from '@expo/vector-icons'; // Add this import
 
+
 const slides = [
   {
     key: 'slide1',
@@ -31,8 +32,6 @@ const slides = [
 ];
 
 const OnboardingSlider = ({ navigation }) => {
-
-  StatusBar.setTranslucent(true);
 
   const renderPrevButton = () => (
     <View style={styles.vector} >

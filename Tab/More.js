@@ -7,16 +7,6 @@ import { useFocusEffect } from '@react-navigation/native'; // Import useFocusEff
 
 export default function More({ navigation }) {
 
-  useFocusEffect(() => {
-    StatusBar.setBarStyle('dark-content'); // Change status bar style (light or dark)
-    StatusBar.setBackgroundColor('#0080FE'); // Change color as per your requirement
-
-    return () => {
-      StatusBar.setBarStyle('dark-content'); // Change status bar style (light or dark)
-    };
-  });
-
-
   const handleSubscription = () => {
     navigation.navigate('Subscription')
   };
@@ -43,7 +33,7 @@ export default function More({ navigation }) {
     <SafeAreaView style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={{ width: '100%', height: 267, backgroundColor: '#0080FE', borderBottomRightRadius: 40, borderBottomLeftRadius: 40 }}>
-          <Text style={{ fontWeight: '500', fontSize: 28, color: '#ffffff', marginLeft: 16, marginTop: 40 }}>More Option</Text>
+          <Text style={{ fontWeight: '500', fontSize: 28, color: '#ffffff', marginLeft: 16, marginTop: 40 }}>More Options</Text>
           <View style={{
             marginLeft: 16,
             flexDirection: 'row',

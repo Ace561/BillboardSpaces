@@ -1,7 +1,7 @@
 import React from 'react';
 import { useEffect } from 'react';
 import * as Updates from 'expo-updates';
-import { StatusBar } from 'react-native';
+import { Alert, StatusBar } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { AuthProvider } from './Screens/authContext';
@@ -33,26 +33,44 @@ import BillboardRequ from './Screens/BillboardRequ';
 const Stack = createStackNavigator();
 
 function App() {
-  // StatusBar.setHidden(false);
-  StatusBar.setTranslucent(true);
+  StatusBar.setBarStyle('dark-content'); // Change status bar style (light or dark)
+    StatusBar.setBackgroundColor('#0080FE'); // Change color as per your requirement
+
 
   async function onFetchUpdateAsync() {
     try {
       const update = await Updates.checkForUpdateAsync();
 
       if (update.isAvailable) {
-        await Updates.fetchUpdateAsync();
-        await Updates.reloadAsync();
+        // Show an alert when an update is available
+        Alert.alert(
+          'Update Available',
+          'A new version of the app is available. Would you like to update now?',
+          [
+            { text: 'Later', onPress: () => console.log('User wants to update later') },
+            { text: 'Update', onPress: () => handleUpdate() },
+          ]
+        );
       }
     } catch (error) {
-      // You can also add an alert() to see the error message in case of an error when fetching updates.
       alert(`Error fetching latest Expo update: ${error}`);
+      console.log(`Error fetching latest Expo update: ${error}`);
     }
   }
 
+  const handleUpdate = async () => {
+    try {
+      await Updates.fetchUpdateAsync();
+      await Updates.reloadAsync();
+    } catch (error) {
+      alert(`Error updating the app: ${error}`);
+      console.log(`Error updating the app: ${error}`);
+    }
+  };
+
   useEffect(() => {
-    onFetchUpdateAsync
-  })
+    onFetchUpdateAsync();
+  }, []);
 
   return (
     <AuthProvider>

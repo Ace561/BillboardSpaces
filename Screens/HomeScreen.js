@@ -12,6 +12,7 @@ const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height;
 
 export default function HomeScreen({ navigation }) {
+    
 
     const ProductComponent = ({ product }) => {
         return (
