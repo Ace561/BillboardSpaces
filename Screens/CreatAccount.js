@@ -221,7 +221,7 @@ export default function CreateAccount({ navigation }) {
 
       // Use fetch to send the signup request
       const response = await fetch(endpointUrl, {
-        method: "POST",
+        method: "GET",
         headers: {
           "Content-Type": "application/json",
         },

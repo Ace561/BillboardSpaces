@@ -27,7 +27,7 @@ export default function About1({ navigation, route }) {
     const [displayNameFocused, setDisplayNameFocused] = useState(false);
 
     const handleDone = async () => {
-        const endpointUrl = `${BASE_URL}/auth/update-profile/${userId}/`;
+        const endpointUrl = `${BASE_URL}/auth/update-profile/`;
         try {
             const storedAccess = await AsyncStorage.getItem('access');
             setIsLoading(true)

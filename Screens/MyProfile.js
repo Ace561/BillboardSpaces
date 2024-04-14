@@ -3,7 +3,9 @@ import React, { useState, useEffect } from 'react';
 import * as ImagePicker from 'expo-image-picker';
 import { Feather } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
-
+import { BASE_URL } from '../apiConfig';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { refreshToken } from './authUtils';
 
 export default function MyProfile({ navigation }) {
     const [selectedImage, setSelectedImage] = useState(null);
@@ -52,6 +54,8 @@ export default function MyProfile({ navigation }) {
     const [stateFocused, setstateFocused] = useState(false);
     const [displayNameFocused, setDisplayNameFocused] = useState(false);
     const [fieldFocused, setFieldFocused] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+
 
 
 
@@ -97,6 +101,60 @@ export default function MyProfile({ navigation }) {
         setstateFocused(false);
         setFieldFocused(true);
     };
+
+
+    const handleSave = async () => {
+        const endpointUrl = `${BASE_URL}/auth/update-profile/`;
+        try {
+            setIsLoading(true);
+            const storedAccess = await AsyncStorage.getItem('access');
+            
+            // Create an object to store the fields to be updated
+            const updatedFields = {};
+            if (field !== undefined) updatedFields.user_field = field;
+            if (name !== undefined) updatedFields.full_name = name;
+            if (phoneNumber !== undefined) updatedFields.phone_number = phoneNumber;
+            if (state !== undefined) updatedFields.state = state;
+            if (displayName !== undefined) updatedFields.display_name = displayName;
+    
+            const response = await fetch(endpointUrl, {
+                method: 'PATCH',
+                headers: {
+                    'Authorization': `Bearer ${storedAccess}`,
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(updatedFields), // Send only the fields that are defined
+            });
+    
+            if (response.ok) {
+                navigation.navigate('Home');
+            } else {
+                console.error('PUT request failed:', response.status);
+                let errorMessage = 'Failed to update user data';
+                // Parse error response if available
+                try {
+                    const errorResponseData = await response.json();
+                    console.log('TEST?? ');
+                    console.log(errorResponseData);
+                    if (errorResponseData && errorResponseData.detail) {
+                        errorMessage = errorResponseData.detail;
+                    }
+                    console.log('Error response data:', errorResponseData);
+                } catch (jsonError) {
+                    console.error('Failed to parse error response as JSON:', jsonError.message);
+                }
+                alert(errorMessage);
+            }
+        } catch (error) {
+            console.error('An error occurred during PUT request:', error.message);
+            alert('Failed to update user data');
+        } finally {
+            setIsLoading(false);
+        }
+    };
+    
+
+
 
 
     return (
@@ -173,7 +231,7 @@ export default function MyProfile({ navigation }) {
                                     />
                                 </View>
                             </View>
-                            <View style={styles.inputView}>
+                            {/* <View style={styles.inputView}>
                                 <Text style={styles.email}>Email</Text>
                                 <View style={[styles.editInput, emailFocused && styles.focusedInput]}>
                                     <TextInput
@@ -185,7 +243,7 @@ export default function MyProfile({ navigation }) {
                                         onBlur={() => setEmailFocused(false)}
                                     />
                                 </View>
-                            </View>
+                            </View> */}
                             <View style={styles.inputView}>
                                 <Text style={styles.email}>Phone Number</Text>
                                 <View style={[styles.editInput, phoneNumberFocused && styles.focusedInput]}>
@@ -242,7 +300,7 @@ export default function MyProfile({ navigation }) {
                     </View>
 
                     <View style={{ marginTop: '40%', alignItems: 'center', marginBottom: 20 }}>
-                        <TouchableOpacity style={styles.buttonParent}>
+                        <TouchableOpacity onPress={handleSave} style={styles.buttonParent}>
                             <Text style={styles.button}>Save Changes</Text>
                         </TouchableOpacity>
                     </View>
